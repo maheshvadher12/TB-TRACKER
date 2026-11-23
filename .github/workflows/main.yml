@@ -1,0 +1,70 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Add Android platform
+        run: npx cap add android
+
+      - name: Generate app icon and splash
+        run: npx capacitor-assets generate --android || echo "Icon generation skipped"
+
+      - name: Status bar colour and version number
+        run: |
+          cat > android/app/src/main/res/values/colors.xml <<'XML'
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+              <color name="colorPrimary">#0F3D63</color>
+              <color name="colorPrimaryDark">#0B2F4E</color>
+              <color name="colorAccent">#1D6FA5</color>
+          </resources>
+          XML
+          sed -i "s/versionCode 1/versionCode ${{ github.run_number }}/" android/app/build.gradle
+          sed -i "s/versionName \"1.0\"/versionName \"1.${{ github.run_number }}\"/" android/app/build.gradle
+
+      - name: Sync web files
+        run: npx cap sync android
+
+      - name: Build release APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+
+      - name: Align and sign APK (fixed key)
+        run: |
+          BT=$ANDROID_HOME/build-tools/$(ls $ANDROID_HOME/build-tools | sort -V | tail -1)
+          IN=android/app/build/outputs/apk/release/app-release-unsigned.apk
+          $BT/zipalign -p -f 4 "$IN" aligned.apk
+          $BT/apksigner sign --ks signing/tracker.jks \
+            --ks-pass pass:tbtracker123 --key-pass pass:tbtracker123 \
+            --ks-key-alias tbtracker --out TB-Tracker.apk aligned.apk
+          $BT/apksigner verify TB-Tracker.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name:V
