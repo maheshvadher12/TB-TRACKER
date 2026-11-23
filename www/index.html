@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="gu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b2f4e"><script src="native-shim.js"></script>
-<title>TB Follow-up Tracker – PHC Pransli</title>
+<title>PHC Pransli – TB FUP Tracker</title>
 <style>
 :root{--p:#0f3d63;--p2:#1d6fa5;--pd:#0b2f4e;--bg:#f1f5f9;--line:#e1e8ef;--ok:#138808;--bad:#d92d20;--warn:#f59e0b;--saf:#ff9933;--txt:#16222e;--mut:#64748b;--sh:0 1px 2px rgba(15,61,99,.06),0 6px 18px rgba(15,61,99,.07)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -237,6 +237,15 @@ details.card>*:last-child{margin-bottom:var(--pad)}
 .card .ct{min-height:20px}
 .st2{margin:18px 4px 10px}
 .srch{margin-bottom:12px}
+/* header: centred title */
+.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
+.top .brand{justify-self:start}
+.top .dt{justify-self:end}
+.ttl{text-align:center;min-width:0}
+.ttl h1{font-size:21px;font-weight:800;letter-spacing:.6px;line-height:1.15;white-space:nowrap}
+.ttl small{display:block;margin-top:4px;font-size:12px;font-weight:600;letter-spacing:2px;opacity:.88;text-transform:uppercase}
+.ttl small::before,.ttl small::after{content:"";display:inline-block;width:14px;height:1px;background:currentColor;opacity:.6;vertical-align:middle;margin:0 8px}
+.badge{width:48px;height:48px}
 </style></head><body>
 <div id="splash">
  <div class="sp-bg"></div><div class="sp-dots"><i></i><i></i><i></i><i></i></div>
@@ -249,7 +258,8 @@ details.card>*:last-child{margin-bottom:var(--pad)}
 </div>
 
 <header class="top noprint">
- <div class="brand"><span class="badge"><img src="logo.png" alt=""></span><div><h1>TB Follow-up Tracker</h1><small>Primary Health Centre · Pransli</small></div></div>
+ <div class="brand"><span class="badge"><img src="logo.png" alt=""></span></div>
+ <div class="ttl"><h1>PHC Pransli</h1><small>TB FUP Tracker</small></div>
  <div class="dt" id="today"></div>
 </header>
 
