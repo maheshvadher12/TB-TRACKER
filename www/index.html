@@ -67,6 +67,15 @@ main{max-width:880px;margin:-10px auto 0;padding:14px 12px 120px}
 .tile span{font-size:10.5px;color:var(--mut);font-weight:700;line-height:1.2}
 .tile.on{border-color:var(--tc);box-shadow:0 0 0 2px var(--tc) inset,var(--sh);background:#fbfdff}
 .tile.b{--tc:#1d6fa5}.tile.r{--tc:#d92d20}.tile.a{--tc:#d97706}.tile.g{--tc:#138808}.tile.p{--tc:#7c3aed}.tile.t{--tc:#0891b2}
+.dtabs{display:flex;flex-direction:column;gap:8px}
+.dtab{background:#fff;border:1px solid var(--line);border-left:5px solid var(--tc);border-radius:14px;box-shadow:var(--sh);overflow:hidden}
+.dtab.b{--tc:#1d6fa5}.dtab.r{--tc:#d92d20}.dtab.a{--tc:#d97706}.dtab.g{--tc:#138808}.dtab.p{--tc:#7c3aed}.dtab.t{--tc:#0891b2}
+.dth{display:flex;align-items:center;gap:12px;width:100%;background:none;color:var(--txt);border-radius:0;padding:13px 12px;text-align:left}
+.dth i{font-style:normal;font-size:20px;flex:none}
+.dth span{flex:1;min-width:0;font-weight:800;color:var(--p);font-size:14.5px}
+.dth b{font-size:20px;color:var(--tc);flex:none;min-width:28px;text-align:right}
+.dtab .chev{transition:transform .2s}.dtab.open .chev{transform:rotate(90deg)}
+.dtb{display:none;padding:10px 10px 2px;background:#f8fafc;border-top:1px solid var(--line)}.dtab.open .dtb{display:block}
 .scgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
 .scc{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;background:#fff;color:var(--p);border:1px solid var(--line);border-radius:14px;padding:11px 12px;box-shadow:var(--sh);position:relative}
 .scc b{font-size:13.5px}.scc span{font-size:11.5px;color:var(--mut);font-weight:600}
@@ -165,6 +174,69 @@ a.tel{color:var(--p2);text-decoration:none;font-weight:800}
  tr.grp td{background:#e3edf7;font-weight:800;text-align:left;font-size:10pt}
  tr.od td{background:#fdecea;color:#b0132b;font-weight:600}tr.mo td{background:#fff4c2;font-weight:600}
 }
+
+/* ===== alignment polish ===== */
+:root{--r:14px;--pad:14px}
+/* unified chevron */
+.chev{font-size:0!important;width:22px;height:22px;flex:none;display:flex;align-items:center;justify-content:center;transform:none!important;transition:none!important}
+.chev::before{content:"";width:8px;height:8px;border-right:2.5px solid var(--p2);border-bottom:2.5px solid var(--p2);transform:rotate(-45deg);transition:transform .2s;margin-left:-2px}
+.sc.open .chev::before,.dtab.open .chev::before{transform:rotate(45deg);margin:-3px 0 0}
+/* dashboard tabs */
+.dtabs{gap:10px}
+.dtab{border-radius:var(--r);border-left-width:5px}
+.dth{min-height:58px;padding:10px var(--pad);gap:12px}
+.dth i{width:36px;height:36px;border-radius:10px;background:color-mix(in srgb,var(--tc) 12%,#fff);display:flex;align-items:center;justify-content:center;font-size:18px}
+.dth b{min-width:38px;height:28px;padding:0 9px;border-radius:14px;background:color-mix(in srgb,var(--tc) 12%,#fff);display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1}
+.dtb{padding:10px}
+.dtb .pc:last-child,.scb .pc:last-child{margin-bottom:8px}
+/* sub centre cards */
+.scgrid{grid-template-columns:1fr 1fr;gap:10px}
+.scgrid .scc:last-child:nth-child(odd){grid-column:1/-1}
+.scc{border-radius:var(--r);padding:12px var(--pad);min-height:64px;justify-content:center;gap:3px;border-left:5px solid var(--p2);cursor:pointer}
+.scc b{font-size:13.5px;letter-spacing:.2px;padding-right:46px}
+.scc em{top:50%;right:var(--pad);transform:translateY(-50%)}
+/* sub centre accordion (follow-up / completed) */
+.sc{border-radius:var(--r);border-left:5px solid var(--p2)}
+.sch{min-height:62px;padding:10px var(--pad);gap:12px}
+.sct b{font-size:14.5px;line-height:1.25}.sct small{display:block;margin-top:2px}
+.scb{padding:10px}
+/* patient cards */
+.pc{border-radius:12px;padding:11px 12px;gap:12px;min-height:62px}
+.pc .ck{flex:none}
+.pnx{min-width:92px;max-width:none;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:2px}
+.pnx b{white-space:nowrap}
+.pnm{overflow-wrap:anywhere}
+/* follow-up toolbar */
+.tb1{display:flex;align-items:center;gap:10px}
+.tb1 label{margin:0;display:flex;align-items:center;gap:8px;flex:none;width:auto;text-transform:none;letter-spacing:0;font-size:13px;color:var(--txt)}
+.tb1 select{flex:1;width:auto;min-width:0}
+.tb2{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:10px 12px;background:#f5f8fb;border:1px solid var(--line);border-radius:12px}
+.tb2 label{margin:0;display:flex;align-items:center;gap:10px;text-transform:none;letter-spacing:0;font-size:14px;font-weight:700;color:var(--txt);line-height:1}
+.tb2 .muted{font-weight:600}
+.tb3{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.tb3 button{width:100%;min-height:46px;padding:11px 8px;font-size:14px}
+.tb4{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tb4 button{min-width:0;padding:11px 6px;font-size:13.5px;white-space:nowrap}
+/* expandable cards (settings) */
+details.card{padding:0;overflow:hidden;border-radius:var(--r)}
+details.card>summary{list-style:none;display:flex;align-items:center;gap:8px;min-height:54px;padding:12px var(--pad);font-size:14px}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary::before{content:"";width:4px;height:16px;border-radius:3px;background:linear-gradient(var(--saf),var(--ok));flex:none}
+details.card>summary::after{content:"";margin-left:auto;width:8px;height:8px;border-right:2.5px solid var(--p2);border-bottom:2.5px solid var(--p2);transform:rotate(-45deg);transition:transform .2s;flex:none;margin-right:7px}
+details.card[open]>summary::after{transform:rotate(45deg) translate(-2px,-2px)}
+details.card[open]>summary{margin-bottom:0;border-bottom:1px solid var(--line)}
+details.card>*:not(summary){margin-left:var(--pad)!important;margin-right:var(--pad)!important}
+details.card>summary+*{margin-top:12px!important}
+details.card>.muted{margin-bottom:6px!important}
+details.card>*:last-child{margin-bottom:var(--pad)}
+/* worker rows */
+.wrow{display:grid;grid-template-columns:30px 112px 1fr;align-items:center;gap:10px;padding:10px 0}
+.wf{display:contents}
+.wf b{margin:0;font-size:12.5px;letter-spacing:.2px;overflow-wrap:anywhere}
+.wf input{min-width:0;padding:10px 12px}
+.card .ct{min-height:20px}
+.st2{margin:18px 4px 10px}
+.srch{margin-bottom:12px}
 </style></head><body>
 <div id="splash">
  <div class="sp-bg"></div><div class="sp-dots"><i></i><i></i><i></i><i></i></div>
@@ -185,31 +257,28 @@ a.tel{color:var(--p2);text-decoration:none;font-weight:800}
 <!-- ================= DASHBOARD ================= -->
 <section id="pg_dash" class="page noprint">
  <div class="hero"><div><small>NATIONAL TB ELIMINATION PROGRAMME</small><h2>TB Harega, Desh Jeetega</h2><p>Follow-up monitoring · PHC Pransli</p></div><div class="hl"><img src="logo.png" alt=""></div></div>
- <div class="tiles" id="tiles"></div>
- <div class="st2">Sub centre wise <small class="muted">tap to open follow-up</small></div>
- <div class="scgrid" id="scgrid"></div>
- <div class="st2"><span id="dtitle">Patients</span></div>
  <div class="srch"><input id="q" type="search" placeholder="Search name / Nikshay ID / village / mobile" oninput="renderDash()"></div>
- <div id="dlist"></div>
+ <div id="sres"><div class="st2"><span id="dtitle"></span></div><div id="dlist"></div></div>
+ <div class="dtabs" id="tiles"></div>
+ <div class="st2">Sub centre wise</div>
+ <div class="scgrid" id="scgrid"></div>
 </section>
 
 <!-- ================= FOLLOW-UP ================= -->
 <section id="pg_fup" class="page">
  <div class="noprint">
   <div class="card"><div class="ct">Follow-up Sheet</div>
-   <div class="muted" style="margin:-4px 0 10px">Annexure 04 · Monitoring sheet of follow-up sputum examination (DS/DR-TB cases). Tap a sub centre to see its patients.</div>
-   <div class="bar">
+   <div class="muted" style="margin:-4px 0 10px">Annexure 04 · Monitoring sheet of follow-up sputum examination (DS/DR-TB cases).</div>
+   <div class="tb1">
     <label>Order:
      <select id="sort" style="width:auto" onchange="render()"><option value="next">By next follow-up date</option><option value="name">By name (A-Z)</option><option value="start">By treatment start date</option></select></label>
    </div>
-   <div class="bar" style="margin-top:10px">
+   <div class="tb2">
     <label><input type="checkbox" onchange="selAll(this.checked)"> Select all ✔</label>
     <span id="selA" class="muted">0 selected</span>
-    <button class="gray" style="padding:7px 12px;font-size:12px" onclick="expAll(false,true)">Expand all</button>
-    <button class="gray" style="padding:7px 12px;font-size:12px" onclick="expAll(false,false)">Collapse all</button>
    </div>
-   <div class="bar" style="margin-top:12px"><button class="green" onclick="inform()" style="flex:1 1 100%">INFORM PATIENT AND WORKER</button>
-    <button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div>
+   <div class="tb3"><button class="green" onclick="inform()">INFORM PATIENT AND WORKER</button>
+    <div class="tb4"><button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div></div>
   </div>
   <div id="scr"></div>
  </div>
@@ -248,14 +317,12 @@ a.tel{color:var(--p2);text-decoration:none;font-weight:800}
 <section id="pg_done" class="page">
  <div class="noprint">
   <div class="card"><div class="ct">Treatment Completed</div>
-   <div class="muted" style="margin:-4px 0 10px">6 / 12 / 18 / 24 month follow-ups after treatment. Tap a sub centre to see its patients.</div>
+   <div class="muted" style="margin:-4px 0 10px">6 / 12 / 18 / 24 month follow-ups after treatment.</div>
    <div class="bar">
     <label><input type="checkbox" onchange="selAllDone(this.checked)"> Select all ✔</label><span id="selD" class="muted">0 selected</span>
-    <button class="gray" style="padding:7px 12px;font-size:12px" onclick="expAll(true,true)">Expand all</button>
-    <button class="gray" style="padding:7px 12px;font-size:12px" onclick="expAll(true,false)">Collapse all</button>
    </div>
-   <div class="bar" style="margin-top:12px"><button class="green" onclick="inform(true)" style="flex:1 1 100%">INFORM PATIENT AND WORKER</button>
-    <button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div>
+   <div class="tb3"><button class="green" onclick="inform(true)">INFORM PATIENT AND WORKER</button>
+    <div class="tb4"><button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div></div>
   </div>
   <div id="dn"></div>
  </div>
@@ -264,7 +331,7 @@ a.tel{color:var(--p2);text-decoration:none;font-weight:800}
 
 <!-- ================= SETTINGS ================= -->
 <section id="pg_set" class="page noprint">
- <div class="card"><div class="ct">Worker Mobile Numbers</div><div class="muted" style="margin:-4px 0 6px">Sub centre wise – used for sending SMS to workers.</div><div id="wk"></div></div>
+ <details class="card"><summary>Worker Mobile Numbers</summary><div class="muted" style="margin:-4px 0 6px">Sub centre wise – used for sending SMS to workers.</div><div id="wk"></div></details>
  <div class="card"><div class="ct">Backup &amp; Restore</div>
   <div class="bar"><button onclick="backup()">⬇ Download Backup</button><button class="gray" onclick="$('rf').click()">⬆ Restore Backup</button><input id="rf" type="file" accept=".json" style="display:none" onchange="restore(this)"></div>
   <div id="saved" style="margin-top:8px"></div>
@@ -380,7 +447,7 @@ function unext(i){delete P[i].extUntil;save();render()}
 const monthly=(i,p,d,hi)=>d.mo?d.mo.map((dt,k)=>`<div class="${hi('mo'+(k+1))}"><span>MONTH ${k+1} FOLLOW-UP – due ${f(dt,1)}</span>${dp(p['mo'+(k+1)+'d'],`setAct(${i},'mo${k+1}d',this)`,todayISO())}</div>`).join(''):'';
 /* ===== NEW UI ===== */
 const NAVS=['dash','fup','add','done','set'];
-let CUR=null,CURPG='dash',DF='all',OPENSC={};
+let CUR=null,CURPG='dash',DF='',OPENSC={};
 const T0=()=>{const t=new Date();t.setHours(0,0,0,0);return t};
 const dayDiff=d=>Math.floor((d-T0())/864e5);
 const E=v=>esc(v==null?'':v);
@@ -398,7 +465,7 @@ function pcard(i,dn,chk){const p=P[i],nx=dn?nxtDone(p):nxt(p),tmr=addD(T0(),1);
  return `<div class="pc ${st} ${SEL[i]?'sel':''}">${chk?`<label class="ck"><input type="checkbox" ${SEL[i]?'checked':''} onchange="SEL[${i}]=this.checked;render()"></label>`:''}<div class="pbody" onclick="openP(${i})"><div class="pnm">${E(p.name)}</div><div class="pmeta">${meta}</div></div><div class="pnx" onclick="openP(${i})">${right}</div></div>`}
 /* ---- dashboard ---- */
 const TLB={all:'Active patients',due:'Follow-up due today / overdue',week:'Follow-up in next 7 days',done:'Treatment completed',mdr:'MDR patients (active)',ep:'EP TB patients (active)'};
-function setDF(k){DF=(DF===k&&k!=='all')?'all':k;$('q').value='';renderDash()}
+function setDF(k){DF=(DF===k)?'':k;renderDash()}
 function dashFilter(i){const p=P[i],dn=isDone(p);if(DF==='done')return dn;if(dn)return false;
  const nx=nxt(p),tmr=addD(T0(),1);
  if(DF==='due')return !!nx&&nx.d<tmr;if(DF==='week')return !!nx&&nx.d>=tmr&&nx.d<addD(tmr,7);
@@ -406,16 +473,16 @@ function dashFilter(i){const p=P[i],dn=isDone(p);if(DF==='done')return dn;if(dn)
 function renderDash(){const tmr=addD(T0(),1),w7=addD(tmr,7);let act=0,due=0,wk=0,dn=0,mdr=0,ep=0;
  P.forEach(p=>{if(isDone(p)){dn++;return}act++;const nx=nxt(p);if(nx){if(nx.d<tmr)due++;else if(nx.d<w7)wk++}if(isMDR(p))mdr++;if(isEP(p))ep++});
  const TL=[['all','👥',act,'Active patients','b'],['due','⏰',due,'Due today / overdue','r'],['week','📅',wk,'Next 7 days','a'],['done','✅',dn,'Completed','g'],['mdr','💊',mdr,'MDR (active)','p'],['ep','🩺',ep,'EP TB (active)','t']];
- $('tiles').innerHTML=TL.map(x=>`<button class="tile ${x[4]} ${DF===x[0]?'on':''}" onclick="setDF('${x[0]}')"><i>${x[1]}</i><b>${x[2]}</b><span>${x[3]}</span></button>`).join('');
+ const bodyOf=k=>{const sv=DF;DF=k;let ix=P.map((_,i)=>i).filter(dashFilter);DF=sv;const kf=i=>{const p=P[i],nx=isDone(p)?nxtDone(p):nxt(p);return nx?nx.d.getTime():9e15};if(k==='done')ix.sort((a,b)=>P[a].name<P[b].name?-1:1);else ix.sort((a,b)=>kf(a)-kf(b));return ix.length?ix.map(i=>pcard(i,isDone(P[i]),false)).join(''):'<div class="empty">No patients found</div>'};
+ $('tiles').innerHTML=TL.map(x=>`<div class="dtab ${x[4]}${DF===x[0]?' open':''}"><button class="dth" onclick="setDF('${x[0]}')"><i>${x[1]}</i><span>${x[3]}</span><b>${x[2]}</b><em class="chev" style="font-style:normal">›</em></button><div class="dtb">${DF===x[0]?bodyOf(x[0]):''}</div></div>`).join('');
  const gs=groups(false);
  $('scgrid').innerHTML=gs.length?gs.map(g=>{let od=0;g.idx.forEach(i=>{const nx=nxt(P[i]);if(nx&&nx.d<tmr)od++});return `<button class="scc" data-k="${esc('a|'+g.n)}" onclick="goSC(this.dataset.k)"><b>${grpLabel(g.n)}</b><span>${g.idx.length} active</span>${od?`<em>${od} due</em>`:''}</button>`}).join(''):'<div class="empty" style="grid-column:1/-1">No active patients</div>';
  const q=($('q').value||'').trim().toLowerCase();
- let idx=P.map((_,i)=>i);
- if(q)idx=idx.filter(i=>{const p=P[i];return [p.name,p.id,p.village,p.phone,p.sc].join(' ').toLowerCase().includes(q)});else idx=idx.filter(dashFilter);
- const key=i=>{const p=P[i],nx=isDone(p)?nxtDone(p):nxt(p);return nx?nx.d.getTime():9e15};
- if(DF==='done'&&!q)idx.sort((a,b)=>P[a].name<P[b].name?-1:1);else idx.sort((a,b)=>key(a)-key(b));
- $('dtitle').textContent=(q?'Search results':TLB[DF])+' ('+idx.length+')';
- $('dlist').innerHTML=idx.length?idx.map(i=>pcard(i,isDone(P[i]),false)).join(''):'<div class="empty">No patients found</div>'}
+ $('sres').style.display=q?'':'none';
+ if(q){let idx=P.map((_,i)=>i).filter(i=>{const p=P[i];return [p.name,p.id,p.village,p.phone,p.sc].join(' ').toLowerCase().includes(q)});
+  const key=i=>{const p=P[i],nx=isDone(p)?nxtDone(p):nxt(p);return nx?nx.d.getTime():9e15};idx.sort((a,b)=>key(a)-key(b));
+  $('dtitle').textContent='Search results ('+idx.length+')';
+  $('dlist').innerHTML=idx.length?idx.map(i=>pcard(i,isDone(P[i]),false)).join(''):'<div class="empty">No patients found</div>'}}
 function goSC(k){OPENSC[k]=true;pg('fup');setTimeout(()=>{const e=[...document.querySelectorAll('#scr .sch')].find(x=>x.dataset.k===k);if(e)e.scrollIntoView({behavior:'smooth',block:'start'})},60)}
 /* ---- sub centre accordion lists ---- */
 function togSC(k){OPENSC[k]=!OPENSC[k];document.querySelectorAll('.sch').forEach(e=>{if(e.dataset.k===k)e.parentNode.classList.toggle('open',!!OPENSC[k])})}
@@ -424,8 +491,8 @@ function selSC(k,v){const dn=k[0]==='d',n=k.slice(2);groups(dn).filter(g=>g.n===
 function mkList(dn){const tmr=addD(T0(),1);let cnt=0,ovn=0;
  const h=groups(dn).map(g=>{const key=(dn?'d|':'a|')+g.n;let od=0;
   const cards=g.idx.map(i=>{cnt++;const p=P[i],nx=dn?nxtDone(p):nxt(p),st=dn?stOf(p):((nx&&nx.d<tmr)?'od':'');if(st==='od'){od++;ovn++}return pcard(i,dn,true)}).join('');
-  const all=g.idx.every(i=>SEL[i]);
-  return `<div class="sc${OPENSC[key]?' open':''}"><div class="sch" data-k="${esc(key)}" onclick="togSC(this.dataset.k)"><label class="ck" onclick="event.stopPropagation()"><input type="checkbox" ${all?'checked':''} data-k="${esc(key)}" onchange="selSC(this.dataset.k,this.checked)"></label><div class="sct"><b>${grpLabel(g.n)}</b><small>${g.idx.length} patient${g.idx.length>1?'s':''}${od?` · <u>${od} ${dn?'overdue':'due'}</u>`:''}</small></div><span class="chev">›</span></div><div class="scb">${cards}</div></div>`}).join('');
+  
+  return `<div class="sc${OPENSC[key]?' open':''}"><div class="sch" data-k="${esc(key)}" onclick="togSC(this.dataset.k)"><div class="sct"><b>${grpLabel(g.n)}</b><small>${g.idx.length} patient${g.idx.length>1?'s':''}${od?` · <u>${od} ${dn?'overdue':'due'}</u>`:''}</small></div><span class="chev">›</span></div><div class="scb">${cards}</div></div>`}).join('');
  return{h:h||'<div class="empty">No patients</div>',cnt,ovn}}
 function render(){const a=mkList(false),b=mkList(true),tmr=new Date();tmr.setHours(0,0,0,0);
  $('scr').innerHTML=a.h;$('dn').innerHTML=b.h;
