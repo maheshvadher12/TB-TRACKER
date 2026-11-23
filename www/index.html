@@ -1,153 +1,303 @@
 <!DOCTYPE html>
-<html lang="gu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0f3d63"><script src="native-shim.js"></script><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<html lang="gu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b2f4e"><script src="native-shim.js"></script>
 <title>TB Follow-up Tracker – PHC Pransli</title>
 <style>
-:root{--p:#0f3d63;--p2:#1d6fa5;--bg:#eef2f7;--line:#d5dee8;--ok:#1e8449;--bad:#c0392b;--txt:#1b2733}
-*{box-sizing:border-box}
+:root{--p:#0f3d63;--p2:#1d6fa5;--pd:#0b2f4e;--bg:#f1f5f9;--line:#e1e8ef;--ok:#138808;--bad:#d92d20;--warn:#f59e0b;--saf:#ff9933;--txt:#16222e;--mut:#64748b;--sh:0 1px 2px rgba(15,61,99,.06),0 6px 18px rgba(15,61,99,.07)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 @page{size:A4 landscape;margin:7mm}
-body{font-family:"Segoe UI",Roboto,"Noto Sans Gujarati",Shruti,Arial,sans-serif;margin:0;background:var(--bg);color:var(--txt);font-size:14px}
-header{background:linear-gradient(135deg,#0b2f4e,#1d6fa5);color:#fff;text-align:center;padding:16px 12px 14px}
-header h1{margin:0;font-size:28px}
-header div{font-size:12px;letter-spacing:2.5px;opacity:.92;margin-top:6px}
-.d3w{font-weight:800;letter-spacing:.5px;text-shadow:1px 1px 0 #3d79a6,2px 2px 0 #2c628c,3px 3px 0 #1d4a6e,4px 5px 8px #0007}
-.d3{display:inline-block;margin-top:4px;color:var(--p);font-size:15px;font-weight:800;text-shadow:1px 1px 0 #b7cde2,2px 2px 0 #92b2d0,3px 3px 3px #0003}
-.tabs{display:flex;gap:6px;padding:10px 12px 0;background:var(--bg);position:sticky;top:0;z-index:5;flex-wrap:wrap;border-bottom:2px solid var(--line)}
-.tabs button{background:#dde6f0;color:var(--p);border-radius:10px 10px 0 0;box-shadow:none;font-weight:700;padding:10px 16px;margin-bottom:-2px;border-bottom:2px solid var(--line)}
-.tabs button.on{background:#fff;color:var(--p2);border:2px solid var(--line);border-bottom:2px solid #fff;box-shadow:0 -3px 0 var(--p2) inset}
-main{padding:12px;max-width:1160px;margin:0 auto}
-.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 2px #0001,0 4px 12px #0000000d}
-.card>b{display:block;font-size:16px;color:var(--p);margin-bottom:10px}
-details.card summary{cursor:pointer;font-weight:700;font-size:16px;color:var(--p)}details.card[open] summary{margin-bottom:10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-label{display:block;font-size:11px;font-weight:700;color:#4a5b6c;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
-input,select,textarea{width:100%;padding:9px 10px;border:1px solid #b9c7d6;border-radius:8px;background:#fff;font:inherit;color:inherit}
-input:focus,select:focus,textarea:focus{outline:2px solid #9cc6e6;border-color:var(--p2)}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Gujarati",Shruti,Arial,sans-serif;overscroll-behavior:none}
+body.noscroll{overflow:hidden}
+h1,h2,p{margin:0}
+/* ---------- splash ---------- */
+#splash{position:fixed;inset:0;z-index:100;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .6s ease,transform .6s ease}
+#splash.out{opacity:0;transform:scale(1.07);pointer-events:none}
+.sp-bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 36%,#fff3c4 0,#fff 58%)}
+.sp-dots i{position:absolute;width:10px;height:10px;border-radius:50%;opacity:0;animation:float 4s ease-in-out infinite}
+.sp-dots i:nth-child(1){left:12%;top:18%;background:var(--saf)}.sp-dots i:nth-child(2){right:14%;top:24%;background:var(--ok);animation-delay:.6s}
+.sp-dots i:nth-child(3){left:20%;bottom:22%;background:var(--ok);animation-delay:1.2s}.sp-dots i:nth-child(4){right:18%;bottom:26%;background:var(--saf);animation-delay:1.8s}
+@keyframes float{0%{opacity:0;transform:translateY(20px) scale(.5)}40%{opacity:.7}100%{opacity:0;transform:translateY(-40px) scale(1.4)}}
+.sp-logo{position:relative;width:min(58vw,250px);aspect-ratio:1;animation:logoIn 1.1s cubic-bezier(.2,1.3,.4,1) both}
+.sp-logo img{width:100%;height:100%;display:block;border-radius:50%;box-shadow:0 10px 40px rgba(15,61,99,.22)}
+.sp-logo::before,.sp-logo::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--saf);opacity:0;animation:ring 2.4s ease-out .7s infinite}
+.sp-logo::after{border-color:var(--ok);animation-delay:1.5s}
+@keyframes logoIn{from{opacity:0;transform:scale(.35) rotate(-140deg)}to{opacity:1;transform:none}}
+@keyframes ring{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(1.6)}}
+.sp-t{position:relative;margin-top:28px;text-align:center;font-weight:900;letter-spacing:2px;font-size:clamp(24px,8vw,38px);line-height:1.18}
+.sp-t i{display:inline-block;font-style:normal;opacity:0;transform:translateY(34px) scale(.5);animation:pop .55s cubic-bezier(.2,1.7,.4,1) forwards}
+.sp-t .wd{display:inline-block;margin:0 .16em}
+@keyframes pop{to{opacity:1;transform:none}}
+.sp-rib{position:relative;width:min(70vw,300px);height:6px;margin:16px auto 0;border-radius:6px;overflow:hidden;display:flex;transform:scaleX(0);animation:grow .8s ease-out 2.1s forwards}
+.sp-rib i{flex:1}.sp-rib i:nth-child(1){background:var(--saf)}.sp-rib i:nth-child(2){background:#dfe6ee}.sp-rib i:nth-child(3){background:var(--ok)}
+@keyframes grow{to{transform:scaleX(1)}}
+.sp-g{position:relative;margin-top:12px;font-size:17px;color:var(--p);font-weight:700;opacity:0;animation:fade .8s ease 2.4s forwards}
+.sp-s{position:relative;margin-top:6px;font-size:10.5px;letter-spacing:2px;color:#6b7c8d;text-transform:uppercase;opacity:0;animation:fade .8s ease 2.6s forwards;text-align:center;padding:0 20px}
+.sp-bar{position:absolute;bottom:8%;left:50%;width:150px;margin-left:-75px;height:4px;background:#e5ebf2;border-radius:4px;overflow:hidden}
+.sp-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--saf),var(--p2),var(--ok));animation:load 3.3s ease-in-out forwards}
+@keyframes load{to{width:100%}}@keyframes fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.sp-logo,.sp-logo::before,.sp-logo::after,.sp-t i,.sp-rib,.sp-g,.sp-s,.sp-dots i{animation-duration:.01s!important;animation-delay:0s!important}}
+/* ---------- layout ---------- */
+.top{background:linear-gradient(135deg,var(--pd),var(--p2));color:#fff;padding:calc(env(safe-area-inset-top,0px) + 12px) 16px 22px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:0 0 24px 24px}
+.brand{display:flex;gap:12px;align-items:center;min-width:0}
+.badge{width:46px;height:46px;border-radius:50%;background:#fff;padding:2px;box-shadow:0 2px 8px #0005;flex:none}
+.badge img{width:100%;height:100%;border-radius:50%;display:block}
+.top h1{font-size:17px;font-weight:800;letter-spacing:.2px;line-height:1.2}
+.top small{display:block;opacity:.85;font-size:11.5px;letter-spacing:.4px}
+.dt{font-size:11px;text-align:right;opacity:.92;line-height:1.35;flex:none}.dt b{font-size:12.5px}
+main{max-width:880px;margin:-10px auto 0;padding:14px 12px 120px}
+.page{display:none}.page.on{display:block;animation:pgin .25s ease}
+@keyframes pgin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:#fff;border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:var(--sh);border:1px solid var(--line)}
+.ct{font-weight:800;color:var(--p);font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ct::before{content:"";width:4px;height:16px;border-radius:3px;background:linear-gradient(var(--saf),var(--ok))}
+.st2{font-weight:800;color:var(--p);font-size:14px;margin:16px 4px 8px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.muted{color:var(--mut);font-size:12.5px}
+.empty{text-align:center;color:var(--mut);padding:26px 10px;background:#fff;border:1px dashed #cdd8e3;border-radius:16px}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(135deg,#ffd84d,#ffb300);color:var(--pd);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 8px 22px rgba(255,179,0,.35)}
+.hero small{font-size:10px;font-weight:800;letter-spacing:1.2px;opacity:.8}
+.hero h2{font-size:20px;font-weight:900;line-height:1.2;margin:3px 0}
+.hero p{font-size:12px;font-weight:600;opacity:.85}
+.hero .hl{width:64px;height:64px;border-radius:50%;background:#fff;padding:2px;flex:none;box-shadow:0 3px 10px #0003}
+.hero .hl img{width:100%;height:100%;border-radius:50%;display:block}
+/* ---------- tiles / lists ---------- */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;background:#fff;color:var(--txt);border:1.5px solid var(--line);border-radius:16px;padding:11px 10px 10px 14px;box-shadow:var(--sh);position:relative;overflow:hidden;min-width:0}
+.tile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--tc)}
+.tile i{font-style:normal;font-size:17px}.tile b{font-size:25px;line-height:1.1;color:var(--tc)}
+.tile span{font-size:10.5px;color:var(--mut);font-weight:700;line-height:1.2}
+.tile.on{border-color:var(--tc);box-shadow:0 0 0 2px var(--tc) inset,var(--sh);background:#fbfdff}
+.tile.b{--tc:#1d6fa5}.tile.r{--tc:#d92d20}.tile.a{--tc:#d97706}.tile.g{--tc:#138808}.tile.p{--tc:#7c3aed}.tile.t{--tc:#0891b2}
+.scgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
+.scc{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;background:#fff;color:var(--p);border:1px solid var(--line);border-radius:14px;padding:11px 12px;box-shadow:var(--sh);position:relative}
+.scc b{font-size:13.5px}.scc span{font-size:11.5px;color:var(--mut);font-weight:600}
+.scc em{position:absolute;top:10px;right:10px;font-style:normal;background:var(--bad);color:#fff;border-radius:10px;padding:1px 7px;font-size:10.5px;font-weight:800}
+.pc{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--p2);border-radius:14px;padding:10px 12px;margin-bottom:8px;box-shadow:0 1px 2px rgba(15,61,99,.05)}
+.pc.od{border-left-color:var(--bad);background:#fff7f6}.pc.mo{border-left-color:var(--warn);background:#fffbeb}.pc.sel{background:#ecfdf3;border-left-color:var(--ok)}
+.pbody{flex:1;min-width:0;cursor:pointer}.pnm{font-weight:800;color:var(--p);font-size:14.5px;line-height:1.25}
+.pmeta{font-size:12px;color:var(--mut);margin-top:1px}
+.pnx{text-align:right;flex:none;max-width:42%;cursor:pointer}.pnx b{display:block;font-size:13px}.pnx span{font-size:10.5px;color:var(--mut);font-weight:700}
+.pc.od .pnx b{color:var(--bad)}
+.sc{background:#fff;border:1px solid var(--line);border-radius:16px;margin-bottom:10px;box-shadow:var(--sh);overflow:hidden}
+.sch{display:flex;align-items:center;gap:10px;padding:13px 12px;cursor:pointer}
+.sct{flex:1;min-width:0}.sct b{display:block;color:var(--p);font-size:15px}.sct small{color:var(--mut);font-size:12px}.sct u{color:var(--bad);font-weight:800;text-decoration:none}
+.chev{font-size:26px;color:var(--p2);transition:transform .2s;line-height:1}.sc.open .chev{transform:rotate(90deg)}
+.scb{display:none;padding:10px 10px 4px;background:#f8fafc;border-top:1px solid var(--line)}.sc.open .scb{display:block}
+.ck{display:flex;align-items:center}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.bar label{margin:0;text-transform:none;font-size:13px;display:flex;gap:6px;align-items:center;width:auto;color:var(--txt);letter-spacing:0}
+.srch{position:relative;margin-bottom:10px}.srch input{padding-left:38px;border-radius:14px;background:#fff}
+.srch::before{content:"🔍";position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.6}
+/* ---------- forms / buttons ---------- */
+label{display:block;font-size:11px;font-weight:800;color:#51647a;margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
+input,select,textarea{width:100%;padding:11px 12px;border:1.5px solid #cfd9e4;border-radius:12px;background:#fbfdff;font:inherit;color:inherit}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--p2);box-shadow:0 0 0 3px rgba(29,111,165,.18)}
 input:disabled,select:disabled{background:#eef2f6;color:#8896a5}
-input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ok)}
-button,a.btn{border:0;border-radius:8px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;background:var(--p2);color:#fff;text-decoration:none;display:inline-block;box-shadow:0 2px 0 #0004}
-button:hover{filter:brightness(1.08)}button:active{transform:translateY(1px);box-shadow:none}
-.green{background:var(--ok)}.gray{background:#5d6b7a}.red{background:var(--bad);padding:6px 10px}
-.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
-.bar label{margin:0;text-transform:none;font-size:13px;display:flex;gap:6px;align-items:center;width:auto}
-#msg,#saved{font-size:12px;color:#4a5b6c}
-.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-.chip{background:#fff;border:1px solid var(--line);border-left:5px solid var(--p2);border-radius:10px;padding:8px 16px;min-width:130px}
-.chip b{display:block;font-size:22px;color:var(--p)}.chip span{font-size:11px;color:#556;text-transform:uppercase;letter-spacing:.4px}
-.chip.r{border-left-color:var(--bad)}.chip.r b{color:var(--bad)}.chip.g{border-left-color:var(--ok)}
-.sheet{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin:0 auto 12px;box-shadow:0 1px 2px #0001,0 4px 12px #0000000d;overflow-x:auto}
-.sheet h2{text-align:center;font-size:13px;line-height:1.7;margin:0 0 12px;color:#333}
-table{border-collapse:separate;border-spacing:0;width:100%;font-size:13px}
-th{background:var(--p);color:#fff;padding:10px 8px;font-size:11px;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;text-align:center}
-th:first-child{border-radius:8px 0 0 0}th:last-child{border-radius:0 8px 0 0}
-td{padding:9px 8px;border-bottom:1px solid #e6ecf2;text-align:center;white-space:nowrap}
-td.l,td.nm{text-align:left;white-space:normal}
-tbody tr:hover td{background:#f4f8fc}
-td.nm{cursor:pointer;color:var(--p2);font-weight:700}
-tr.grp td{background:#e3edf7;color:var(--p);font-weight:800;text-align:left;font-size:13px;white-space:normal;border-bottom:2px solid var(--p2)}
-tr.det td{background:#f6f9fc;text-align:left;padding:10px;white-space:normal}
-tr.sel td{background:#e1f5e9}
-tr.od td{background:#fdecea;color:#b0132b;font-weight:600}tr.od td.nm{color:#b0132b}
-td.nx{background:#fff4c2;font-weight:700}
-.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
-.dg>div{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;font-size:13px;text-align:left;white-space:normal;word-break:keep-all}
-.dg span{display:block;font-size:10px;color:#667;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
-.dg .nx{background:#fff4c2;font-weight:700}.dg .nx.due{background:#f7c6c0;color:#900}
-.dg input{padding:6px 8px;font-size:13px}
-.wt input{max-width:260px;text-align:center}
-.dp{position:relative;display:block}.dp input[type=text]{cursor:pointer;background:#fff;padding-right:30px}
-.dp::after{content:"📅";position:absolute;right:9px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:14px}
+input[type=checkbox]{width:20px;height:20px;padding:0;accent-color:var(--ok);box-shadow:none}
+button,a.btn{border:0;border-radius:12px;padding:11px 16px;font:inherit;font-weight:700;cursor:pointer;background:var(--p2);color:#fff;text-decoration:none;display:inline-block;text-align:center}
+button:active,a.btn:active{transform:scale(.97)}
+.green{background:var(--ok)}.gray{background:#5d6b7a}.red{background:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.fsec{font-size:11px;font-weight:800;color:var(--p2);letter-spacing:.8px;margin:14px 0 8px;text-transform:uppercase}
+#msg,#saved{font-size:12.5px;color:var(--mut)}
+.dp{position:relative;display:block}.dp input[type=text]{cursor:pointer;background:#fff;padding-right:32px}
+.dp::after{content:"📅";position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:14px}
 .dpi{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;padding:0;border:0}
-#prt{display:none}
-#modal{display:none;position:fixed;inset:0;background:#0009;padding:14px;overflow:auto;z-index:20}#modal .card{max-width:660px;margin:auto}
-.item{border-bottom:1px solid #e1e8ef;padding:10px 0}.item pre{white-space:pre-wrap;font-family:inherit;font-size:13px;background:#f3f6fa;padding:8px;border-radius:8px}.done{opacity:.45}
-tr.mo td{background:#fff4c2;font-weight:600}
-#dprt{display:none}
-#dlg{display:none;position:fixed;inset:0;background:#0009;z-index:40;align-items:center;justify-content:center;padding:14px}#dlg .card{width:100%;max-width:420px;margin:0}
-.sec{margin-bottom:14px}.sec>b{display:block;font-size:15px;color:var(--p);margin-bottom:4px}details summary{cursor:pointer;font-weight:600;margin:6px 0}.warn{color:var(--bad)}
-@media (max-width:700px){
- body{font-size:15px}header h1{font-size:20px}header{padding:12px 8px}header div{font-size:10px}main{padding:8px}
- .tabs{padding:8px 8px 0;gap:4px}.tabs button{flex:1 1 45%;font-size:12px;padding:9px 6px;border-radius:10px}
- .tabs button.on{border-bottom:2px solid var(--line)}
- .card{padding:12px}input,select,textarea{font-size:16px}button,a.btn{padding:12px 14px}.bar>*{flex:1 1 auto}.btns button{padding:9px 10px!important}
- .sheet{padding:6px;border:0;box-shadow:none;background:transparent}.sheet h2{font-size:11px}.d3{font-size:12px}
- #scr table,#scr tbody,#scr tr,#scr td,#dn table,#dn tbody,#dn tr,#dn td{display:block;width:100%;min-width:0!important}
- #scr thead,#dn thead{display:none}
- #scr tr,#dn tr{position:relative;border:1px solid var(--line);border-radius:12px;margin:8px 0;background:#fff;padding:8px 10px;box-shadow:0 1px 2px #0001}
- #scr td,#dn td{border:0;text-align:left;padding:3px 0;background:transparent!important;white-space:normal}
- #scr td[data-l]::before,#dn td[data-l]::before{content:attr(data-l) ': ';font-weight:700;color:#667;font-size:12px}
- #scr td[data-l=SR],#dn td[data-l=SR]{display:none}
- #scr td.nm,#dn td.nm{font-size:16px;padding-right:34px}
- #scr td:first-child:not([data-l]),#dn td:first-child:not([data-l]){position:absolute;top:10px;right:10px;width:auto}
- #scr tr.grp,#dn tr.grp{background:#e3edf7;border:0;padding:8px 10px}
- #scr tr.grp td,#dn tr.grp td{font-size:14px;padding:0;position:static!important;width:100%!important}
- #scr tr.sel,#dn tr.sel{background:#e1f5e9}#scr tr.od,#dn tr.od{background:#fdecea}#scr tr.od td,#dn tr.od td{color:#b0132b}#scr tr.mo,#dn tr.mo{background:#fff4c2}
- #scr tr.det,#dn tr.det{background:#f6f9fc;margin-top:-6px}
- #scr tr.det td,#dn tr.det td{padding:0;position:static!important;width:100%!important}
- #scr td.nx,#dn td.nx{font-weight:700;color:#7a5b00}
- .dg{grid-template-columns:1fr 1fr}#modal{padding:6px}.chip{flex:1 1 40%;min-width:0}
-}
+.wrow{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}.wrow:last-child{border:0}
+.wn{width:30px;height:30px;border-radius:50%;background:#e8f1fa;color:var(--p);font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;font-size:12.5px}
+.wf{flex:1;min-width:0}.wf b{display:block;font-size:13px;color:var(--p);margin-bottom:4px}
+details summary{cursor:pointer;font-weight:800;color:var(--p);font-size:14px}details[open] summary{margin-bottom:10px}
+.info{font-size:12.5px;color:var(--mut);line-height:1.6}
+/* ---------- bottom nav ---------- */
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:25;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:flex-end;padding:6px 4px calc(env(safe-area-inset-bottom,0px) + 6px);box-shadow:0 -4px 20px rgba(15,61,99,.1)}
+.bnav button{flex:1;background:none;color:#7b8a99;border-radius:12px;padding:6px 2px;font-size:10.5px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px;position:relative;min-width:0}
+.bnav svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bnav button.on{color:var(--p2)}
+.bnav button.on::after{content:"";position:absolute;top:-7px;width:26px;height:3px;border-radius:3px;background:var(--p2)}
+.bnav .add{margin-top:-24px}.bnav .add.on::after{display:none}
+.fab{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--saf),var(--warn));color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(245,158,11,.5);border:4px solid #fff}
+.bnav .fab svg{width:26px;height:26px;stroke-width:2.8;color:#fff}
+.bd{position:absolute;top:0;right:18%;background:var(--ok);color:#fff;border-radius:9px;font-size:10px;min-width:17px;padding:1px 4px;line-height:1.3}
+/* ---------- patient detail ---------- */
+#detail{position:fixed;inset:0;z-index:30;background:var(--bg);overflow-y:auto;transform:translateX(100%);transition:transform .25s ease,visibility .25s;visibility:hidden}
+#detail.on{transform:none;visibility:visible}
+.dhead{position:sticky;top:0;z-index:2;background:linear-gradient(135deg,var(--pd),var(--p2));color:#fff;display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 12px;font-size:16px}
+.dhead .back{background:rgba(255,255,255,.18);width:38px;height:38px;border-radius:50%;padding:0;font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center}
+.dbody{max-width:880px;margin:0 auto;padding:12px 12px 40px}
+.prof{display:flex;gap:14px;align-items:center}
+.av{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--warn),var(--saf));color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;flex:none}
+.prof h2{font-size:17px;color:var(--p);line-height:1.25;margin-bottom:2px}.prof p{font-size:12.5px;color:var(--mut)}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:800;background:#e0efff;color:var(--p2);margin-top:6px}
+.pill.od{background:#fde8e6;color:var(--bad)}.pill.ok{background:#dcfce7;color:var(--ok)}.pill.mo{background:#fef3c7;color:#b45309}
+.nxb{display:flex;justify-content:space-between;align-items:center;gap:10px;border-radius:16px;padding:14px 16px;margin-bottom:12px;background:linear-gradient(135deg,#eef6ff,#dcecfb);border:1px solid #bcd7f0;color:var(--p)}
+.nxb small{display:block;font-size:10.5px;font-weight:800;letter-spacing:.6px;opacity:.8}.nxb b{font-size:20px}.nxb span{font-size:12px;font-weight:800;text-align:right}
+.nxb.mo{background:linear-gradient(135deg,#fff7e0,#fff1bf);border-color:#f6df8a;color:#7a4b00}
+.nxb.od{background:linear-gradient(135deg,#fff0ee,#fde1de);border-color:#f5b5ae;color:var(--bad)}
+.nxb.ok{background:#ecfdf3;border-color:#bbe9cc;color:var(--ok)}.nxb.ok b{font-size:16px}
+.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.dg>div{border:1px solid var(--line);background:#f8fafc;border-radius:12px;padding:8px 10px;font-size:13.5px;font-weight:600;min-width:0;word-break:break-word}
+.dg span{display:block;font-size:10px;color:var(--mut);font-weight:800;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}
+.dg .nx{background:#fff4c2;border-color:#f6df8a}.dg .nx.due{background:#fde1de;border-color:#f5b5ae;color:#900}
+.dg input{padding:8px 10px;font-size:13.5px}
+a.tel{color:var(--p2);text-decoration:none;font-weight:800}
+.btns2{display:flex;flex-wrap:wrap;gap:8px}.btns2 button,.btns2 a{padding:10px 14px;font-size:13px;flex:1 1 auto}
+/* ---------- dialogs ---------- */
+#modal{display:none;position:fixed;inset:0;background:#0009;padding:14px;overflow:auto;z-index:45}#modal .card{max-width:660px;margin:auto}
+#dlg{display:none;position:fixed;inset:0;background:#0009;z-index:50;align-items:center;justify-content:center;padding:14px}#dlg .card{width:100%;max-width:420px;margin:0}
+.item{border-bottom:1px solid #e1e8ef;padding:10px 0}.item pre{white-space:pre-wrap;font-family:inherit;font-size:13px;background:#f3f6fa;padding:8px;border-radius:8px}
+.sec{margin-bottom:14px}.sec>b{display:block;font-size:15px;color:var(--p);margin-bottom:4px}.warn{color:var(--bad)}
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 92px);transform:translate(-50%,20px);background:#16222e;color:#fff;padding:10px 18px;border-radius:24px;font-weight:700;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:60}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.sheet,#prt,#dprt{display:none}
+@media (min-width:700px){.tiles{grid-template-columns:repeat(6,1fr)}.tile b{font-size:22px}}
+@media (max-width:380px){.tiles{gap:8px}.tile{padding:10px 8px 9px 12px}.tile b{font-size:22px}.top h1{font-size:15.5px}}
 @media print{
- body{background:#fff;font-size:10pt}.noprint,header,.tabs{display:none!important}main{padding:0;max-width:none}
- .sheet{border:0;box-shadow:none;padding:0;overflow:visible;border-radius:0;margin:0}.sheet h2{font-size:10.5pt;margin-bottom:6px}.d3{font-size:11.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
- table{border-collapse:collapse;font-size:8.5pt;min-width:0!important}
- th{background:var(--p)!important;color:#fff!important;border:1px solid #000;padding:3px 4px;font-size:7.5pt;border-radius:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
- td{border:1px solid #444;padding:3px 4px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
- #scr{display:none!important}#prt{display:block!important}#dn{display:none!important}#dprt{display:block!important}#dprt table{font-size:8.5pt}#prt table{font-size:9.5pt}
- #dn>div{overflow:visible!important}#dn table{font-size:7.5pt}#dn th,#dn td{padding:2px 3px}
- tr{page-break-inside:avoid}tr.grp{break-after:avoid}tr.grp td{font-size:10.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ body{background:#fff;font-size:10pt}
+ .noprint,.top,.bnav,#detail,#splash,#toast{display:none!important}
+ main{padding:0;max-width:none;margin:0}
+ .page{animation:none}
+ .sheet{display:block!important;border:0;box-shadow:none;padding:0;margin:0}
+ .sheet h2{text-align:center;font-size:10.5pt;line-height:1.6;margin-bottom:6px}
+ #prt,#dprt{display:block!important}
+ table{border-collapse:collapse;width:100%;font-size:8.5pt}
+ th{background:var(--p)!important;color:#fff!important;border:1px solid #000;padding:3px 4px;font-size:7.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ td{border:1px solid #444;padding:3px 4px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact}td.l{text-align:left}
+ tr{page-break-inside:avoid}tr.grp{break-after:avoid}
+ tr.grp td{background:#e3edf7;font-weight:800;text-align:left;font-size:10pt}
+ tr.od td{background:#fdecea;color:#b0132b;font-weight:600}tr.mo td{background:#fff4c2;font-weight:600}
 }
-.dg>div.btns{grid-column:1/-1;border:0;background:none;padding:2px 0 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.btns button{padding:6px 11px;font-size:12px;font-weight:600;border-radius:6px;box-shadow:none}
-td.ty{white-space:normal;min-width:130px;max-width:190px}
 </style></head><body>
-<header><h1 class="d3w">Primary Health Centre Pransli</h1><div style="font-size:12px;opacity:.9;letter-spacing:1px">TB FOLLOW-UP TRACKER</div></header>
-<nav class="noprint tabs"><button id="t1" onclick="pg(1)">Patient Info</button><button id="t2" onclick="pg(2)">Follow-up Sheet</button><button id="t3" onclick="pg(3)">Treatment Completed</button><button id="t4" onclick="pg(4)">Worker Numbers</button></nav>
+<div id="splash">
+ <div class="sp-bg"></div><div class="sp-dots"><i></i><i></i><i></i><i></i></div>
+ <div class="sp-logo"><img src="logo.png" alt="NTEP"></div>
+ <div class="sp-t" id="spt"></div>
+ <div class="sp-rib"><i></i><i></i><i></i></div>
+ <div class="sp-g">ટીબી હારેગા, દેશ જીતેગા</div>
+ <div class="sp-s">National TB Elimination Programme<br>PHC Pransli</div>
+ <div class="sp-bar"><i></i></div>
+</div>
+
+<header class="top noprint">
+ <div class="brand"><span class="badge"><img src="logo.png" alt=""></span><div><h1>TB Follow-up Tracker</h1><small>Primary Health Centre · Pransli</small></div></div>
+ <div class="dt" id="today"></div>
+</header>
+
 <main>
-<div id="pg1">
-<div class="card noprint"><b>Add New Patient</b>
-<div class="grid" style="margin-top:6px">
-<div><label>SC NAME (SUB CENTRE)</label><select id="f_sc" onchange="scCh(this)"></select></div>
-<div><label>VILLAGE</label><select id="f_village" onchange="vlCh(this)"></select></div>
-<div><label>NIKSHAY ID</label><input id="f_id"></div>
-<div><label>NAME OF PATIENT</label><input id="f_name"></div>
-<div><label>CONTACT NUMBER</label><input id="f_phone" inputmode="numeric"></div>
-<div><label>SITE OF CASE DEFINITION</label><select id="f_site"><option value="Microbiologically confirmed">Microbiologically confirmed</option><option value="EP TB">EP TB</option></select></div>
-<div><label>TYPE OF PATIENT</label><select id="f_type"><option>NEW</option><option>PT</option></select></div>
-<div><label>DS / MDR</label><select id="f_drug"><option value="DS">DS</option><option value="MDR">MDR</option></select></div>
-<div><label>DATE OF TREATMENT INITIATION</label><span class="dp"><input type="text" readonly placeholder="dd/mm/yyyy"><input type="date" class="dpi" id="f_start" onclick="try{this.showPicker()}catch(e){}" onchange="this.previousElementSibling.value=fromISO(this.value)"></span></div>
-</div>
-<div class="bar"><button id="addbtn" onclick="addP()">Add</button><button id="cancelbtn" class="gray" style="display:none" onclick="cancelEdit()">Cancel</button><span id="msg"></span></div></div>
+<!-- ================= DASHBOARD ================= -->
+<section id="pg_dash" class="page noprint">
+ <div class="hero"><div><small>NATIONAL TB ELIMINATION PROGRAMME</small><h2>TB Harega, Desh Jeetega</h2><p>Follow-up monitoring · PHC Pransli</p></div><div class="hl"><img src="logo.png" alt=""></div></div>
+ <div class="tiles" id="tiles"></div>
+ <div class="st2">Sub centre wise <small class="muted">tap to open follow-up</small></div>
+ <div class="scgrid" id="scgrid"></div>
+ <div class="st2"><span id="dtitle">Patients</span></div>
+ <div class="srch"><input id="q" type="search" placeholder="Search name / Nikshay ID / village / mobile" oninput="renderDash()"></div>
+ <div id="dlist"></div>
+</section>
 
+<!-- ================= FOLLOW-UP ================= -->
+<section id="pg_fup" class="page">
+ <div class="noprint">
+  <div class="card"><div class="ct">Follow-up Sheet</div>
+   <div class="muted" style="margin:-4px 0 10px">Annexure 04 · Monitoring sheet of follow-up sputum examination (DS/DR-TB cases). Tap a sub centre to see its patients.</div>
+   <div class="bar">
+    <label>Order:
+     <select id="sort" style="width:auto" onchange="render()"><option value="next">By next follow-up date</option><option value="name">By name (A-Z)</option><option value="start">By treatment start date</option></select></label>
+   </div>
+   <div class="bar" style="margin-top:10px">
+    <label><input type="checkbox" onchange="selAll(this.checked)"> Select all ✔</label>
+    <span id="selA" class="muted">0 selected</span>
+    <button class="gray" style="padding:7px 12px;font-size:12px" onclick="expAll(false,true)">Expand all</button>
+    <button class="gray" style="padding:7px 12px;font-size:12px" onclick="expAll(false,false)">Collapse all</button>
+   </div>
+   <div class="bar" style="margin-top:12px"><button class="green" onclick="inform()" style="flex:1 1 100%">INFORM PATIENT AND WORKER</button>
+    <button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div>
+  </div>
+  <div id="scr"></div>
+ </div>
+ <div class="sheet"><h2>Annexure 04 – National TB Elimination Programme<br>Monitoring sheet of follow up sputum examination (DS/DR-TB cases)<br><b>Primary Health Centre :- Pransli</b></h2><div id="prt"></div></div>
+</section>
 
-<div class="card noprint"><div class="bar" style="margin:0"><button onclick="backup()">⬇ Download Backup</button><button class="gray" onclick="$('rf').click()">⬆ Restore Backup</button><input id="rf" type="file" accept=".json" style="display:none" onchange="restore(this)"><span id="saved"></span></div></div>
+<!-- ================= ADD NEW PT ================= -->
+<section id="pg_add" class="page noprint">
+ <div class="card"><div class="ct" id="addTitle">Add New Patient</div>
+  <div class="fsec" style="margin-top:2px">Location</div>
+  <div class="grid">
+   <div><label>SC NAME (SUB CENTRE)</label><select id="f_sc" onchange="scCh(this)"></select></div>
+   <div><label>VILLAGE</label><select id="f_village" onchange="vlCh(this)"></select></div>
+  </div>
+  <div class="fsec">Patient</div>
+  <div class="grid">
+   <div><label>NIKSHAY ID</label><input id="f_id" inputmode="numeric"></div>
+   <div><label>NAME OF PATIENT</label><input id="f_name" autocapitalize="characters"></div>
+   <div><label>CONTACT NUMBER</label><input id="f_phone" inputmode="numeric" maxlength="10"></div>
+  </div>
+  <div class="fsec">Treatment</div>
+  <div class="grid">
+   <div><label>SITE OF CASE DEFINITION</label><select id="f_site"><option value="Microbiologically confirmed">Microbiologically confirmed</option><option value="EP TB">EP TB</option></select></div>
+   <div><label>TYPE OF PATIENT</label><select id="f_type"><option>NEW</option><option>PT</option></select></div>
+   <div><label>DS / MDR</label><select id="f_drug"><option value="DS">DS</option><option value="MDR">MDR</option></select></div>
+   <div><label>DATE OF TREATMENT INITIATION</label><span class="dp"><input type="text" readonly placeholder="dd/mm/yyyy"><input type="date" class="dpi" id="f_start" onclick="try{this.showPicker()}catch(e){}" onchange="this.previousElementSibling.value=fromISO(this.value)"></span></div>
+  </div>
+  <div class="bar" style="margin-top:16px"><button id="addbtn" onclick="addP()" style="flex:1 1 140px">Add Patient</button><button id="cancelbtn" class="gray" style="display:none" onclick="cancelEdit()">Cancel</button></div>
+  <div id="msg" style="margin-top:8px"></div>
+ </div>
+ <div class="st2">Recently added</div>
+ <div id="recent"></div>
+</section>
 
-<details class="card noprint"><summary>Message Templates</summary><label>Message – individual patient (with own date)</label><textarea id="tp" rows="4" onchange="saveT()"></textarea>
-<label style="margin-top:10px">Message – common for all patients (sent together)</label><textarea id="tc" rows="3" onchange="saveT()"></textarea>
-<label style="margin-top:10px">Message – worker list heading</label><textarea id="tw" rows="4" onchange="saveT()"></textarea></details>
+<!-- ================= COMPLETED ================= -->
+<section id="pg_done" class="page">
+ <div class="noprint">
+  <div class="card"><div class="ct">Treatment Completed</div>
+   <div class="muted" style="margin:-4px 0 10px">6 / 12 / 18 / 24 month follow-ups after treatment. Tap a sub centre to see its patients.</div>
+   <div class="bar">
+    <label><input type="checkbox" onchange="selAllDone(this.checked)"> Select all ✔</label><span id="selD" class="muted">0 selected</span>
+    <button class="gray" style="padding:7px 12px;font-size:12px" onclick="expAll(true,true)">Expand all</button>
+    <button class="gray" style="padding:7px 12px;font-size:12px" onclick="expAll(true,false)">Collapse all</button>
+   </div>
+   <div class="bar" style="margin-top:12px"><button class="green" onclick="inform(true)" style="flex:1 1 100%">INFORM PATIENT AND WORKER</button>
+    <button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div>
+  </div>
+  <div id="dn"></div>
+ </div>
+ <div class="sheet"><h2>Treatment Completed Patients<br><b>Primary Health Centre :- Pransli</b></h2><div id="dprt"></div></div>
+</section>
 
-</div>
-<div id="pg2" style="display:none">
-<div id="stats" class="stats noprint"></div>
-<div class="card noprint"><div class="bar" style="margin:0">
-<label style="display:flex;gap:6px;align-items:center;width:auto">Order within each sub centre:
-<select id="sort" style="width:auto" onchange="render()"><option value="next">By next follow-up date</option><option value="name">By name (A-Z)</option><option value="start">By treatment start date</option></select></label>
-<label style="display:flex;gap:6px;align-items:center;width:auto"><input type="checkbox" style="width:auto" onchange="selAll(this.checked)"> Select all ✔</label>
-</div>
-</div>
-
-<div class="sheet"><h2>Annexure 04 – National TB Elimination Programme<br>Monitoring sheet of follow up sputum examination (DS/DR-TB cases)<br><span class="d3">Primary Health Centre :- Pransli</span></h2>
-<div id="scr"></div><div id="prt"></div></div>
-<div class="card noprint"><div class="bar" style="margin:0"><button class="green" onclick="inform()">INFORM PATIENT AND WORKER</button><button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div></div>
-</div>
-<div id="pg4" style="display:none"><div class="card noprint"><b>Worker Mobile Numbers (Sub Centre wise)</b><div id="wk" style="overflow-x:auto"></div></div></div>
-<div id="pg3" style="display:none"><div class="sheet"><h2 style="margin-bottom:8px">Treatment Completed Patients<br><span class="d3">Primary Health Centre :- Pransli</span></h2><div id="dn"></div><div id="dprt"></div></div>
-<div class="card noprint"><div class="bar" style="margin:0"><label style="display:flex;gap:6px;align-items:center;width:auto"><input type="checkbox" style="width:auto" onchange="selAllDone(this.checked)"> Select all ✔</label><button class="green" onclick="inform(true)">INFORM PATIENT AND WORKER</button><button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div></div></div>
+<!-- ================= SETTINGS ================= -->
+<section id="pg_set" class="page noprint">
+ <div class="card"><div class="ct">Worker Mobile Numbers</div><div class="muted" style="margin:-4px 0 6px">Sub centre wise – used for sending SMS to workers.</div><div id="wk"></div></div>
+ <div class="card"><div class="ct">Backup &amp; Restore</div>
+  <div class="bar"><button onclick="backup()">⬇ Download Backup</button><button class="gray" onclick="$('rf').click()">⬆ Restore Backup</button><input id="rf" type="file" accept=".json" style="display:none" onchange="restore(this)"></div>
+  <div id="saved" style="margin-top:8px"></div>
+  <p class="info" style="margin-top:8px">All data is saved only on this phone. It is erased only if you use <b>Clear data</b> in phone settings or uninstall the app. Take a backup regularly.</p></div>
+ <details class="card"><summary>Message Templates</summary><label>Message – individual patient (with own date)</label><textarea id="tp" rows="4" onchange="saveT()"></textarea>
+  <label style="margin-top:10px">Message – common for all patients (sent together)</label><textarea id="tc" rows="3" onchange="saveT()"></textarea>
+  <label style="margin-top:10px">Message – worker list heading</label><textarea id="tw" rows="4" onchange="saveT()"></textarea></details>
+ <div class="card" style="text-align:center"><img src="logo.png" alt="" style="width:84px;height:84px"><div class="ct" style="justify-content:center;margin:6px 0 2px">TB Follow-up Tracker</div><div class="muted">Primary Health Centre Pransli · TB Harega, Desh Jeetega</div></div>
+</section>
 </main>
-<div id="dlg"><div class="card"><div id="dmsg" style="font-weight:600;margin-bottom:10px"></div><div id="dbody"></div><div class="bar"><button id="dok">OK</button><button id="dno" class="gray">Cancel</button></div></div></div>
-<div id="modal"><div class="card"><b>Send SMS</b>
+
+<div id="detail"><div class="dhead"><button class="back" onclick="closeDetail()" aria-label="Back">‹</button><b>Patient Details</b></div><div class="dbody" id="dcont"></div></div>
+
+<nav class="bnav noprint">
+ <button id="n_dash" onclick="pg('dash')"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Dashboard</button>
+ <button id="n_fup" onclick="pg('fup')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 15l2 2 4-4"/></svg>Follow-up</button>
+ <button id="n_add" class="add" onclick="pg('add')"><span class="fab"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>Add New Pt</button>
+ <button id="n_done" onclick="pg('done')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>Completed<span class="bd" id="cnt_done" style="display:none"></span></button>
+ <button id="n_set" onclick="pg('set')"><svg viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>Settings</button>
+</nav>
+
+<div id="dlg"><div class="card"><div id="dmsg" style="font-weight:700;margin-bottom:10px"></div><div id="dbody"></div><div class="bar" style="margin-top:12px"><button id="dok">OK</button><button id="dno" class="gray">Cancel</button></div></div></div>
+<div id="modal"><div class="card"><div class="ct">Send SMS</div>
 <div id="list"></div><button class="gray" onclick="$('modal').style.display='none'">Close</button></div></div>
+<div id="toast"></div>
 <script>
 const $=id=>document.getElementById(id);
+(function(){const s=$('splash');if(!s)return;
+ const W=[['TB','#d92d20'],['HAREGA','#0f3d63'],['DESH','#ff8a00'],['JEETEGA','#138808']];let n=0;
+ const line=ws=>'<div>'+ws.map(w=>'<span class="wd" style="color:'+w[1]+'">'+[...w[0]].map(ch=>'<i style="animation-delay:'+(1.1+(n++)*0.07).toFixed(2)+'s">'+ch+'</i>').join('')+'</span>').join('')+'</div>';
+ $('spt').innerHTML=line(W.slice(0,2))+line(W.slice(2));
+ let gone=false;const end=()=>{if(gone)return;gone=true;s.classList.add('out');setTimeout(()=>s.remove(),700)};
+ s.onclick=end;setTimeout(end,3600)})();
 const DEF=[{"id":"334106857","name":"SOLANKI MANISHA KISHAN","village":"KHAMBHA","phone":"7990584895","sc":"KHAMBHA","site":"MICRO BIO.","type":"NEW","start":"2026-02-09","ipDone":"","cpDone":""},{"id":"334043520","name":"BIJAL BOGHA JETHWA","village":"PRANSLI","phone":"6354540852","sc":"PRANSLI","site":"MICRO BIO.","type":"NEW","start":"2026-08-29","ipDone":"","cpDone":""},{"id":"331506863","name":"JODNI NARANJI RANMALJI","village":"KHAMBHA","phone":"8780575810","sc":"KHAMBHA","site":"MICRO BIO.","type":"NEW","start":"2026-08-22","ipDone":"","cpDone":""},{"id":"286318474","name":"PARMAR SONAL JAYSUKH","village":"KHAMBHA","phone":"9714751240","sc":"KHAMBHA","site":"MICRO BIO.","type":"PT","start":"2026-06-22","ipDone":"","cpDone":""},{"id":"304415425","name":"SOLANKI MOMAL KISHAN","village":"KHAMBHA","phone":"9490584895","sc":"KHAMBHA","site":"MICRO BIO.","type":"PT","start":"2026-07-23","ipDone":"","cpDone":""},{"id":"314033688","name":"SOSA PRAVIN AEBHA","village":"PRANSLI","phone":"6354920822","sc":"PRANSLI","site":"MICRO BIO.","type":"NEW","start":"2026-07-23","ipDone":"","cpDone":""},{"id":"311746805","name":"GAUSWAMI RISHIKESHGIRI RAJENDRAGIRI","village":"GHANTIYA","phone":"9429766707","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-07-21","ipDone":"","cpDone":""},{"id":"286966067","name":"VAINSH RAVI RAMSING","village":"PRANSLI","phone":"9316246656","sc":"PRANSLI","site":"MICRO BIO.","type":"NEW","start":"2026-10-07","ipDone":"","cpDone":""},{"id":"272010691","name":"KANA JASABHAI PARMAR","village":"GHANTIYA","phone":"9313914405","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-05-04","ipDone":"","cpDone":""},{"id":"294482323","name":"RATHOD BACHU TABHABHAI","village":"GHANTIYA","phone":"9913516097","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-07-01","ipDone":"","cpDone":""},{"id":"286966067","name":"RAVJI RAMSINGBHAI VANSH","village":"PRANSLI","phone":"9316246656","sc":"PRANSLI","site":"","type":"NEW","start":"2026-07-10","ipDone":"","cpDone":""},{"id":"266291344","name":"HAMIR ARJAN BHOLA","village":"GHANTIYA","phone":"9998070800","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-04-18","ipDone":"","cpDone":""},{"id":"266082243","name":"RANDHEER NONGHAN PARMAR","village":"MAHOBATPARA","phone":"8460773074","sc":"MAHOBATPARA","site":"MICRO BIO.","type":"NEW","start":"2026-04-20","ipDone":"","cpDone":""},{"id":"63231274","name":"JAYSUKH KURJI PARMAR","village":"KHAMBHA","phone":"8799464094","sc":"KHAMBHA","site":"MICRO BIO.","type":"RE","start":"2026-04-21","ipDone":"","cpDone":""},{"id":"260776165","name":"RAANI CHINA BARAD","village":"PRANSLI","phone":"6353984611","sc":"PRANSLI","site":"","type":"NEW","start":"2026-03-17","ipDone":"","cpDone":""},{"id":"260771134","name":"DIVYESH BABU SOLANKI","village":"BHUVAVADA","phone":"9313035454","sc":"RANGPUR","site":"","type":"NEW","start":"2026-03-14","ipDone":"","cpDone":""},{"id":"254700364","name":"NEETA JAGDISH SODHA","village":"GHANTIYA","phone":"6352114395","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-02-17","ipDone":"","cpDone":""},{"id":"251990480","name":"CHUDASAMA HASMUKH ODHAVJI","village":"TIMBDI","phone":"9228902191","sc":"PRANSLI","site":"MICRO BIO.","type":"RE","start":"2026-02-03","ipDone":"","cpDone":""}];
 const DT={p:"નમસ્તે {NAME} ({VILLAGE}), તમારું આગામી ટીબી ફોલોઅપ ({FUP}) તારીખ {DATE} ના રોજ છે. કૃપા કરી તે દિવસે આરોગ્ય કેન્દ્ર પર ગળફાની તપાસ કરાવવા આવશો. - પ્રાઈમરી હેલ્થ સેન્ટર પ્રાસલી",
 c:"નમસ્તે, તમારી ટીબી ફોલોઅપ (ગળફા) તપાસની તારીખ આવી ગઈ છે. કૃપા કરી આરોગ્ય કેન્દ્ર પર ગળફાની તપાસ કરાવવા આવશો. - પ્રાઈમરી હેલ્થ સેન્ટર પ્રાસલી",
@@ -208,7 +358,6 @@ function vlCh(s){if(s.value!=='__new')return;const sc=$('f_sc').value;
  dlg('Enter new village name for '+sc,'<input id="dinp" autocapitalize="characters">','Add',()=>{const n=($('dinp').value||'').trim().toUpperCase();if(n){VM[n]=sc;const x=L('VM2',{});x[n]=sc;localStorage.setItem('VM2',JSON.stringify(x))}fillVil();$('f_village').value=n||''});
  fillVil()}
 function initSel(){fillSel('f_sc',LS,'');fillVil();renderWk()}
-function renderWk(){$('wk').innerHTML='<table class="st wt"><thead><tr><th>#</th><th>SC NAME (SUB CENTRE)</th><th>WORKER MOBILE NUMBER</th></tr></thead><tbody>'+LS.map((s,n)=>`<tr><td>${n+1}</td><td class="l"><b>${esc(s)}</b></td><td><input inputmode="numeric" maxlength="10" placeholder="10 digit number" value="${esc(WK[s]||'')}" onchange="WK['${esc(s)}']=this.value;localStorage.setItem('tbWk2',JSON.stringify(WK))"></td></tr>`).join('')+'</tbody></table>'}
 function order(){const idx=P.map((_,i)=>i),m=$('sort').value;
  const key={next:i=>{const n=nxt(P[i]);return n?n.d.getTime():9e15},sc:i=>(P[i].sc||'~')+(P[i].village||'')+P[i].name,name:i=>P[i].name,start:i=>P[i].start};
  return idx.sort((a,b)=>{const x=key[m](a),y=key[m](b);return x<y?-1:x>y?1:0})}
@@ -228,32 +377,64 @@ function extendP(i){const p=P[i];let o='';for(let m=1;m<=12;m++)o+=`<option valu
  dlg('Extend treatment of '+p.name+' by:','<select id="dinp">'+o+'</select>','Extend',()=>{const n=+$('dinp').value||3,t=new Date();t.setHours(12,0,0,0);const e=endOf(p)||t,b=e>t?e:t;
   p.extUntil=iso8(addM(b,n));p.restored=false;p.done=false;save();render();setTimeout(()=>uiAlert(p.name+': treatment extended until '+f(pd(p.extUntil),1)),50)})}
 function unext(i){delete P[i].extUntil;save();render()}
-function tg(i){OPEN[i]=!OPEN[i];render()}
 const monthly=(i,p,d,hi)=>d.mo?d.mo.map((dt,k)=>`<div class="${hi('mo'+(k+1))}"><span>MONTH ${k+1} FOLLOW-UP – due ${f(dt,1)}</span>${dp(p['mo'+(k+1)+'d'],`setAct(${i},'mo${k+1}d',this)`,todayISO())}</div>`).join(''):'';
-function mkTable(dn){const today=new Date();today.setHours(0,0,0,0);const tmr=new Date(today);tmr.setDate(tmr.getDate()+1);let cnt=0,ovn=0;
- let h='<table class="st"><thead><tr><th class="noprint">✔</th><th>SR</th><th>NAME OF PATIENT</th><th>VILLAGE</th><th>PATIENT TYPE</th><th>DATE OF TREATMENT INITIATION</th><th>NEXT FOLLOW-UP DATE</th><th>FOLLOW-UP</th></tr></thead><tbody>';
- groups(dn).forEach(g=>{h+=`<tr class="grp"><td colspan="8">${grpLabel(g.n)} <small>(${g.idx.length})</small></td></tr>`;
-  g.idx.forEach((i,n)=>{const p=P[i],d=dates(p),nx=dn?nxtDone(p):nxt(p),op=OPEN[i];
-   const st=dn?stOf(p):((nx&&nx.d<tmr)?'od':'');cnt++;if(st==='od')ovn++;
-   const hi=k=>(nx&&nx.k===k)?'nx'+(st==='od'?' due':''):'';
-   const it=(l,v,k)=>`<div class="${k?hi(k):''}"><span>${l}</span>${v||'-'}</div>`;
-   h+=`<tr class="${SEL[i]?'sel':''} ${st}"><td class="noprint"><input type="checkbox" style="width:auto" ${SEL[i]?'checked':''} onchange="SEL[${i}]=this.checked;render()"></td>
-    <td data-l="SR">${n+1}</td><td class="l nm" onclick="tg(${i})">${op?'▾':'▸'} ${esc(p.name)}</td><td data-l="Village">${esc(p.village)}</td><td data-l="Patient type" class="ty">${esc(tyL(p))}</td><td data-l="Treatment start">${f(pd(p.start),1)}</td><td data-l="Next follow-up">${nx?f(nx.d,1):'-'}</td><td data-l="Follow-up">${nx?FEN[nx.k]:(p.extUntil?'Treatment extended':'-')}</td></tr>`;
-   if(op){let mid;
-    if(dn)mid=((isMDR(p)&&!isEP(p))?monthly(i,p,d,hi):`${it('IP DONE ON',p.ipDone?f(pd(p.ipDone),1):'-')}${it('CP DONE ON',p.cpDone?f(pd(p.cpDone),1):'-')}`)+['m6','m12','m18','m24'].map(k=>`<div class="${hi(k)}"><span>${k.slice(1)} MONTH – due ${f(d[k],1)||'-'}</span>${d[k]?dp(p[k+'d'],`setAct(${i},'${k}d',this)`,todayISO()):'-'}</div>`).join('');
-    else mid=(isMDR(p)&&!isEP(p))?monthly(i,p,d,hi):isEP(p)?`<div><span>TREATMENT END DATE</span>${endOf(p)?f(endOf(p),1):'-'}</div><div><span>FOLLOW-UP DATE (EP TB)</span>${dp(p.fupDate,`setAct(${i},'fupDate',this)`,todayISO())}</div>`:`${it('IP FUP DATE (+56 days)',f(d.ip,1),'ip')}${it('CP FUP DATE (+112 days after IP)',f(d.cp,1),'cp')}
-    <div><span>ACTUAL IP DONE</span>${dp(p.ipDone,`setAct(${i},'ipDone',this)`,todayISO())}</div>
-    <div><span>ACTUAL CP DONE</span>${dp(p.cpDone,`setAct(${i},'cpDone',this)`,todayISO())}</div>`;
-    h+=`<tr class="det"><td colspan="8"><div class="dg">${it('NIKSHAY ID',esc(p.id))}${it('CONTACT NO.',esc(p.phone))}${it('SC NAME',esc(p.sc))}${it('SITE OF CASE DEFINITION',esc(p.site))}${it('TYPE OF PATIENT',esc(p.type))}${it('DS / MDR',esc(p.drug))}
-    ${mid}
-    ${p.extUntil?`<div class="nx"><span>TREATMENT EXTENDED UNTIL</span>${f(pd(p.extUntil),1)}</div>`:''}
-    <div class="btns">${spec(p)?`<button class="green" onclick="extendP(${i})">➕ Extend Treatment</button> `:''}${spec(p)&&!dn?`<button class="green" onclick="fin(${i},true)">✔ Completed</button> `:''}${p.extUntil?`<button class="gray" onclick="unext(${i})">Remove extension</button> `:''}${dn?`<button class="gray" onclick="fin(${i},false)">↩ Restore</button> `:''}<button class="gray" onclick="editP(${i})">✎ Edit</button> <button class="red" onclick="del(${i})">✖ Delete</button></div></div></td></tr>`}})});
- return {h:h+'</tbody></table>',cnt,ovn}}
-function render(){const a=mkTable(false),b=mkTable(true),tmr=new Date();tmr.setHours(0,0,0,0);
- $('scr').innerHTML=a.h;$('dn').innerHTML=b.cnt?b.h:'<p style="text-align:center">No patients</p>';
- $('t3').textContent='Treatment Completed ('+b.cnt+')';
- $('stats').innerHTML=`<div class="chip"><b>${a.cnt}</b><span>Active patients</span></div><div class="chip r"><b>${a.ovn}</b><span>Follow-up due / overdue</span></div><div class="chip g"><b>${b.cnt}</b><span>Treatment completed</span></div>`;
- const D=d=>d?f(d,1):'-';
+/* ===== NEW UI ===== */
+const NAVS=['dash','fup','add','done','set'];
+let CUR=null,CURPG='dash',DF='all',OPENSC={};
+const T0=()=>{const t=new Date();t.setHours(0,0,0,0);return t};
+const dayDiff=d=>Math.floor((d-T0())/864e5);
+const E=v=>esc(v==null?'':v);
+const ini=n=>(n||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+function toast(m){const e=$('toast');e.textContent=m;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2200)}
+function setToday(){const d=new Date();$('today').innerHTML=d.toLocaleDateString('en-GB',{weekday:'long'})+'<br><b>'+d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+'</b>'}
+function statusOf(p){const dn=isDone(p),tmr=addD(T0(),1);
+ if(dn){const s=stOf(p);return s==='od'?{c:'od',t:'Completed · follow-up overdue'}:s==='mo'?{c:'mo',t:'Completed · due this month'}:{c:'ok',t:'Treatment completed'}}
+ const nx=nxt(p);if(nx&&nx.d<tmr){const n=dayDiff(nx.d);return{c:'od',t:n>=0?'Follow-up due today':'Overdue by '+(-n)+' day'+(n==-1?'':'s')}}
+ return{c:'',t:p.extUntil?'Active · treatment extended':'Active'}}
+function pcard(i,dn,chk){const p=P[i],nx=dn?nxtDone(p):nxt(p),tmr=addD(T0(),1);
+ const st=dn?stOf(p):((nx&&nx.d<tmr)?'od':'');
+ const right=nx?`<b>${f(nx.d,1)}</b><span>${FEN[nx.k]}</span>`:`<span>${p.extUntil?'Treatment extended':(isEP(p)&&!dn?'EP TB':'—')}</span>`;
+ const meta=E(p.village)+' · '+(chk?E(tyL(p)):E(p.sc||'-')+' SC');
+ return `<div class="pc ${st} ${SEL[i]?'sel':''}">${chk?`<label class="ck"><input type="checkbox" ${SEL[i]?'checked':''} onchange="SEL[${i}]=this.checked;render()"></label>`:''}<div class="pbody" onclick="openP(${i})"><div class="pnm">${E(p.name)}</div><div class="pmeta">${meta}</div></div><div class="pnx" onclick="openP(${i})">${right}</div></div>`}
+/* ---- dashboard ---- */
+const TLB={all:'Active patients',due:'Follow-up due today / overdue',week:'Follow-up in next 7 days',done:'Treatment completed',mdr:'MDR patients (active)',ep:'EP TB patients (active)'};
+function setDF(k){DF=(DF===k&&k!=='all')?'all':k;$('q').value='';renderDash()}
+function dashFilter(i){const p=P[i],dn=isDone(p);if(DF==='done')return dn;if(dn)return false;
+ const nx=nxt(p),tmr=addD(T0(),1);
+ if(DF==='due')return !!nx&&nx.d<tmr;if(DF==='week')return !!nx&&nx.d>=tmr&&nx.d<addD(tmr,7);
+ if(DF==='mdr')return isMDR(p);if(DF==='ep')return isEP(p);return true}
+function renderDash(){const tmr=addD(T0(),1),w7=addD(tmr,7);let act=0,due=0,wk=0,dn=0,mdr=0,ep=0;
+ P.forEach(p=>{if(isDone(p)){dn++;return}act++;const nx=nxt(p);if(nx){if(nx.d<tmr)due++;else if(nx.d<w7)wk++}if(isMDR(p))mdr++;if(isEP(p))ep++});
+ const TL=[['all','👥',act,'Active patients','b'],['due','⏰',due,'Due today / overdue','r'],['week','📅',wk,'Next 7 days','a'],['done','✅',dn,'Completed','g'],['mdr','💊',mdr,'MDR (active)','p'],['ep','🩺',ep,'EP TB (active)','t']];
+ $('tiles').innerHTML=TL.map(x=>`<button class="tile ${x[4]} ${DF===x[0]?'on':''}" onclick="setDF('${x[0]}')"><i>${x[1]}</i><b>${x[2]}</b><span>${x[3]}</span></button>`).join('');
+ const gs=groups(false);
+ $('scgrid').innerHTML=gs.length?gs.map(g=>{let od=0;g.idx.forEach(i=>{const nx=nxt(P[i]);if(nx&&nx.d<tmr)od++});return `<button class="scc" data-k="${esc('a|'+g.n)}" onclick="goSC(this.dataset.k)"><b>${grpLabel(g.n)}</b><span>${g.idx.length} active</span>${od?`<em>${od} due</em>`:''}</button>`}).join(''):'<div class="empty" style="grid-column:1/-1">No active patients</div>';
+ const q=($('q').value||'').trim().toLowerCase();
+ let idx=P.map((_,i)=>i);
+ if(q)idx=idx.filter(i=>{const p=P[i];return [p.name,p.id,p.village,p.phone,p.sc].join(' ').toLowerCase().includes(q)});else idx=idx.filter(dashFilter);
+ const key=i=>{const p=P[i],nx=isDone(p)?nxtDone(p):nxt(p);return nx?nx.d.getTime():9e15};
+ if(DF==='done'&&!q)idx.sort((a,b)=>P[a].name<P[b].name?-1:1);else idx.sort((a,b)=>key(a)-key(b));
+ $('dtitle').textContent=(q?'Search results':TLB[DF])+' ('+idx.length+')';
+ $('dlist').innerHTML=idx.length?idx.map(i=>pcard(i,isDone(P[i]),false)).join(''):'<div class="empty">No patients found</div>'}
+function goSC(k){OPENSC[k]=true;pg('fup');setTimeout(()=>{const e=[...document.querySelectorAll('#scr .sch')].find(x=>x.dataset.k===k);if(e)e.scrollIntoView({behavior:'smooth',block:'start'})},60)}
+/* ---- sub centre accordion lists ---- */
+function togSC(k){OPENSC[k]=!OPENSC[k];document.querySelectorAll('.sch').forEach(e=>{if(e.dataset.k===k)e.parentNode.classList.toggle('open',!!OPENSC[k])})}
+function expAll(dn,v){groups(dn).forEach(g=>OPENSC[(dn?'d|':'a|')+g.n]=v);render()}
+function selSC(k,v){const dn=k[0]==='d',n=k.slice(2);groups(dn).filter(g=>g.n===n).forEach(g=>g.idx.forEach(i=>SEL[i]=v));render()}
+function mkList(dn){const tmr=addD(T0(),1);let cnt=0,ovn=0;
+ const h=groups(dn).map(g=>{const key=(dn?'d|':'a|')+g.n;let od=0;
+  const cards=g.idx.map(i=>{cnt++;const p=P[i],nx=dn?nxtDone(p):nxt(p),st=dn?stOf(p):((nx&&nx.d<tmr)?'od':'');if(st==='od'){od++;ovn++}return pcard(i,dn,true)}).join('');
+  const all=g.idx.every(i=>SEL[i]);
+  return `<div class="sc${OPENSC[key]?' open':''}"><div class="sch" data-k="${esc(key)}" onclick="togSC(this.dataset.k)"><label class="ck" onclick="event.stopPropagation()"><input type="checkbox" ${all?'checked':''} data-k="${esc(key)}" onchange="selSC(this.dataset.k,this.checked)"></label><div class="sct"><b>${grpLabel(g.n)}</b><small>${g.idx.length} patient${g.idx.length>1?'s':''}${od?` · <u>${od} ${dn?'overdue':'due'}</u>`:''}</small></div><span class="chev">›</span></div><div class="scb">${cards}</div></div>`}).join('');
+ return{h:h||'<div class="empty">No patients</div>',cnt,ovn}}
+function render(){const a=mkList(false),b=mkList(true),tmr=new Date();tmr.setHours(0,0,0,0);
+ $('scr').innerHTML=a.h;$('dn').innerHTML=b.h;
+ $('cnt_done').textContent=b.cnt;$('cnt_done').style.display=b.cnt?'':'none';
+ const sc=dn=>Object.keys(SEL).filter(k=>SEL[k]&&P[k]&&isDone(P[k])===dn).length;
+ $('selA').textContent=sc(false)+' selected';$('selD').textContent=sc(true)+' selected';
+ renderDash();
+ $('recent').innerHTML=P.length?P.map((_,i)=>i).slice(-5).reverse().map(i=>pcard(i,isDone(P[i]),false)).join(''):'<div class="empty">No patients yet</div>';
+  const D=d=>d?f(d,1):'-';
  let q='<table class="pt"><thead><tr><th>SR</th><th>NAME OF PATIENT</th><th>NIKSHAY ID</th><th>VILLAGE</th><th>SITE OF CASE DEFINITION</th><th>DATE OF TREATMENT INITIATION</th><th>IP FUP DATE</th><th>CP FUP DATE</th></tr></thead><tbody>';
  groups(false).forEach(g=>{q+=`<tr class="grp"><td colspan="8">${grpLabel(g.n)} (${g.idx.length})</td></tr>`;g.idx.forEach((i,n)=>{const p=P[i],d=dates(p),nx=nxt(p);
   q+=`<tr class="${nx&&nx.d<=tmr?'od':''}"><td>${n+1}</td><td class="l">${esc(p.name)}</td><td>${esc(p.id)}</td><td>${esc(p.village)}</td><td>${esc(tyL(p))}</td><td>${f(pd(p.start),1)}</td>${(isMDR(p)&&!isEP(p))?`<td colspan="2">MDR monthly – next: ${nx?f(nx.d,1):'-'}</td>`:`<td>${D(d.ip)}</td><td>${D(d.cp)}</td>`}</tr>`})});
@@ -261,25 +442,57 @@ function render(){const a=mkTable(false),b=mkTable(true),tmr=new Date();tmr.setH
  let r='<table class="pt"><thead><tr><th>SR</th><th>NAME OF PATIENT</th><th>NIKSHAY ID</th><th>VILLAGE</th><th>SITE</th><th>START DATE</th><th>IP DONE</th><th>CP DONE</th><th>6 MONTH</th><th>12 MONTH</th><th>18 MONTH</th><th>24 MONTH</th></tr></thead><tbody>';
  groups(true).forEach(g=>{r+=`<tr class="grp"><td colspan="12">${grpLabel(g.n)} (${g.idx.length})</td></tr>`;g.idx.forEach((i,n)=>{const p=P[i],d=dates(p);
   r+=`<tr class="${stOf(p)}"><td>${n+1}</td><td class="l">${esc(p.name)}</td><td>${esc(p.id)}</td><td>${esc(p.village)}</td><td>${esc(tyL(p))}</td><td>${f(pd(p.start),1)}</td>${(isMDR(p)&&!isEP(p))?`<td colspan="2">Monthly done ${cntMo(p)}/9</td>`:`<td>${p.ipDone?f(pd(p.ipDone),1):'-'}</td><td>${p.cpDone?f(pd(p.cpDone),1):'-'}</td>`}`+['m6','m12','m18','m24'].map(k=>`<td>${D(d[k])}${p[k+'d']?' ✓':''}</td>`).join('')+'</tr>'})});
- $('dprt').innerHTML=r+'</tbody></table>'}
-function pg(n){[1,2,3,4].forEach(k=>{$('pg'+k).style.display=n==k?'block':'none';$('t'+k).className=n==k?'on':''});if(n>1)render();window.scrollTo(0,0)}
+ $('dprt').innerHTML=r+'</tbody></table>'
+ if(CUR!==null)renderDetail()}
+/* ---- patient detail ---- */
+function openP(i){CUR=i;renderDetail();$('detail').classList.add('on');$('detail').scrollTop=0;document.body.classList.add('noscroll')}
+function closeDetail(){CUR=null;$('detail').classList.remove('on');document.body.classList.remove('noscroll')}
+function renderDetail(){const i=CUR,p=P[i];if(!p){closeDetail();return}
+ const dn=isDone(p),d=dates(p),nx=dn?nxtDone(p):nxt(p),tmr=addD(T0(),1),st=dn?stOf(p):((nx&&nx.d<tmr)?'od':''),S=statusOf(p);
+ const hi=k=>(nx&&nx.k===k)?'nx'+(st==='od'?' due':''):'';
+ const it=(l,v,k)=>`<div class="${k?hi(k):''}"><span>${l}</span>${v||'-'}</div>`;
+ let mid;
+ if(dn)mid=((isMDR(p)&&!isEP(p))?monthly(i,p,d,hi):`${it('IP DONE ON',p.ipDone?f(pd(p.ipDone),1):'-')}${it('CP DONE ON',p.cpDone?f(pd(p.cpDone),1):'-')}`)+['m6','m12','m18','m24'].map(k=>`<div class="${hi(k)}"><span>${k.slice(1)} MONTH – due ${f(d[k],1)||'-'}</span>${d[k]?dp(p[k+'d'],`setAct(${i},'${k}d',this)`,todayISO()):'-'}</div>`).join('');
+ else mid=(isMDR(p)&&!isEP(p))?monthly(i,p,d,hi):isEP(p)?`<div><span>TREATMENT END DATE</span>${endOf(p)?f(endOf(p),1):'-'}</div><div><span>FOLLOW-UP DATE (EP TB)</span>${dp(p.fupDate,`setAct(${i},'fupDate',this)`,todayISO())}</div>`:`${it('IP FUP DATE (+56 days)',f(d.ip,1),'ip')}${it('CP FUP DATE (+112 days after IP)',f(d.cp,1),'cp')}<div><span>ACTUAL IP DONE</span>${dp(p.ipDone,`setAct(${i},'ipDone',this)`,todayISO())}</div><div><span>ACTUAL CP DONE</span>${dp(p.cpDone,`setAct(${i},'cpDone',this)`,todayISO())}</div>`;
+ const ext=p.extUntil?`<div class="nx"><span>TREATMENT EXTENDED UNTIL</span>${f(pd(p.extUntil),1)}</div>`:'';
+ const ph=String(p.phone||'').replace(/[^\d+]/g,'');
+ const info=`${it('NIKSHAY ID',E(p.id))}<div><span>CONTACT NO.</span>${ph?`<a class="tel" href="tel:${ph}">📞 ${E(p.phone)}</a>`:'-'}</div>${it('SUB CENTRE',E(p.sc))}${it('VILLAGE',E(p.village))}${it('SITE OF CASE DEFINITION',E(p.site))}${it('TYPE OF PATIENT',E(p.type))}${it('DS / MDR',E(p.drug||'DS'))}${it('TREATMENT START',f(pd(p.start),1))}`;
+ let nb;
+ if(nx){const dd=dayDiff(nx.d);nb=`<div class="nxb ${st}"><div><small>NEXT FOLLOW-UP</small><b>${f(nx.d,1)}</b></div><span>${FEN[nx.k]}<br>${dd<0?'Overdue by '+(-dd)+' day'+(dd==-1?'':'s'):dd===0?'Today':'In '+dd+' day'+(dd==1?'':'s')}</span></div>`}
+ else if(isEP(p)&&!dn&&p.start){nb=`<div class="nxb"><div><small>TREATMENT END DATE</small><b>${f(endOf(p),1)}</b></div><span>EP TB</span></div>`}
+ else nb=`<div class="nxb ok"><div><small>FOLLOW-UP</small><b>${p.extUntil?'Treatment extended':'No pending follow-up'}</b></div></div>`;
+ const bt=`${ph?`<a class="btn green" href="tel:${ph}">📞 Call</a>`:''}${spec(p)?`<button class="green" onclick="extendP(${i})">➕ Extend Treatment</button>`:''}${spec(p)&&!dn?`<button class="green" onclick="fin(${i},true)">✔ Completed</button>`:''}${p.extUntil?`<button class="gray" onclick="unext(${i})">Remove extension</button>`:''}${dn?`<button class="gray" onclick="fin(${i},false)">↩ Restore</button>`:''}<button class="gray" onclick="editP(${i})">✎ Edit</button><button class="red" onclick="del(${i})">✖ Delete</button>`;
+ $('dcont').innerHTML=`<div class="card prof"><div class="av">${E(ini(p.name))}</div><div><h2>${E(p.name)}</h2><p>${E(p.sc||'-')} SC · ${E(p.village)}</p><span class="pill ${S.c}">${S.t}</span></div></div>${nb}
+ <div class="card"><div class="ct">Patient information</div><div class="dg">${info}</div></div>
+ <div class="card"><div class="ct">Follow-up schedule</div><div class="dg">${mid}${ext}</div></div>
+ <div class="card"><div class="btns2">${bt}</div></div>`}
+/* ---- navigation ---- */
+function pg(n){closeDetail();CURPG=n;NAVS.forEach(k=>{$('pg_'+k).classList.toggle('on',k===n);$('n_'+k).classList.toggle('on',k===n)});render();window.scrollTo(0,0)}
+window.onAppBack=function(){
+ if($('dlg').style.display==='flex'){$('dlg').style.display='none';return true}
+ if($('modal').style.display==='block'){$('modal').style.display='none';return true}
+ if(CUR!==null){closeDetail();return true}
+ if(CURPG!=='dash'){pg('dash');return true}
+ return false};
+function renderWk(){$('wk').innerHTML=LS.map((s,n)=>`<div class="wrow"><div class="wn">${n+1}</div><div class="wf"><b>${esc(s)}</b><input inputmode="numeric" maxlength="10" placeholder="10 digit mobile number" value="${esc(WK[s]||'')}" onchange="WK['${esc(s)}']=this.value;localStorage.setItem('tbWk2',JSON.stringify(WK))"></div></div>`).join('')}
+
 let EDIT=null;
-function clearForm(){['id','name','phone','start'].forEach(k=>$('f_'+k).value='');$('f_start').previousElementSibling.value='';$('addbtn').textContent='Add';$('cancelbtn').style.display='none';$('msg').textContent=''}
+function clearForm(){['id','name','phone','start'].forEach(k=>$('f_'+k).value='');$('f_start').previousElementSibling.value='';$('addbtn').textContent='Add Patient';$('cancelbtn').style.display='none';$('msg').textContent='';$('addTitle').textContent='Add New Patient'}
 function cancelEdit(){EDIT=null;clearForm()}
-function editP(i){const p=P[i];EDIT=i;pg(1);
+function editP(i){const p=P[i];EDIT=i;pg('add');
  $('f_name').value=p.name;$('f_id').value=p.id;$('f_phone').value=p.phone;
  if(p.sc&&!LS.includes(p.sc))LS.push(p.sc);if(p.village&&!VM[p.village])VM[p.village]=p.sc;
  fillSel('f_sc',LS,p.sc);fillVil();$('f_village').value=p.village;
  $('f_site').value=p.site||'Microbiologically confirmed';
  if(![...$('f_type').options].some(o=>o.value===p.type)){const o=document.createElement('option');o.textContent=p.type;$('f_type').appendChild(o)}
  $('f_type').value=p.type;$('f_drug').value=p.drug||'DS';$('f_start').value=p.start;$('f_start').previousElementSibling.value=fromISO(p.start);
- $('addbtn').textContent='Update';$('cancelbtn').style.display='';$('msg').textContent='Editing: '+p.name}
+ $('addbtn').textContent='Update';$('cancelbtn').style.display='';$('msg').textContent='Editing: '+p.name;$('addTitle').textContent='Edit Patient';$('addbtn').textContent='Update Patient'}
 function addP(){const g=k=>$('f_'+k).value.trim();
  if(!g('name')||!g('start')||!g('phone')||!g('sc')||!g('village')||g('village')==='__new'){$('msg').textContent='Select sub centre and village, and enter name, number and start date';return}
  const o={id:g('id'),name:g('name').toUpperCase(),village:g('village'),phone:g('phone'),sc:g('sc'),site:g('site'),type:g('type'),drug:g('drug'),start:g('start')};
- const upd=EDIT!==null;if(upd){Object.assign(P[EDIT],o);EDIT=null}else P.push(Object.assign(o,{ipDone:'',cpDone:''}));
- save();render();clearForm();$('msg').textContent=upd?'Updated ✔':'Added ✔'}
-function del(i){uiConfirm(P[i].name+': delete this patient?',()=>{P.splice(i,1);SEL={};for(const k in OPEN)delete OPEN[k];save();render()})}
+ const upd=EDIT!==null,ei=EDIT;if(upd){Object.assign(P[EDIT],o);EDIT=null}else P.push(Object.assign(o,{ipDone:'',cpDone:''}));
+ save();render();clearForm();toast(upd?'Patient updated ✔':'Patient added ✔');$('msg').textContent=upd?'Updated ✔':'Added ✔';if(upd){pg('dash');openP(ei)}}
+function del(i){uiConfirm(P[i].name+': delete this patient?',()=>{P.splice(i,1);SEL={};closeDetail();save();render()})}
 function selAllDone(v){P.forEach((p,i)=>{if(isDone(p))SEL[i]=v});render()}
 function selAll(v){P.forEach((p,i)=>SEL[i]=v&&!isDone(p));render()}
 const num=s=>{const d=String(s||'').replace(/\D/g,'');return d.length>=10?'+91'+d.slice(-10):''};
@@ -339,5 +552,6 @@ async function sharePDF(){const b=pdfReport(),name='TB_FUP_'+todayISO()+'.pdf',f
  dlPDF(b,name);location.href='mailto:?subject='+encodeURIComponent('TB Follow-up List - PHC Pransli')+'&body='+encodeURIComponent('Please find the attached PDF ('+name+').')}
 if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
 window.addEventListener('error',e=>{try{uiAlert('Error: '+e.message)}catch(_){}});
-initSel();render();pg(1);
+initSel();setToday();render();pg('dash');
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){setToday();render()}});
 </script></body></html>

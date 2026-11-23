@@ -44,5 +44,12 @@
   // Email PDF button -> share sheet (Gmail / WhatsApp / Drive vagere)
   window.addEventListener('load', function () {
     window.sharePDF = function () { downloadPDF(); };
+    // Android back button: pehla detail/dialog band, pachi Dashboard, chhelle app band
+    if (P.App && P.App.addListener) {
+      P.App.addListener('backButton', function () {
+        var handled = window.onAppBack && window.onAppBack();
+        if (!handled) P.App.exitApp();
+      });
+    }
   });
 })();
