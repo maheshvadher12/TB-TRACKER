@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="gu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0f3d63"><script src="native-shim.js"></script><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<title>TB Follow-up Tracker – PHC Pransli</title>
+<style>
+:root{--p:#0f3d63;--p2:#1d6fa5;--bg:#eef2f7;--line:#d5dee8;--ok:#1e8449;--bad:#c0392b;--txt:#1b2733}
+*{box-sizing:border-box}
+@page{size:A4 landscape;margin:7mm}
+body{font-family:"Segoe UI",Roboto,"Noto Sans Gujarati",Shruti,Arial,sans-serif;margin:0;background:var(--bg);color:var(--txt);font-size:14px}
+header{background:linear-gradient(135deg,#0b2f4e,#1d6fa5);color:#fff;text-align:center;padding:16px 12px 14px}
+header h1{margin:0;font-size:28px}
+header div{font-size:12px;letter-spacing:2.5px;opacity:.92;margin-top:6px}
+.d3w{font-weight:800;letter-spacing:.5px;text-shadow:1px 1px 0 #3d79a6,2px 2px 0 #2c628c,3px 3px 0 #1d4a6e,4px 5px 8px #0007}
+.d3{display:inline-block;margin-top:4px;color:var(--p);font-size:15px;font-weight:800;text-shadow:1px 1px 0 #b7cde2,2px 2px 0 #92b2d0,3px 3px 3px #0003}
+.tabs{display:flex;gap:6px;padding:10px 12px 0;background:var(--bg);position:sticky;top:0;z-index:5;flex-wrap:wrap;border-bottom:2px solid var(--line)}
+.tabs button{background:#dde6f0;color:var(--p);border-radius:10px 10px 0 0;box-shadow:none;font-weight:700;padding:10px 16px;margin-bottom:-2px;border-bottom:2px solid var(--line)}
+.tabs button.on{background:#fff;color:var(--p2);border:2px solid var(--line);border-bottom:2px solid #fff;box-shadow:0 -3px 0 var(--p2) inset}
+main{padding:12px;max-width:1160px;margin:0 auto}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 2px #0001,0 4px 12px #0000000d}
+.card>b{display:block;font-size:16px;color:var(--p);margin-bottom:10px}
+details.card summary{cursor:pointer;font-weight:700;font-size:16px;color:var(--p)}details.card[open] summary{margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+label{display:block;font-size:11px;font-weight:700;color:#4a5b6c;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
+input,select,textarea{width:100%;padding:9px 10px;border:1px solid #b9c7d6;border-radius:8px;background:#fff;font:inherit;color:inherit}
+input:focus,select:focus,textarea:focus{outline:2px solid #9cc6e6;border-color:var(--p2)}
+input:disabled,select:disabled{background:#eef2f6;color:#8896a5}
+input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--ok)}
+button,a.btn{border:0;border-radius:8px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;background:var(--p2);color:#fff;text-decoration:none;display:inline-block;box-shadow:0 2px 0 #0004}
+button:hover{filter:brightness(1.08)}button:active{transform:translateY(1px);box-shadow:none}
+.green{background:var(--ok)}.gray{background:#5d6b7a}.red{background:var(--bad);padding:6px 10px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.bar label{margin:0;text-transform:none;font-size:13px;display:flex;gap:6px;align-items:center;width:auto}
+#msg,#saved{font-size:12px;color:#4a5b6c}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.chip{background:#fff;border:1px solid var(--line);border-left:5px solid var(--p2);border-radius:10px;padding:8px 16px;min-width:130px}
+.chip b{display:block;font-size:22px;color:var(--p)}.chip span{font-size:11px;color:#556;text-transform:uppercase;letter-spacing:.4px}
+.chip.r{border-left-color:var(--bad)}.chip.r b{color:var(--bad)}.chip.g{border-left-color:var(--ok)}
+.sheet{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin:0 auto 12px;box-shadow:0 1px 2px #0001,0 4px 12px #0000000d;overflow-x:auto}
+.sheet h2{text-align:center;font-size:13px;line-height:1.7;margin:0 0 12px;color:#333}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:13px}
+th{background:var(--p);color:#fff;padding:10px 8px;font-size:11px;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;text-align:center}
+th:first-child{border-radius:8px 0 0 0}th:last-child{border-radius:0 8px 0 0}
+td{padding:9px 8px;border-bottom:1px solid #e6ecf2;text-align:center;white-space:nowrap}
+td.l,td.nm{text-align:left;white-space:normal}
+tbody tr:hover td{background:#f4f8fc}
+td.nm{cursor:pointer;color:var(--p2);font-weight:700}
+tr.grp td{background:#e3edf7;color:var(--p);font-weight:800;text-align:left;font-size:13px;white-space:normal;border-bottom:2px solid var(--p2)}
+tr.det td{background:#f6f9fc;text-align:left;padding:10px;white-space:normal}
+tr.sel td{background:#e1f5e9}
+tr.od td{background:#fdecea;color:#b0132b;font-weight:600}tr.od td.nm{color:#b0132b}
+td.nx{background:#fff4c2;font-weight:700}
+.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.dg>div{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;font-size:13px;text-align:left;white-space:normal;word-break:keep-all}
+.dg span{display:block;font-size:10px;color:#667;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
+.dg .nx{background:#fff4c2;font-weight:700}.dg .nx.due{background:#f7c6c0;color:#900}
+.dg input{padding:6px 8px;font-size:13px}
+.wt input{max-width:260px;text-align:center}
+.dp{position:relative;display:block}.dp input[type=text]{cursor:pointer;background:#fff;padding-right:30px}
+.dp::after{content:"📅";position:absolute;right:9px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:14px}
+.dpi{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;padding:0;border:0}
+#prt{display:none}
+#modal{display:none;position:fixed;inset:0;background:#0009;padding:14px;overflow:auto;z-index:20}#modal .card{max-width:660px;margin:auto}
+.item{border-bottom:1px solid #e1e8ef;padding:10px 0}.item pre{white-space:pre-wrap;font-family:inherit;font-size:13px;background:#f3f6fa;padding:8px;border-radius:8px}.done{opacity:.45}
+tr.mo td{background:#fff4c2;font-weight:600}
+#dprt{display:none}
+#dlg{display:none;position:fixed;inset:0;background:#0009;z-index:40;align-items:center;justify-content:center;padding:14px}#dlg .card{width:100%;max-width:420px;margin:0}
+.sec{margin-bottom:14px}.sec>b{display:block;font-size:15px;color:var(--p);margin-bottom:4px}details summary{cursor:pointer;font-weight:600;margin:6px 0}.warn{color:var(--bad)}
+@media (max-width:700px){
+ body{font-size:15px}header h1{font-size:20px}header{padding:12px 8px}header div{font-size:10px}main{padding:8px}
+ .tabs{padding:8px 8px 0;gap:4px}.tabs button{flex:1 1 45%;font-size:12px;padding:9px 6px;border-radius:10px}
+ .tabs button.on{border-bottom:2px solid var(--line)}
+ .card{padding:12px}input,select,textarea{font-size:16px}button,a.btn{padding:12px 14px}.bar>*{flex:1 1 auto}.btns button{padding:9px 10px!important}
+ .sheet{padding:6px;border:0;box-shadow:none;background:transparent}.sheet h2{font-size:11px}.d3{font-size:12px}
+ #scr table,#scr tbody,#scr tr,#scr td,#dn table,#dn tbody,#dn tr,#dn td{display:block;width:100%;min-width:0!important}
+ #scr thead,#dn thead{display:none}
+ #scr tr,#dn tr{position:relative;border:1px solid var(--line);border-radius:12px;margin:8px 0;background:#fff;padding:8px 10px;box-shadow:0 1px 2px #0001}
+ #scr td,#dn td{border:0;text-align:left;padding:3px 0;background:transparent!important;white-space:normal}
+ #scr td[data-l]::before,#dn td[data-l]::before{content:attr(data-l) ': ';font-weight:700;color:#667;font-size:12px}
+ #scr td[data-l=SR],#dn td[data-l=SR]{display:none}
+ #scr td.nm,#dn td.nm{font-size:16px;padding-right:34px}
+ #scr td:first-child:not([data-l]),#dn td:first-child:not([data-l]){position:absolute;top:10px;right:10px;width:auto}
+ #scr tr.grp,#dn tr.grp{background:#e3edf7;border:0;padding:8px 10px}
+ #scr tr.grp td,#dn tr.grp td{font-size:14px;padding:0;position:static!important;width:100%!important}
+ #scr tr.sel,#dn tr.sel{background:#e1f5e9}#scr tr.od,#dn tr.od{background:#fdecea}#scr tr.od td,#dn tr.od td{color:#b0132b}#scr tr.mo,#dn tr.mo{background:#fff4c2}
+ #scr tr.det,#dn tr.det{background:#f6f9fc;margin-top:-6px}
+ #scr tr.det td,#dn tr.det td{padding:0;position:static!important;width:100%!important}
+ #scr td.nx,#dn td.nx{font-weight:700;color:#7a5b00}
+ .dg{grid-template-columns:1fr 1fr}#modal{padding:6px}.chip{flex:1 1 40%;min-width:0}
+}
+@media print{
+ body{background:#fff;font-size:10pt}.noprint,header,.tabs{display:none!important}main{padding:0;max-width:none}
+ .sheet{border:0;box-shadow:none;padding:0;overflow:visible;border-radius:0;margin:0}.sheet h2{font-size:10.5pt;margin-bottom:6px}.d3{font-size:11.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ table{border-collapse:collapse;font-size:8.5pt;min-width:0!important}
+ th{background:var(--p)!important;color:#fff!important;border:1px solid #000;padding:3px 4px;font-size:7.5pt;border-radius:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ td{border:1px solid #444;padding:3px 4px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ #scr{display:none!important}#prt{display:block!important}#dn{display:none!important}#dprt{display:block!important}#dprt table{font-size:8.5pt}#prt table{font-size:9.5pt}
+ #dn>div{overflow:visible!important}#dn table{font-size:7.5pt}#dn th,#dn td{padding:2px 3px}
+ tr{page-break-inside:avoid}tr.grp{break-after:avoid}tr.grp td{font-size:10.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+.dg>div.btns{grid-column:1/-1;border:0;background:none;padding:2px 0 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btns button{padding:6px 11px;font-size:12px;font-weight:600;border-radius:6px;box-shadow:none}
+td.ty{white-space:normal;min-width:130px;max-width:190px}
+</style></head><body>
+<header><h1 class="d3w">Primary Health Centre Pransli</h1><div style="font-size:12px;opacity:.9;letter-spacing:1px">TB FOLLOW-UP TRACKER</div></header>
+<nav class="noprint tabs"><button id="t1" onclick="pg(1)">Patient Info</button><button id="t2" onclick="pg(2)">Follow-up Sheet</button><button id="t3" onclick="pg(3)">Treatment Completed</button><button id="t4" onclick="pg(4)">Worker Numbers</button></nav>
+<main>
+<div id="pg1">
+<div class="card noprint"><b>Add New Patient</b>
+<div class="grid" style="margin-top:6px">
+<div><label>SC NAME (SUB CENTRE)</label><select id="f_sc" onchange="scCh(this)"></select></div>
+<div><label>VILLAGE</label><select id="f_village" onchange="vlCh(this)"></select></div>
+<div><label>NIKSHAY ID</label><input id="f_id"></div>
+<div><label>NAME OF PATIENT</label><input id="f_name"></div>
+<div><label>CONTACT NUMBER</label><input id="f_phone" inputmode="numeric"></div>
+<div><label>SITE OF CASE DEFINITION</label><select id="f_site"><option value="Microbiologically confirmed">Microbiologically confirmed</option><option value="EP TB">EP TB</option></select></div>
+<div><label>TYPE OF PATIENT</label><select id="f_type"><option>NEW</option><option>PT</option></select></div>
+<div><label>DS / MDR</label><select id="f_drug"><option value="DS">DS</option><option value="MDR">MDR</option></select></div>
+<div><label>DATE OF TREATMENT INITIATION</label><span class="dp"><input type="text" readonly placeholder="dd/mm/yyyy"><input type="date" class="dpi" id="f_start" onclick="try{this.showPicker()}catch(e){}" onchange="this.previousElementSibling.value=fromISO(this.value)"></span></div>
+</div>
+<div class="bar"><button id="addbtn" onclick="addP()">Add</button><button id="cancelbtn" class="gray" style="display:none" onclick="cancelEdit()">Cancel</button><span id="msg"></span></div></div>
+
+
+<div class="card noprint"><div class="bar" style="margin:0"><button onclick="backup()">⬇ Download Backup</button><button class="gray" onclick="$('rf').click()">⬆ Restore Backup</button><input id="rf" type="file" accept=".json" style="display:none" onchange="restore(this)"><span id="saved"></span></div></div>
+
+<details class="card noprint"><summary>Message Templates</summary><label>Message – individual patient (with own date)</label><textarea id="tp" rows="4" onchange="saveT()"></textarea>
+<label style="margin-top:10px">Message – common for all patients (sent together)</label><textarea id="tc" rows="3" onchange="saveT()"></textarea>
+<label style="margin-top:10px">Message – worker list heading</label><textarea id="tw" rows="4" onchange="saveT()"></textarea></details>
+
+</div>
+<div id="pg2" style="display:none">
+<div id="stats" class="stats noprint"></div>
+<div class="card noprint"><div class="bar" style="margin:0">
+<label style="display:flex;gap:6px;align-items:center;width:auto">Order within each sub centre:
+<select id="sort" style="width:auto" onchange="render()"><option value="next">By next follow-up date</option><option value="name">By name (A-Z)</option><option value="start">By treatment start date</option></select></label>
+<label style="display:flex;gap:6px;align-items:center;width:auto"><input type="checkbox" style="width:auto" onchange="selAll(this.checked)"> Select all ✔</label>
+</div>
+</div>
+
+<div class="sheet"><h2>Annexure 04 – National TB Elimination Programme<br>Monitoring sheet of follow up sputum examination (DS/DR-TB cases)<br><span class="d3">Primary Health Centre :- Pransli</span></h2>
+<div id="scr"></div><div id="prt"></div></div>
+<div class="card noprint"><div class="bar" style="margin:0"><button class="green" onclick="inform()">INFORM PATIENT AND WORKER</button><button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div></div>
+</div>
+<div id="pg4" style="display:none"><div class="card noprint"><b>Worker Mobile Numbers (Sub Centre wise)</b><div id="wk" style="overflow-x:auto"></div></div></div>
+<div id="pg3" style="display:none"><div class="sheet"><h2 style="margin-bottom:8px">Treatment Completed Patients<br><span class="d3">Primary Health Centre :- Pransli</span></h2><div id="dn"></div><div id="dprt"></div></div>
+<div class="card noprint"><div class="bar" style="margin:0"><label style="display:flex;gap:6px;align-items:center;width:auto"><input type="checkbox" style="width:auto" onchange="selAllDone(this.checked)"> Select all ✔</label><button class="green" onclick="inform(true)">INFORM PATIENT AND WORKER</button><button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div></div></div>
+</main>
+<div id="dlg"><div class="card"><div id="dmsg" style="font-weight:600;margin-bottom:10px"></div><div id="dbody"></div><div class="bar"><button id="dok">OK</button><button id="dno" class="gray">Cancel</button></div></div></div>
+<div id="modal"><div class="card"><b>Send SMS</b>
+<div id="list"></div><button class="gray" onclick="$('modal').style.display='none'">Close</button></div></div>
+<script>
+const $=id=>document.getElementById(id);
+const DEF=[{"id":"334106857","name":"SOLANKI MANISHA KISHAN","village":"KHAMBHA","phone":"7990584895","sc":"KHAMBHA","site":"MICRO BIO.","type":"NEW","start":"2026-02-09","ipDone":"","cpDone":""},{"id":"334043520","name":"BIJAL BOGHA JETHWA","village":"PRANSLI","phone":"6354540852","sc":"PRANSLI","site":"MICRO BIO.","type":"NEW","start":"2026-08-29","ipDone":"","cpDone":""},{"id":"331506863","name":"JODNI NARANJI RANMALJI","village":"KHAMBHA","phone":"8780575810","sc":"KHAMBHA","site":"MICRO BIO.","type":"NEW","start":"2026-08-22","ipDone":"","cpDone":""},{"id":"286318474","name":"PARMAR SONAL JAYSUKH","village":"KHAMBHA","phone":"9714751240","sc":"KHAMBHA","site":"MICRO BIO.","type":"PT","start":"2026-06-22","ipDone":"","cpDone":""},{"id":"304415425","name":"SOLANKI MOMAL KISHAN","village":"KHAMBHA","phone":"9490584895","sc":"KHAMBHA","site":"MICRO BIO.","type":"PT","start":"2026-07-23","ipDone":"","cpDone":""},{"id":"314033688","name":"SOSA PRAVIN AEBHA","village":"PRANSLI","phone":"6354920822","sc":"PRANSLI","site":"MICRO BIO.","type":"NEW","start":"2026-07-23","ipDone":"","cpDone":""},{"id":"311746805","name":"GAUSWAMI RISHIKESHGIRI RAJENDRAGIRI","village":"GHANTIYA","phone":"9429766707","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-07-21","ipDone":"","cpDone":""},{"id":"286966067","name":"VAINSH RAVI RAMSING","village":"PRANSLI","phone":"9316246656","sc":"PRANSLI","site":"MICRO BIO.","type":"NEW","start":"2026-10-07","ipDone":"","cpDone":""},{"id":"272010691","name":"KANA JASABHAI PARMAR","village":"GHANTIYA","phone":"9313914405","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-05-04","ipDone":"","cpDone":""},{"id":"294482323","name":"RATHOD BACHU TABHABHAI","village":"GHANTIYA","phone":"9913516097","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-07-01","ipDone":"","cpDone":""},{"id":"286966067","name":"RAVJI RAMSINGBHAI VANSH","village":"PRANSLI","phone":"9316246656","sc":"PRANSLI","site":"","type":"NEW","start":"2026-07-10","ipDone":"","cpDone":""},{"id":"266291344","name":"HAMIR ARJAN BHOLA","village":"GHANTIYA","phone":"9998070800","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-04-18","ipDone":"","cpDone":""},{"id":"266082243","name":"RANDHEER NONGHAN PARMAR","village":"MAHOBATPARA","phone":"8460773074","sc":"MAHOBATPARA","site":"MICRO BIO.","type":"NEW","start":"2026-04-20","ipDone":"","cpDone":""},{"id":"63231274","name":"JAYSUKH KURJI PARMAR","village":"KHAMBHA","phone":"8799464094","sc":"KHAMBHA","site":"MICRO BIO.","type":"RE","start":"2026-04-21","ipDone":"","cpDone":""},{"id":"260776165","name":"RAANI CHINA BARAD","village":"PRANSLI","phone":"6353984611","sc":"PRANSLI","site":"","type":"NEW","start":"2026-03-17","ipDone":"","cpDone":""},{"id":"260771134","name":"DIVYESH BABU SOLANKI","village":"BHUVAVADA","phone":"9313035454","sc":"RANGPUR","site":"","type":"NEW","start":"2026-03-14","ipDone":"","cpDone":""},{"id":"254700364","name":"NEETA JAGDISH SODHA","village":"GHANTIYA","phone":"6352114395","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-02-17","ipDone":"","cpDone":""},{"id":"251990480","name":"CHUDASAMA HASMUKH ODHAVJI","village":"TIMBDI","phone":"9228902191","sc":"PRANSLI","site":"MICRO BIO.","type":"RE","start":"2026-02-03","ipDone":"","cpDone":""}];
+const DT={p:"નમસ્તે {NAME} ({VILLAGE}), તમારું આગામી ટીબી ફોલોઅપ ({FUP}) તારીખ {DATE} ના રોજ છે. કૃપા કરી તે દિવસે આરોગ્ય કેન્દ્ર પર ગળફાની તપાસ કરાવવા આવશો. - પ્રાઈમરી હેલ્થ સેન્ટર પ્રાસલી",
+c:"નમસ્તે, તમારી ટીબી ફોલોઅપ (ગળફા) તપાસની તારીખ આવી ગઈ છે. કૃપા કરી આરોગ્ય કેન્દ્ર પર ગળફાની તપાસ કરાવવા આવશો. - પ્રાઈમરી હેલ્થ સેન્ટર પ્રાસલી",
+w:"[વર્કર જાણ] નીચેના દર્દીઓનું આગામી ફોલોઅપ છે. કૃપા કરી દર્દીઓને તપાસ માટે લાવશો:"};
+const FOOT="- પ્રાઈમરી હેલ્થ સેન્ટર પ્રાસલી";
+const L=(k,d)=>JSON.parse(localStorage.getItem(k)||'null')||d;
+const MAP=[['PRANSLI','9016146166',['PRANSLI','TIMBDI']],
+['MORADIYA','9537550978',['MORADIYA','KHERA','BHUVATIMBI']],
+['RANGPUR','9274026642',['RANGPUR','PIPALVA','BHUVAVADA']],
+['GHANTIYA','8799483685',['GHANTIYA','PRACHI','ALIDRA']],
+['MAHOBATPARA','9228290979',['MAHOBATPARA','GANGETHA','VASAVAD']],
+['KHAMBHA','9924126473',['KHAMBHA','TOBARA','ANANDPARA']]];
+const V0={},DWK={};MAP.forEach(m=>{DWK[m[0]]=m[1];m[2].forEach(v=>V0[v]=m[0])});
+let P=L('tbData2',DEF),VM=Object.assign({},V0,L('VM2',{})),LS=L('LS2',MAP.map(m=>m[0])),WK=Object.assign({},DWK,L('tbWk2',{})),SEL={};
+P.forEach(p=>{if(p.site==='MICRO BIO.')p.site='Microbiologically confirmed';else if(p.site==='EP')p.site='EP TB'});
+const T=Object.assign({},DT,L('tbT5',{}));$('tp').value=T.p;$('tw').value=T.w;$('tc').value=T.c;
+const saveT=()=>localStorage.setItem('tbT5',JSON.stringify({p:$('tp').value,w:$('tw').value,c:$('tc').value}));
+let warned=false;
+const save=()=>{try{localStorage.setItem('tbData2',JSON.stringify(P));const e=$('saved');if(e)e.textContent='Saved ✔ '+new Date().toLocaleTimeString()}catch(err){if(!warned){warned=true;uiAlert('Browser storage is blocked – data cannot be saved. Do not use private/incognito mode.')}}};
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
+function backup(){const o={};['tbData2','tbWk2','tbT4','LS2','VM2'].forEach(k=>{const v=localStorage.getItem(k);if(v!==null)o[k]=v});if(!o.tbData2)o.tbData2=JSON.stringify(P);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:'application/json'}));a.download='TB_FUP_backup_'+todayISO()+'.json';a.click()}
+function restore(inp){const fl=inp.files[0];if(!fl)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o.tbData2)throw 0;dlg('Restore will replace the current data with this backup. Continue?','','Restore',()=>{Object.keys(o).forEach(k=>localStorage.setItem(k,o[k]));location.reload()})}catch(e){uiAlert('Invalid backup file')}};r.readAsText(fl)}
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+const pd=s=>{if(!s)return null;const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12)};
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const addM=(d,n)=>{const x=new Date(d),day=x.getDate();x.setDate(1);x.setMonth(x.getMonth()+n);x.setDate(Math.min(day,new Date(x.getFullYear(),x.getMonth()+1,0).getDate()));return x};
+const f=(d,y4)=>d?String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear():'';
+const isEP=p=>/^EP/i.test(p.site||'');
+const isMDR=p=>p.drug==='MDR',spec=p=>isEP(p)||isMDR(p);
+const tyL=p=>(p.site||'-')+(isMDR(p)?' (MDR)':'');
+const mAll=p=>{for(let k=1;k<=9;k++)if(!p['mo'+k+'d'])return false;return true};
+const cntMo=p=>{let c=0;for(let k=1;k<=9;k++)if(p['mo'+k+'d'])c++;return c};
+const iso8=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const hasF=p=>isEP(p)?!!p.fupDate:(isMDR(p)&&!!p.cpDone);
+const endOf=p=>p.extUntil?pd(p.extUntil):(p.start?(isMDR(p)&&!isEP(p)?addM(pd(p.start),9):addD(pd(p.start),168)):null);
+const isDone=p=>{if(p.done)return true;if(p.restored)return false;
+ if(spec(p)){const t=new Date();t.setHours(0,0,0,0);if(p.extUntil)return pd(p.extUntil)<=t;if(isEP(p)&&p.start)return addD(pd(p.start),168)<=t;if(isMDR(p)&&p.start)return mAll(p);return false}
+ return !!p.cpDone};
+function dp(val,oc,max){return `<span class="dp"><input type="text" readonly placeholder="dd/mm/yyyy" value="${fromISO(val)}"><input type="date" class="dpi" ${max?'max="'+max+'"':''} value="${val||''}" onclick="try{this.showPicker()}catch(e){}" onchange="${oc}"></span>`}
+function dm(el){let v=el.value.replace(/\D/g,'').slice(0,8);if(v.length>4)v=v.slice(0,2)+'/'+v.slice(2,4)+'/'+v.slice(4);else if(v.length>2)v=v.slice(0,2)+'/'+v.slice(2);el.value=v}
+function toISO(t){const m=/^(\d{2})\/(\d{2})\/(\d{4})$/.exec((t||'').trim());if(!m)return null;const d=new Date(+m[3],+m[2]-1,+m[1],12);if(d.getMonth()!==+m[2]-1||d.getDate()!==+m[1])return null;return m[3]+'-'+m[2]+'-'+m[1]}
+const fromISO=i=>i?i.slice(8)+'/'+i.slice(5,7)+'/'+i.slice(0,4):'';
+const todayISO=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+function dates(p){if(!p.start||isEP(p))return {};if(isMDR(p)){const st=pd(p.start),mo=[1,2,3,4,5,6,7,8,9].map(k=>addM(st,k)),cb=p.mo9d?pd(p.mo9d):mo[8];return {mo,m6:addM(cb,6),m12:addM(cb,12),m18:addM(cb,18),m24:addM(cb,24)}}const ip=addD(pd(p.start),56),cp=addD(ip,112),cb=p.cpDone?pd(p.cpDone):cp;return {ip,cp,m6:addM(cb,6),m12:addM(cb,12),m18:addM(cb,18),m24:addM(cb,24)}}
+const NAMES={ip:'IP ફોલોઅપ',cp:'CP ફોલોઅપ',m6:'6 મહિનાનું ફોલોઅપ',m12:'12 મહિનાનું ફોલોઅપ',m18:'18 મહિનાનું ફોલોઅપ',m24:'24 મહિનાનું ફોલોઅપ'};
+for(let k=1;k<=9;k++){NAMES['mo'+k]='માસિક ફોલોઅપ '+k+'/9'}
+const FEN={ip:'IP Follow-up',cp:'CP Follow-up',m6:'6 Month',m12:'12 Month',m18:'18 Month',m24:'24 Month'};for(let k=1;k<=9;k++)FEN['mo'+k]='Monthly '+k+'/9';
+function nxtDone(p){const d=dates(p);if(!d.m6)return null;for(const k of['m6','m12','m18','m24'])if(!p[k+'d'])return{k,d:d[k]};return null}
+function stOf(p){const nd=nxtDone(p);if(!nd)return '';const t=new Date();t.setHours(0,0,0,0);if(nd.d<t)return 'od';return(nd.d.getFullYear()===t.getFullYear()&&nd.d.getMonth()===t.getMonth())?'mo':''}
+function nxt(p){const t0=new Date();t0.setHours(0,0,0,0);if(spec(p)&&p.extUntil&&pd(p.extUntil)>t0)return null;const d=dates(p);if(isMDR(p)){if(!d.mo)return null;for(let k=1;k<=9;k++)if(!p['mo'+k+'d'])return{k:'mo'+k,d:d.mo[k-1]};return null}if(!d.ip)return null;if(!p.ipDone)return{k:'ip',d:d.ip};if(!p.cpDone)return{k:'cp',d:d.cp};
+ const t=new Date();t.setHours(0,0,0,0);for(const k of['m6','m12','m18','m24'])if(d[k]>=t)return{k,d:d[k]};return null}
+function fillSel(id,list,v){const s=$(id);s.innerHTML='<option value="">-- Select --</option>'+list.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')+'<option value="__new">➕ Add new</option>';s.value=v||''}
+function fillVil(){const sc=$('f_sc').value,v=$('f_village').value,ok=sc&&sc!=='__new',l=ok?Object.keys(VM).filter(x=>VM[x]===sc):[];fillSel('f_village',l,l.includes(v)?v:'');$('f_village').disabled=!ok}
+function scCh(s){if(s.value!=='__new'){fillVil();return}
+ dlg('Enter new sub centre name','<input id="dinp" autocapitalize="characters">','Add',()=>{const n=($('dinp').value||'').trim().toUpperCase();if(n&&!LS.includes(n)){LS.push(n);localStorage.setItem('LS2',JSON.stringify(LS))}fillSel('f_sc',LS,n);renderWk();fillVil()});
+ fillSel('f_sc',LS,'');fillVil()}
+function vlCh(s){if(s.value!=='__new')return;const sc=$('f_sc').value;
+ dlg('Enter new village name for '+sc,'<input id="dinp" autocapitalize="characters">','Add',()=>{const n=($('dinp').value||'').trim().toUpperCase();if(n){VM[n]=sc;const x=L('VM2',{});x[n]=sc;localStorage.setItem('VM2',JSON.stringify(x))}fillVil();$('f_village').value=n||''});
+ fillVil()}
+function initSel(){fillSel('f_sc',LS,'');fillVil();renderWk()}
+function renderWk(){$('wk').innerHTML='<table class="st wt"><thead><tr><th>#</th><th>SC NAME (SUB CENTRE)</th><th>WORKER MOBILE NUMBER</th></tr></thead><tbody>'+LS.map((s,n)=>`<tr><td>${n+1}</td><td class="l"><b>${esc(s)}</b></td><td><input inputmode="numeric" maxlength="10" placeholder="10 digit number" value="${esc(WK[s]||'')}" onchange="WK['${esc(s)}']=this.value;localStorage.setItem('tbWk2',JSON.stringify(WK))"></td></tr>`).join('')+'</tbody></table>'}
+function order(){const idx=P.map((_,i)=>i),m=$('sort').value;
+ const key={next:i=>{const n=nxt(P[i]);return n?n.d.getTime():9e15},sc:i=>(P[i].sc||'~')+(P[i].village||'')+P[i].name,name:i=>P[i].name,start:i=>P[i].start};
+ return idx.sort((a,b)=>{const x=key[m](a),y=key[m](b);return x<y?-1:x>y?1:0})}
+const OPEN={};
+const grpLabel=n=>n?esc(n):'NO SUB CENTRE';
+function groups(dn){const ord=order(),names=[...LS];P.forEach(p=>{if(p.sc&&!names.includes(p.sc))names.push(p.sc)});names.push('');
+ return names.map(n=>({n,idx:ord.filter(i=>!!isDone(P[i])===!!dn&&(P[i].sc||'')===n)})).filter(g=>g.idx.length)}
+function dlg(msg,body,ok,cb,single){$('dmsg').textContent=msg;$('dbody').innerHTML=body||'';$('dok').textContent=ok||'OK';$('dno').style.display=single?'none':'';$('dlg').style.display='flex';
+ $('dok').onclick=()=>{$('dlg').style.display='none';if(cb)cb()};$('dno').onclick=()=>{$('dlg').style.display='none'}}
+const uiAlert=m=>dlg(m,'','OK',null,true),uiConfirm=(m,cb)=>dlg(m,'','Yes',cb);
+function setAct(i,k,e){const iso=e.value;if(iso&&iso>todayISO()){uiAlert('A date later than today cannot be entered');render();return}
+ if(k==='cpDone')P[i].restored=false;
+ P[i][k]=iso;save();render();if(k==='cpDone'&&iso&&isDone(P[i]))uiAlert(P[i].name+': CP follow-up done. Patient moved to Treatment Completed.')}
+function fin(i,v){if(!v){P[i].done=false;P[i].cpDone='';P[i].fupDate='';P[i].restored=true;SEL[i]=false;save();render();return}
+ uiConfirm(P[i].name+': treatment completed? Patient will move to Treatment Completed.',()=>{P[i].done=true;SEL[i]=false;save();render()})}
+function extendP(i){const p=P[i];let o='';for(let m=1;m<=12;m++)o+=`<option value="${m}"${m==3?' selected':''}>${m} month${m>1?'s':''}</option>`;
+ dlg('Extend treatment of '+p.name+' by:','<select id="dinp">'+o+'</select>','Extend',()=>{const n=+$('dinp').value||3,t=new Date();t.setHours(12,0,0,0);const e=endOf(p)||t,b=e>t?e:t;
+  p.extUntil=iso8(addM(b,n));p.restored=false;p.done=false;save();render();setTimeout(()=>uiAlert(p.name+': treatment extended until '+f(pd(p.extUntil),1)),50)})}
+function unext(i){delete P[i].extUntil;save();render()}
+function tg(i){OPEN[i]=!OPEN[i];render()}
+const monthly=(i,p,d,hi)=>d.mo?d.mo.map((dt,k)=>`<div class="${hi('mo'+(k+1))}"><span>MONTH ${k+1} FOLLOW-UP – due ${f(dt,1)}</span>${dp(p['mo'+(k+1)+'d'],`setAct(${i},'mo${k+1}d',this)`,todayISO())}</div>`).join(''):'';
+function mkTable(dn){const today=new Date();today.setHours(0,0,0,0);const tmr=new Date(today);tmr.setDate(tmr.getDate()+1);let cnt=0,ovn=0;
+ let h='<table class="st"><thead><tr><th class="noprint">✔</th><th>SR</th><th>NAME OF PATIENT</th><th>VILLAGE</th><th>PATIENT TYPE</th><th>DATE OF TREATMENT INITIATION</th><th>NEXT FOLLOW-UP DATE</th><th>FOLLOW-UP</th></tr></thead><tbody>';
+ groups(dn).forEach(g=>{h+=`<tr class="grp"><td colspan="8">${grpLabel(g.n)} <small>(${g.idx.length})</small></td></tr>`;
+  g.idx.forEach((i,n)=>{const p=P[i],d=dates(p),nx=dn?nxtDone(p):nxt(p),op=OPEN[i];
+   const st=dn?stOf(p):((nx&&nx.d<tmr)?'od':'');cnt++;if(st==='od')ovn++;
+   const hi=k=>(nx&&nx.k===k)?'nx'+(st==='od'?' due':''):'';
+   const it=(l,v,k)=>`<div class="${k?hi(k):''}"><span>${l}</span>${v||'-'}</div>`;
+   h+=`<tr class="${SEL[i]?'sel':''} ${st}"><td class="noprint"><input type="checkbox" style="width:auto" ${SEL[i]?'checked':''} onchange="SEL[${i}]=this.checked;render()"></td>
+    <td data-l="SR">${n+1}</td><td class="l nm" onclick="tg(${i})">${op?'▾':'▸'} ${esc(p.name)}</td><td data-l="Village">${esc(p.village)}</td><td data-l="Patient type" class="ty">${esc(tyL(p))}</td><td data-l="Treatment start">${f(pd(p.start),1)}</td><td data-l="Next follow-up">${nx?f(nx.d,1):'-'}</td><td data-l="Follow-up">${nx?FEN[nx.k]:(p.extUntil?'Treatment extended':'-')}</td></tr>`;
+   if(op){let mid;
+    if(dn)mid=((isMDR(p)&&!isEP(p))?monthly(i,p,d,hi):`${it('IP DONE ON',p.ipDone?f(pd(p.ipDone),1):'-')}${it('CP DONE ON',p.cpDone?f(pd(p.cpDone),1):'-')}`)+['m6','m12','m18','m24'].map(k=>`<div class="${hi(k)}"><span>${k.slice(1)} MONTH – due ${f(d[k],1)||'-'}</span>${d[k]?dp(p[k+'d'],`setAct(${i},'${k}d',this)`,todayISO()):'-'}</div>`).join('');
+    else mid=(isMDR(p)&&!isEP(p))?monthly(i,p,d,hi):isEP(p)?`<div><span>TREATMENT END DATE</span>${endOf(p)?f(endOf(p),1):'-'}</div><div><span>FOLLOW-UP DATE (EP TB)</span>${dp(p.fupDate,`setAct(${i},'fupDate',this)`,todayISO())}</div>`:`${it('IP FUP DATE (+56 days)',f(d.ip,1),'ip')}${it('CP FUP DATE (+112 days after IP)',f(d.cp,1),'cp')}
+    <div><span>ACTUAL IP DONE</span>${dp(p.ipDone,`setAct(${i},'ipDone',this)`,todayISO())}</div>
+    <div><span>ACTUAL CP DONE</span>${dp(p.cpDone,`setAct(${i},'cpDone',this)`,todayISO())}</div>`;
+    h+=`<tr class="det"><td colspan="8"><div class="dg">${it('NIKSHAY ID',esc(p.id))}${it('CONTACT NO.',esc(p.phone))}${it('SC NAME',esc(p.sc))}${it('SITE OF CASE DEFINITION',esc(p.site))}${it('TYPE OF PATIENT',esc(p.type))}${it('DS / MDR',esc(p.drug))}
+    ${mid}
+    ${p.extUntil?`<div class="nx"><span>TREATMENT EXTENDED UNTIL</span>${f(pd(p.extUntil),1)}</div>`:''}
+    <div class="btns">${spec(p)?`<button class="green" onclick="extendP(${i})">➕ Extend Treatment</button> `:''}${spec(p)&&!dn?`<button class="green" onclick="fin(${i},true)">✔ Completed</button> `:''}${p.extUntil?`<button class="gray" onclick="unext(${i})">Remove extension</button> `:''}${dn?`<button class="gray" onclick="fin(${i},false)">↩ Restore</button> `:''}<button class="gray" onclick="editP(${i})">✎ Edit</button> <button class="red" onclick="del(${i})">✖ Delete</button></div></div></td></tr>`}})});
+ return {h:h+'</tbody></table>',cnt,ovn}}
+function render(){const a=mkTable(false),b=mkTable(true),tmr=new Date();tmr.setHours(0,0,0,0);
+ $('scr').innerHTML=a.h;$('dn').innerHTML=b.cnt?b.h:'<p style="text-align:center">No patients</p>';
+ $('t3').textContent='Treatment Completed ('+b.cnt+')';
+ $('stats').innerHTML=`<div class="chip"><b>${a.cnt}</b><span>Active patients</span></div><div class="chip r"><b>${a.ovn}</b><span>Follow-up due / overdue</span></div><div class="chip g"><b>${b.cnt}</b><span>Treatment completed</span></div>`;
+ const D=d=>d?f(d,1):'-';
+ let q='<table class="pt"><thead><tr><th>SR</th><th>NAME OF PATIENT</th><th>NIKSHAY ID</th><th>VILLAGE</th><th>SITE OF CASE DEFINITION</th><th>DATE OF TREATMENT INITIATION</th><th>IP FUP DATE</th><th>CP FUP DATE</th></tr></thead><tbody>';
+ groups(false).forEach(g=>{q+=`<tr class="grp"><td colspan="8">${grpLabel(g.n)} (${g.idx.length})</td></tr>`;g.idx.forEach((i,n)=>{const p=P[i],d=dates(p),nx=nxt(p);
+  q+=`<tr class="${nx&&nx.d<=tmr?'od':''}"><td>${n+1}</td><td class="l">${esc(p.name)}</td><td>${esc(p.id)}</td><td>${esc(p.village)}</td><td>${esc(tyL(p))}</td><td>${f(pd(p.start),1)}</td>${(isMDR(p)&&!isEP(p))?`<td colspan="2">MDR monthly – next: ${nx?f(nx.d,1):'-'}</td>`:`<td>${D(d.ip)}</td><td>${D(d.cp)}</td>`}</tr>`})});
+ $('prt').innerHTML=q+'</tbody></table>';
+ let r='<table class="pt"><thead><tr><th>SR</th><th>NAME OF PATIENT</th><th>NIKSHAY ID</th><th>VILLAGE</th><th>SITE</th><th>START DATE</th><th>IP DONE</th><th>CP DONE</th><th>6 MONTH</th><th>12 MONTH</th><th>18 MONTH</th><th>24 MONTH</th></tr></thead><tbody>';
+ groups(true).forEach(g=>{r+=`<tr class="grp"><td colspan="12">${grpLabel(g.n)} (${g.idx.length})</td></tr>`;g.idx.forEach((i,n)=>{const p=P[i],d=dates(p);
+  r+=`<tr class="${stOf(p)}"><td>${n+1}</td><td class="l">${esc(p.name)}</td><td>${esc(p.id)}</td><td>${esc(p.village)}</td><td>${esc(tyL(p))}</td><td>${f(pd(p.start),1)}</td>${(isMDR(p)&&!isEP(p))?`<td colspan="2">Monthly done ${cntMo(p)}/9</td>`:`<td>${p.ipDone?f(pd(p.ipDone),1):'-'}</td><td>${p.cpDone?f(pd(p.cpDone),1):'-'}</td>`}`+['m6','m12','m18','m24'].map(k=>`<td>${D(d[k])}${p[k+'d']?' ✓':''}</td>`).join('')+'</tr>'})});
+ $('dprt').innerHTML=r+'</tbody></table>'}
+function pg(n){[1,2,3,4].forEach(k=>{$('pg'+k).style.display=n==k?'block':'none';$('t'+k).className=n==k?'on':''});if(n>1)render();window.scrollTo(0,0)}
+let EDIT=null;
+function clearForm(){['id','name','phone','start'].forEach(k=>$('f_'+k).value='');$('f_start').previousElementSibling.value='';$('addbtn').textContent='Add';$('cancelbtn').style.display='none';$('msg').textContent=''}
+function cancelEdit(){EDIT=null;clearForm()}
+function editP(i){const p=P[i];EDIT=i;pg(1);
+ $('f_name').value=p.name;$('f_id').value=p.id;$('f_phone').value=p.phone;
+ if(p.sc&&!LS.includes(p.sc))LS.push(p.sc);if(p.village&&!VM[p.village])VM[p.village]=p.sc;
+ fillSel('f_sc',LS,p.sc);fillVil();$('f_village').value=p.village;
+ $('f_site').value=p.site||'Microbiologically confirmed';
+ if(![...$('f_type').options].some(o=>o.value===p.type)){const o=document.createElement('option');o.textContent=p.type;$('f_type').appendChild(o)}
+ $('f_type').value=p.type;$('f_drug').value=p.drug||'DS';$('f_start').value=p.start;$('f_start').previousElementSibling.value=fromISO(p.start);
+ $('addbtn').textContent='Update';$('cancelbtn').style.display='';$('msg').textContent='Editing: '+p.name}
+function addP(){const g=k=>$('f_'+k).value.trim();
+ if(!g('name')||!g('start')||!g('phone')||!g('sc')||!g('village')||g('village')==='__new'){$('msg').textContent='Select sub centre and village, and enter name, number and start date';return}
+ const o={id:g('id'),name:g('name').toUpperCase(),village:g('village'),phone:g('phone'),sc:g('sc'),site:g('site'),type:g('type'),drug:g('drug'),start:g('start')};
+ const upd=EDIT!==null;if(upd){Object.assign(P[EDIT],o);EDIT=null}else P.push(Object.assign(o,{ipDone:'',cpDone:''}));
+ save();render();clearForm();$('msg').textContent=upd?'Updated ✔':'Added ✔'}
+function del(i){uiConfirm(P[i].name+': delete this patient?',()=>{P.splice(i,1);SEL={};for(const k in OPEN)delete OPEN[k];save();render()})}
+function selAllDone(v){P.forEach((p,i)=>{if(isDone(p))SEL[i]=v});render()}
+function selAll(v){P.forEach((p,i)=>SEL[i]=v&&!isDone(p));render()}
+const num=s=>{const d=String(s||'').replace(/\D/g,'');return d.length>=10?'+91'+d.slice(-10):''};
+const fillT=(t,p,n)=>t.replace(/\{(\w+)\}/g,(a,k)=>({NAME:p.name,VILLAGE:p.village,PHONE:p.phone,FUP:NAMES[n.k],DATE:f(n.d,1)})[k]??a);
+const smsLink=(n,t)=>'sms:'+n+(/iPhone|iPad/.test(navigator.userAgent)?'&':'?')+'body='+encodeURIComponent(t);
+function inform(dn){const sel=P.map((p,i)=>i).filter(i=>SEL[i]&&isDone(P[i])===!!dn);if(!sel.length){uiAlert('Please tick (✔) the patients first');return}
+ const W={},pts=[],skip=[];
+ sel.forEach(i=>{const p=P[i],n=dn?nxtDone(p):nxt(p);if(!n){skip.push(p.name);return}
+  pts.push({p,t:fillT($('tp').value,p,n)});(W[p.sc||'']=W[p.sc||'']||[]).push(p.name+' ('+p.village+', '+p.phone+') – '+NAMES[n.k]+' – '+f(n.d,1))});
+ const lst=a=>a.map((x,k)=>(k+1)+') '+x).join('\n'),head=$('tw').value;
+ const wl=Object.keys(W).map(sc=>({sc,nm:num(WK[sc]),c:W[sc].length,t:head+'\n'+lst(W[sc])+'\n'+FOOT}));
+ const allW=head+'\n'+Object.keys(W).map(sc=>'['+(sc||'NO SC')+']\n'+lst(W[sc])).join('\n')+'\n'+FOOT;
+ const wn=[...new Set(wl.map(x=>x.nm).filter(Boolean))],pn=[...new Set(pts.map(x=>num(x.p.phone)).filter(Boolean))],common=$('tc').value;
+ const cp=t=>`<button class="gray" onclick="navigator.clipboard&&navigator.clipboard.writeText(${esc(JSON.stringify(t))})">Copy</button>`;
+ const A=(n,t,l,c)=>`<a class="btn ${c||''}" href="${smsLink(n,t)}">${l}</a>`,nonum='<span class="warn">(no number)</span>';
+ let h=`<div class="sec"><b>Workers (${wl.length})</b>`+(wn.length?`<div class="bar" style="margin:6px 0">${A(wn.join(','),allW,'📨 Send to ALL workers together','green')}${cp(allW)}</div>`:'')
+  +`<details><summary>Message for each worker</summary>`+wl.map(w=>`<div class="item"><b>${esc(w.sc||'NO SC')}</b> – ${w.nm||nonum} · ${w.c} patient${w.c>1?'s':''}<pre>${esc(w.t)}</pre>${w.nm?A(w.nm,w.t,'Open SMS'):''} ${cp(w.t)}</div>`).join('')+'</details></div>';
+ h+=`<div class="sec"><b>Patients (${pts.length})</b>`+(pn.length?`<div class="bar" style="margin:6px 0">${A(pn.join(','),common,'📨 Send to ALL patients together','green')}${cp(common)}</div><small>Same message for all (without individual dates)</small>`:'')
+  +`<details><summary>Message with each patient's own date</summary>`+pts.map(x=>{const nm=num(x.p.phone);return `<div class="item"><b>${esc(x.p.name)}</b> ${nm||nonum}<pre>${esc(x.t)}</pre>${nm?A(nm,x.t,'Open SMS'):''} ${cp(x.t)}</div>`}).join('')+'</details></div>';
+ if(skip.length)h+=`<p class="warn">No follow-up pending: ${esc(skip.join(', '))}</p>`;
+ $('list').innerHTML=h;$('modal').style.display='block'}
+function exportCsv(){const h=['SR','NIKSHAY ID','NAME','VILLAGE','CONTACT','SC','SITE','TYPE','START','IP','CP','6M','12M','18M','24M','IP DONE','CP DONE'];
+ const rows=order().map((i,n)=>{const p=P[i],d=dates(p);return [n+1,p.id,p.name,p.village,p.phone,p.sc,p.site,p.type,f(pd(p.start),1),f(d.ip,1),f(d.cp,1),f(d.m6,1),f(d.m12,1),f(d.m18,1),f(d.m24,1),p.ipDone,p.cpDone]});
+ const csv='\ufeff'+[h,...rows].map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='TB_FUP.csv';a.click()}
+
+const pesc=t=>String(t==null?'':t).replace(/[^\x20-\x7E]/g,'?').replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)');
+function pdfBuild(pgs){const W=842,H=595,o=[];o[1]='<< /Type /Catalog /Pages 2 0 R >>';
+ o[3]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>';o[4]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>';
+ const kids=[];pgs.forEach((c,i)=>{const a=5+i*2,b=6+i*2;kids.push(a+' 0 R');o[a]=`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${b} 0 R >>`;o[b]=`<< /Length ${c.length} >>\nstream\n${c}\nendstream`});
+ o[2]=`<< /Type /Pages /Kids [${kids.join(' ')}] /Count ${kids.length} >>`;
+ let out='%PDF-1.4\n';const off=[];for(let i=1;i<o.length;i++){off[i]=out.length;out+=`${i} 0 obj\n${o[i]}\nendobj\n`}
+ const x=out.length;out+=`xref\n0 ${o.length}\n0000000000 65535 f \n`+off.slice(1).map(v=>String(v).padStart(10,'0')+' 00000 n \n').join('')+`trailer\n<< /Size ${o.length} /Root 1 0 R >>\nstartxref\n${x}\n%%EOF`;
+ const u=new Uint8Array(out.length);for(let i=0;i<out.length;i++)u[i]=out.charCodeAt(i)&255;return new Blob([u],{type:'application/pdf'})}
+function pdfReport(){const W=842,H=595,M=24,RH=15,BL=[.06,.24,.39];let pages=[],c='',y=0,cols=[],title='',tw=0;
+ const T=(x,yy,s,fs,b,rgb)=>`BT /F${b?2:1} ${fs} Tf ${(rgb||[0,0,0]).join(' ')} rg ${x} ${yy} Td (${pesc(s)}) Tj ET\n`;
+ const Rc=(x,yy,w,h,rgb)=>`${rgb.join(' ')} rg ${x} ${yy} ${w} ${h} re f\n`;
+ const Ln=(x1,y1,x2,y2)=>`0.8 G 0.5 w ${x1} ${y1} m ${x2} ${y2} l S\n`;
+ const fit=(s,w,fs)=>{s=String(s==null?'':s);const n=Math.floor((w-4)/(fs*.62));return s.length>n?s.slice(0,Math.max(n-1,1))+'.':s};
+ const hdr=()=>{let x=M;c+=Rc(M,y-RH,tw,RH,BL);cols.forEach(k=>{c+=T(x+2,y-RH+4.5,k.h,6.5,1,[1,1,1]);x+=k.w});y-=RH};
+ const page=()=>{if(c)pages.push(c);c='';y=H-M;c+=T(M,y-12,'Primary Health Centre :- Pransli',14,1,BL);c+=T(M,y-25,title+'   |   Generated on '+f(new Date()),8,0,[.35,.35,.35]);y-=34;hdr()};
+ const table=(t,cs,gs)=>{title=t;cols=cs;tw=cs.reduce((a,k)=>a+k.w,0);page();
+  if(!gs.length){c+=T(M,y-14,'No patients',9,0)}
+  gs.forEach(g=>{if(y-2*RH<M)page();c+=Rc(M,y-RH,tw,RH,[.89,.93,.97]);c+=T(M+3,y-RH+4.5,g.label,8,1,BL);y-=RH;
+   g.rows.forEach(r=>{if(y-RH<M)page();let x=M;cols.forEach((k,j)=>{c+=T(x+2,y-RH+4.5,fit(r.c[j],k.w,7),7,0,r.red?[.75,.07,.17]:[0,0,0]);x+=k.w});c+=Ln(M,y-RH,M+tw,y-RH);y-=RH})})};
+ const tmr=new Date();tmr.setHours(0,0,0,0);tmr.setDate(tmr.getDate()+1);
+ const site=p=>(isEP(p)?'EP TB':(p.site?'Micro.conf.':''))+(isMDR(p)?' (MDR)':'');const D=d=>d?f(d,1):'-',I=v=>v?f(pd(v),1):'-';
+ const A=groups(false).map(g=>({label:(g.n||'NO SUB CENTRE')+'  ('+g.idx.length+')',rows:g.idx.map((i,n)=>{const p=P[i],d=dates(p),nx=nxt(p);return {red:nx&&nx.d<tmr,c:[n+1,p.name,p.id,p.village,p.phone,site(p),p.type,I(p.start),(isMDR(p)&&!isEP(p))?'Monthly':D(d.ip),(isMDR(p)&&!isEP(p))?'9 monthly':D(d.cp),(isMDR(p)&&!isEP(p))?cntMo(p)+'/9 done':I(p.ipDone),(isMDR(p)&&!isEP(p))?'-':I(p.cpDone),nx?f(nx.d,1):'-',nx?FEN[nx.k]:(p.extUntil?'Extended':'-')]}})}));
+ table('Follow-up Sheet (Active Patients)',[{h:'SR',w:20},{h:'NAME OF PATIENT',w:142},{h:'NIKSHAY ID',w:58},{h:'VILLAGE',w:62},{h:'CONTACT',w:56},{h:'SITE',w:78},{h:'TYPE',w:26},{h:'START DATE',w:48},{h:'IP FUP',w:48},{h:'CP FUP',w:48},{h:'ACTUAL IP',w:48},{h:'ACTUAL CP',w:48},{h:'NEXT FUP',w:48},{h:'FOLLOW-UP',w:58}],A);
+ const B=groups(true).map(g=>({label:(g.n||'NO SUB CENTRE')+'  ('+g.idx.length+')',rows:g.idx.map((i,n)=>{const p=P[i],d=dates(p);return {c:[n+1,p.name,p.id,p.village,p.sc,site(p),I(p.start),(isMDR(p)&&!isEP(p))?cntMo(p)+'/9 monthly':I(p.ipDone),(isMDR(p)&&!isEP(p))?'-':I(p.cpDone),D(d.m6),D(d.m12),D(d.m18),D(d.m24)]}})}));
+ table('Treatment Completed Patients',[{h:'SR',w:20},{h:'NAME OF PATIENT',w:150},{h:'NIKSHAY ID',w:58},{h:'VILLAGE',w:70},{h:'SC NAME',w:66},{h:'SITE',w:70},{h:'START DATE',w:48},{h:'IP DONE',w:48},{h:'CP DONE',w:48},{h:'6 MONTH',w:48},{h:'12 MONTH',w:48},{h:'18 MONTH',w:48},{h:'24 MONTH',w:48}],B);
+ pages.push(c);return pdfBuild(pages)}
+function dlPDF(b,name){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click()}
+function downloadPDF(){dlPDF(pdfReport(),'TB_FUP_'+todayISO()+'.pdf')}
+async function sharePDF(){const b=pdfReport(),name='TB_FUP_'+todayISO()+'.pdf',file=new File([b],name,{type:'application/pdf'});
+ if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:'TB Follow-up List - PHC Pransli',text:'TB follow-up and treatment completed patient list.'});return}catch(e){if(e&&e.name==='AbortError')return}}
+ dlPDF(b,name);location.href='mailto:?subject='+encodeURIComponent('TB Follow-up List - PHC Pransli')+'&body='+encodeURIComponent('Please find the attached PDF ('+name+').')}
+if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
+window.addEventListener('error',e=>{try{uiAlert('Error: '+e.message)}catch(_){}});
+initSel();render();pg(1);
+</script></body></html>

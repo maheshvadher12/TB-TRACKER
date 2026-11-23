@@ -1,0 +1,7 @@
+{
+  "appId": "in.phcpransli.tbfuptracker.app26",
+  "appName": "TB FUP Tracker",
+  "webDir": "www",
+  "backgroundColor": "#0f3d63",
+  "android": { "allowMixedContent": false }
+}
