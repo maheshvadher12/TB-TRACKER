@@ -24,7 +24,7 @@
   async function token(force) {
     if (!force && tok && Date.now() - tokAt < 45 * 60000) return tok;
     if (WEB_CLIENT_ID.indexOf('PASTE_') === 0)
-      throw new Error('Google Drive is not set up yet. Add the client ID in www/gdrive.js (see GOOGLE_DRIVE_SETUP.md) and rebuild the app.');
+      throw new Error('Google Drive is not set up in this app version yet.');
     var G = plugin();
     if (!G) throw new Error('Google sign-in is not available in this build.');
     try { await G.initialize({ clientId: WEB_CLIENT_ID, scopes: [SCOPE], grantOfflineAccess: false }); } catch (e) {}

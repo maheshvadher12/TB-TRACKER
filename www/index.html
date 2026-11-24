@@ -330,6 +330,29 @@ button.green:active,button.gray:active,button.red:active,main button:not([class]
 .rt td.z{color:#a9b6c3;font-weight:500}
 .rt tr.cl{cursor:pointer}
 #lockinfo b.lk{color:var(--bad)}#lockinfo b.ul{color:var(--ok)}.rt tr.cl:active td{background:#f1f6fb}
+
+/* ===== v9: uniform spacing / alignment ===== */
+details.card>*:not(summary)+*{margin-top:12px!important}
+details.card .bar{gap:12px}
+details.card .bar>button{flex:1 1 140px;min-height:48px;margin:0}
+details.card .fsec{margin:0}
+details.card .grid{gap:12px}
+.yrg>div:nth-child(4){grid-column:1/-1}
+details.card .tb2{margin:0}
+details.card>button{display:block;width:calc(100% - 2*var(--pad))}
+#pwcard .tb2 span{text-transform:none;letter-spacing:0;font-size:14px}
+#accinfo .an{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+#accinfo .pill{margin:0}
+#accinfo:empty{display:none}
+#accinfo .ar{padding:10px 0}
+#accinfo .rs{gap:10px}
+/* bottom nav: Add New Pt is a normal tab (after Dashboard) */
+.bnav{align-items:stretch}
+.bnav button{justify-content:center}
+.bnav .add{margin-top:0}
+.fab{width:auto;height:auto;background:none;box-shadow:none;border:0;border-radius:0;color:inherit}
+.bnav .fab svg{width:23px;height:23px;stroke-width:2;color:inherit}
+.bnav .add.on::after{display:block}
 </style></head><body>
 <div id="splash">
  <div class="sp-bg"></div><div class="sp-dots"><i></i><i></i><i></i><i></i></div>
@@ -428,7 +451,7 @@ button.green:active,button.gray:active,button.red:active,main button:not([class]
     <label class="tb2"><span>Ask password to change Settings</span><input type="checkbox" id="lockchk" onchange="lockToggle(this)"></label>
   <div class="fsec">Change / reset password</div>
   <div class="grid"><div><label>Old password</label><input id="pw_o" type="password" autocomplete="off"></div><div><label>New password</label><input id="pw_n" type="password" autocomplete="off"></div><div><label>Confirm new password</label><input id="pw_c" type="password" autocomplete="off"></div></div>
-  <button onclick="pwChange()" style="width:100%;margin-top:12px">Save new password</button></details>
+  <button onclick="pwChange()">Save new password</button></details>
  <details class="card"><summary>Worker Mobile Numbers</summary><div id="wk"></div></details>
  <details class="card" id="yrcard" ontoggle="if(this.open)yrFill()"><summary>Year-wise Patient Report</summary>
   <div class="yrg">
@@ -442,12 +465,12 @@ button.green:active,button.gray:active,button.red:active,main button:not([class]
  </details>
   <details class="card" id="acccard" ontoggle="if(this.open)accInfo()"><summary>Google Accounts (Drive)</summary>
   <div id="accinfo"></div>
-  <div class="bar" style="margin-top:12px"><button onclick="gate(accAdd)" style="flex:1 1 100%">➕ Add Google account</button></div></details>
+  <div class="bar"><button onclick="gate(accAdd)">➕ Add Google account</button></div></details>
   <details class="card"><summary>Backup &amp; Restore (Google Drive)</summary>
-  <div class="bar"><button onclick="backup()" style="flex:1 1 150px">☁ Backup to Google Drive</button><button class="gray" onclick="gate(restoreMenu)" style="flex:1 1 150px">☁ Restore from Google Drive</button></div>
-  <div class="bar" style="margin-top:8px"><button onclick="gate(()=>$('rf').click())" style="flex:1 1 100%">⬆ Import data from JSON file (one-time)</button><input id="rf" type="file" accept=".json,application/json" style="display:none" onchange="importJson(this)"></div>
+  <div class="bar"><button onclick="backup()">☁ Backup to Google Drive</button><button class="gray" onclick="gate(restoreMenu)">☁ Restore from Google Drive</button></div>
+  <div class="bar"><button onclick="gate(()=>$('rf').click())">⬆ Import from JSON file</button><input id="rf" type="file" accept=".json,application/json" style="display:none" onchange="importJson(this)"></div>
   
-  <div id="saved" style="margin-top:4px"></div></details>
+  </details>
  <details class="card"><summary>Message Templates</summary><label>Message – individual patient (with own date)</label><textarea id="tp" onfocus="gateIn(this)" rows="4" onchange="saveT()"></textarea>
   <label style="margin-top:10px">Message – common for all patients (sent together)</label><textarea id="tc" onfocus="gateIn(this)" rows="3" onchange="saveT()"></textarea>
   <label style="margin-top:10px">Message – worker list heading</label><textarea id="tw" onfocus="gateIn(this)" rows="4" onchange="saveT()"></textarea></details>
@@ -460,8 +483,8 @@ button.green:active,button.gray:active,button.red:active,main button:not([class]
 
 <nav class="bnav noprint">
  <button id="n_dash" onclick="pg('dash')"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Dashboard</button>
- <button id="n_fup" onclick="pg('fup')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 15l2 2 4-4"/></svg>Follow-up</button>
  <button id="n_add" class="add" onclick="pg('add')"><span class="fab"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>Add New Pt</button>
+ <button id="n_fup" onclick="pg('fup')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 15l2 2 4-4"/></svg>Follow-up</button>
  <button id="n_done" onclick="pg('done')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>Completed<span class="bd" id="cnt_done" style="display:none"></span></button>
  <button id="n_rep" onclick="pg('rep')"><svg viewBox="0 0 24 24"><path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/></svg>Report</button>
  <button id="n_set" onclick="pg('set')"><svg viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>Settings</button>
@@ -511,7 +534,7 @@ async function accUse(m){try{const a=await GD.choose(m);accInfo();bkInfo();if(a!
 function accDel(m){uiConfirm('Remove '+m+' from this app?',async()=>{await GD.remove(m);accInfo();bkInfo();toast('Account removed')})}
 function bkPack(){const o={};BKEYS.forEach(k=>{const v=localStorage.getItem(k);if(v!==null)o[k]=v});o.tbData2=JSON.stringify(P);o.tbRep2=JSON.stringify(REP);return JSON.stringify(o)}
 const bkName=()=>{const d=new Date(),z=n=>String(n).padStart(2,'0');return 'TB_FUP_backup_'+d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate())+'_'+z(d.getHours())+z(d.getMinutes())+'.json'};
-function gdErr(e){const m=String((e&&e.message)||e||'');if(/cancel|12501|popup_closed|dismiss|user closed/i.test(m))return;
+function gdErr(e){try{$('toast').classList.remove('on')}catch(_){}const m=String((e&&e.message)||e||'');if(/cancel|12501|popup_closed|dismiss|user closed/i.test(m))return;
  uiAlert(/Failed to fetch|NetworkError|network/i.test(m)?'No internet connection. Please connect to the internet and try again.':'Google Drive: '+m)}
 async function backup(){
  if(!(window.GD&&GD.native())){uiAlert('Backup works only in the Android app (saved to Google Drive).');return}
