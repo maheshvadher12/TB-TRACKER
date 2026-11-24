@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="gu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b2f4e"><script src="native-shim.js"></script>
+<html lang="gu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b2f4e"><script src="native-shim.js"></script><script src="gdrive.js"></script>
 <title>PHC Pransli – TB FUP Tracker</title>
 <style>
 :root{--p:#0f3d63;--p2:#1d6fa5;--pd:#0b2f4e;--bg:#f1f5f9;--line:#e1e8ef;--ok:#138808;--bad:#d92d20;--warn:#f59e0b;--saf:#ff9933;--txt:#16222e;--mut:#64748b;--sh:0 1px 2px rgba(15,61,99,.06),0 6px 18px rgba(15,61,99,.07)}
@@ -173,6 +173,9 @@ a.tel{color:var(--p2);text-decoration:none;font-weight:800}
  tr{page-break-inside:avoid}tr.grp{break-after:avoid}
  tr.grp td{background:#e3edf7;font-weight:800;text-align:left;font-size:10pt}
  tr.od td{background:#fdecea;color:#b0132b;font-weight:600}tr.mo td{background:#fff4c2;font-weight:600}
+ .sh2{text-align:center;font-weight:800;font-size:10.5pt;margin:16px 0 6px}
+ .ashat{width:60%!important;margin:0 auto}
+ .ashat th.l{text-align:left}
 }
 
 /* ===== alignment polish ===== */
@@ -238,22 +241,103 @@ details.card>*:last-child{margin-bottom:var(--pad)}
 .st2{margin:18px 4px 10px}
 .srch{margin-bottom:12px}
 /* header: centred title */
-.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
+.top{display:grid;grid-template-columns:96px 1fr 96px;align-items:center;gap:8px}
 .top .brand{justify-self:start}
 .top .dt{justify-self:end}
 .ttl{text-align:center;min-width:0}
 .ttl h1{font-size:21px;font-weight:800;letter-spacing:.6px;line-height:1.15;white-space:nowrap}
-.ttl small{display:block;margin-top:4px;font-size:12px;font-weight:600;letter-spacing:2px;opacity:.88;text-transform:uppercase}
-.ttl small::before,.ttl small::after{content:"";display:inline-block;width:14px;height:1px;background:currentColor;opacity:.6;vertical-align:middle;margin:0 8px}
+.ttl small{display:block;margin-top:4px;font-size:11.5px;font-weight:600;letter-spacing:1.5px;opacity:.88;text-transform:uppercase}
+.ttl small::before,.ttl small::after{content:"";display:inline-block;width:10px;height:1px;background:currentColor;opacity:.6;vertical-align:middle;margin:0 5px}
 .badge{width:48px;height:48px}
+/* v3 */
+.hero{display:block;text-align:center;padding:11px 14px;border-radius:14px;margin-bottom:12px}
+.hero small{display:block;font-size:9.5px;letter-spacing:1.4px}
+.hero h2{font-size:17px;margin:2px 0 1px}
+.hero p{font-size:11.5px}
+.dt{text-align:right;line-height:1.3}
+.dt{white-space:nowrap}.dt b{display:block;font-size:12.5px}
+.dt span.tm{display:block;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;opacity:.95}
+.tb2 span:first-child{font-size:14px;font-weight:700;color:var(--txt)}
+.actbar{margin-top:14px;padding:12px}
+/* year report */
+.yrg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.yrg>div:nth-child(3){grid-column:1/-1}
+.yrg>div{min-width:0}.yrg label{margin-bottom:4px;white-space:nowrap}.yrg select{width:100%;min-width:0}
+.yrinfo{margin-top:12px;padding:10px 12px;background:#f5f8fb;border:1px solid var(--line);border-radius:12px;font-size:13px;color:var(--txt);line-height:1.5}
+.yrinfo b{color:var(--p)}
+.yrb{margin-top:12px;grid-template-columns:1fr 1fr}
+.infb{width:100%;min-height:46px;font-size:14px;margin-bottom:14px}
+/* v5: 3D title, glass buttons, credit */
+.sp-by{position:absolute;bottom:3.2%;left:0;right:0;text-align:center;font-size:10px;letter-spacing:1.4px;color:#8a97a5;font-weight:600;opacity:1;z-index:2}
+.ttl{perspective:600px}
+.ttl h1{font-size:22px;font-weight:800;letter-spacing:1px;color:#fff;transform:none;animation:none;
+ text-shadow:1px 1px 0 #0b2a47,2px 2px 0 #0b2a47,3px 3px 0 #08233c,4px 5px 6px rgba(0,0,0,.45)}
+.ttl small{display:inline-block;margin-top:11px;padding:3px 12px;font-size:10.5px;letter-spacing:2px;font-weight:700;opacity:1;color:#fff;
+ background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.08));border:1px solid rgba(255,255,255,.45);border-radius:20px;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 3px 8px rgba(0,0,0,.25);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.ttl small::before,.ttl small::after{display:none}
+.top{padding-bottom:26px}
+button,a.btn{--bc:var(--p2)}
+button.green{--bc:var(--ok)}button.gray{--bc:#5d6b7a}button.red{--bc:var(--bad)}
+button.green,button.gray,button.red,main button:not([class]),a.btn{
+ position:relative;border:1px solid rgba(255,255,255,.4);
+ background:linear-gradient(180deg,rgba(255,255,255,.42) 0,rgba(255,255,255,.12) 46%,rgba(255,255,255,0) 50%,rgba(0,0,0,.10) 100%),var(--bc);
+ text-shadow:0 1px 1px rgba(0,0,0,.35);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 -2px 0 rgba(0,0,0,.15),0 4px 0 color-mix(in srgb,var(--bc) 62%,#000),0 8px 14px rgba(15,40,70,.25);
+ margin-bottom:4px;transition:transform .08s,box-shadow .08s}
+button.green:active,button.gray:active,button.red:active,main button:not([class]):active,a.btn:active{
+ transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(0,0,0,.15),0 1px 0 color-mix(in srgb,var(--bc) 62%,#000),0 3px 6px rgba(15,40,70,.25)}
+.tb4,.tb3{padding-bottom:4px}
+/* v7: iOS-style translucent buttons */
+button.green,button.gray,button.red,main button:not([class]),a.btn{
+ border:.5px solid rgba(255,255,255,.55);border-radius:14px;margin-bottom:0;
+ background:linear-gradient(180deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,0) 55%),color-mix(in srgb,var(--bc) 90%,transparent);
+ -webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px);
+ text-shadow:none;font-weight:600;letter-spacing:.1px;
+ box-shadow:inset 0 .5px 0 rgba(255,255,255,.7),inset 0 -.5px 0 rgba(0,0,0,.12),0 1px 2px rgba(15,40,70,.18),0 6px 16px color-mix(in srgb,var(--bc) 30%,transparent);
+ transition:transform .12s ease,opacity .12s ease,box-shadow .12s ease}
+button.green:active,button.gray:active,button.red:active,main button:not([class]):active,a.btn:active{
+ transform:scale(.97);opacity:.72;box-shadow:inset 0 .5px 0 rgba(255,255,255,.5),0 1px 2px rgba(15,40,70,.15)}
+.tb4,.tb3{padding-bottom:0}.infb{margin-bottom:10px}
+/* ===== Monthly Report ===== */
+.bnav button{font-size:10px}
+@media (max-width:360px){.fab{width:50px;height:50px}.bnav button{font-size:9.5px}}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dnav{display:flex;align-items:center;gap:8px}.dnav .dp{flex:1}
+.rb{width:44px;height:44px;padding:0;border-radius:12px;font-size:26px;line-height:1;font-weight:700;display:flex;align-items:center;justify-content:center;color:#fff;flex:none;box-shadow:none}
+.rb.m{background:var(--bad)}.rb.p{background:var(--ok)}.rb.n{background:#e8f1fa;color:var(--p)}
+.rb:disabled{opacity:.35}
+.rb.s{width:36px;height:36px;font-size:22px;border-radius:10px}
+.rc{width:66px;flex:none;text-align:center;font-size:19px;font-weight:800;padding:8px 4px;color:var(--p)}
+.rc.s{width:54px;font-size:16px;padding:6px 2px}
+.rrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rrow .rn{flex:1;min-width:0}.rn b{display:block;color:var(--p);font-size:15px;letter-spacing:.3px}.rn small{color:var(--mut);font-size:11.5px}.rn u{text-decoration:none;font-weight:800;color:var(--ok)}
+.rs{display:flex;align-items:center;gap:8px;flex:none}
+.rtot{display:flex;gap:10px;margin:14px 0 4px}
+.rtot span{flex:1;background:#f5f8fb;border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:11.5px;color:var(--mut);font-weight:700}
+.rtot b{display:block;font-size:22px;color:var(--p);line-height:1.2}
+.ashab{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px;margin:2px 0 6px}
+.ashas{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.ashas .muted{flex:1;text-align:center;font-size:11.5px}
+.al{margin-top:10px}.ar{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px dashed #cfdae6}
+.ar .an{flex:1;min-width:0;font-weight:700;color:var(--p);font-size:13.5px;overflow-wrap:anywhere}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+.rt{width:100%;border-collapse:collapse;font-size:12.5px;min-width:330px}
+.rt th{background:var(--p);color:#fff;padding:9px 4px;font-size:10.5px;letter-spacing:.3px}
+.rt td{padding:9px 4px;text-align:center;border-top:1px solid var(--line);font-weight:600}
+.rt td:first-child,.rt th:first-child{text-align:left;padding-left:10px}
+.rt tr.tot td{background:#e8f1fa;font-weight:800;color:var(--p)}
+.rt td.z{color:#a9b6c3;font-weight:500}
+.rt tr.cl{cursor:pointer}
+#lockinfo b.lk{color:var(--bad)}#lockinfo b.ul{color:var(--ok)}.rt tr.cl:active td{background:#f1f6fb}
 </style></head><body>
 <div id="splash">
  <div class="sp-bg"></div><div class="sp-dots"><i></i><i></i><i></i><i></i></div>
  <div class="sp-logo"><img src="logo.png" alt="NTEP"></div>
  <div class="sp-t" id="spt"></div>
  <div class="sp-rib"><i></i><i></i><i></i></div>
- <div class="sp-g">ટીબી હારેગા, દેશ જીતેગા</div>
  <div class="sp-s">National TB Elimination Programme<br>PHC Pransli</div>
+ <div class="sp-by">Created by Mahesh Vadher</div>
  <div class="sp-bar"><i></i></div>
 </div>
 
@@ -266,12 +350,10 @@ details.card>*:last-child{margin-bottom:var(--pad)}
 <main>
 <!-- ================= DASHBOARD ================= -->
 <section id="pg_dash" class="page noprint">
- <div class="hero"><div><small>NATIONAL TB ELIMINATION PROGRAMME</small><h2>TB Harega, Desh Jeetega</h2><p>Follow-up monitoring · PHC Pransli</p></div><div class="hl"><img src="logo.png" alt=""></div></div>
+ <div class="hero"><small>NATIONAL TB ELIMINATION PROGRAMME</small><h2>TB Harega, Desh Jeetega</h2><p>Follow-up monitoring</p></div>
  <div class="srch"><input id="q" type="search" placeholder="Search name / Nikshay ID / village / mobile" oninput="renderDash()"></div>
  <div id="sres"><div class="st2"><span id="dtitle"></span></div><div id="dlist"></div></div>
  <div class="dtabs" id="tiles"></div>
- <div class="st2">Sub centre wise</div>
- <div class="scgrid" id="scgrid"></div>
 </section>
 
 <!-- ================= FOLLOW-UP ================= -->
@@ -279,18 +361,11 @@ details.card>*:last-child{margin-bottom:var(--pad)}
  <div class="noprint">
   <div class="card"><div class="ct">Follow-up Sheet</div>
    <div class="muted" style="margin:-4px 0 10px">Annexure 04 · Monitoring sheet of follow-up sputum examination (DS/DR-TB cases).</div>
-   <div class="tb1">
-    <label>Order:
-     <select id="sort" style="width:auto" onchange="render()"><option value="next">By next follow-up date</option><option value="name">By name (A-Z)</option><option value="start">By treatment start date</option></select></label>
-   </div>
-   <div class="tb2">
-    <label><input type="checkbox" onchange="selAll(this.checked)"> Select all ✔</label>
-    <span id="selA" class="muted">0 selected</span>
-   </div>
-   <div class="tb3"><button class="green" onclick="inform()">INFORM PATIENT AND WORKER</button>
-    <div class="tb4"><button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div></div>
+   <input type="hidden" id="sort" value="next">
+   <span id="selA" hidden></span>
   </div>
   <div id="scr"></div>
+  <div class="card actbar"><button class="green infb" onclick="inform()">INFORM PATIENT AND WORKER</button><div class="tb4"><button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div></div>
  </div>
  <div class="sheet"><h2>Annexure 04 – National TB Elimination Programme<br>Monitoring sheet of follow up sputum examination (DS/DR-TB cases)<br><b>Primary Health Centre :- Pransli</b></h2><div id="prt"></div></div>
 </section>
@@ -328,28 +403,56 @@ details.card>*:last-child{margin-bottom:var(--pad)}
  <div class="noprint">
   <div class="card"><div class="ct">Treatment Completed</div>
    <div class="muted" style="margin:-4px 0 10px">6 / 12 / 18 / 24 month follow-ups after treatment.</div>
-   <div class="bar">
-    <label><input type="checkbox" onchange="selAllDone(this.checked)"> Select all ✔</label><span id="selD" class="muted">0 selected</span>
-   </div>
-   <div class="tb3"><button class="green" onclick="inform(true)">INFORM PATIENT AND WORKER</button>
-    <div class="tb4"><button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div></div>
+   <span id="selD" hidden></span>
   </div>
   <div id="dn"></div>
+  <div class="card actbar"><button class="green infb" onclick="inform(true)">INFORM PATIENT AND WORKER</button><div class="tb4"><button onclick="window.print()">🖨 PRINT</button><button class="gray" onclick="downloadPDF()">⬇ PDF</button><button class="green" onclick="sharePDF()">📧 Email PDF</button></div></div>
  </div>
  <div class="sheet"><h2>Treatment Completed Patients<br><b>Primary Health Centre :- Pransli</b></h2><div id="dprt"></div></div>
 </section>
 
+<!-- ================= MONTHLY REPORT ================= -->
+<section id="pg_rep" class="page">
+ <div class="noprint">
+  <div class="card"><div class="ct">Monthly Report · Sample Entry (month-wise)</div><div id="rep_entry"></div></div>
+  <div class="card"><div class="ct">Monthly Report · Summary</div><div id="rep_sum"></div>
+   <div class="tb4" style="margin-top:12px"><button onclick="repPrint()">🖨 PRINT</button><button class="gray" onclick="repPDFdl()">⬇ PDF</button><button class="green" onclick="repCSV()">⬇ Excel</button></div></div>
+ </div>
+ <div class="sheet"><h2 id="rph"></h2><div id="rprt"></div></div>
+</section>
+
 <!-- ================= SETTINGS ================= -->
 <section id="pg_set" class="page noprint">
- <details class="card"><summary>Worker Mobile Numbers</summary><div class="muted" style="margin:-4px 0 6px">Sub centre wise – used for sending SMS to workers.</div><div id="wk"></div></details>
- <div class="card"><div class="ct">Backup &amp; Restore</div>
-  <div class="bar"><button onclick="backup()">⬇ Download Backup</button><button class="gray" onclick="$('rf').click()">⬆ Restore Backup</button><input id="rf" type="file" accept=".json" style="display:none" onchange="restore(this)"></div>
-  <div id="saved" style="margin-top:8px"></div>
-  <p class="info" style="margin-top:8px">All data is saved only on this phone. It is erased only if you use <b>Clear data</b> in phone settings or uninstall the app. Take a backup regularly.</p></div>
- <details class="card"><summary>Message Templates</summary><label>Message – individual patient (with own date)</label><textarea id="tp" rows="4" onchange="saveT()"></textarea>
-  <label style="margin-top:10px">Message – common for all patients (sent together)</label><textarea id="tc" rows="3" onchange="saveT()"></textarea>
-  <label style="margin-top:10px">Message – worker list heading</label><textarea id="tw" rows="4" onchange="saveT()"></textarea></details>
- <div class="card" style="text-align:center"><img src="logo.png" alt="" style="width:84px;height:84px"><div class="ct" style="justify-content:center;margin:6px 0 2px">TB Follow-up Tracker</div><div class="muted">Primary Health Centre Pransli · TB Harega, Desh Jeetega</div></div>
+ <div id="setbody">
+ <details class="card" id="pwcard"><summary>Settings Password</summary>
+    <label class="tb2"><span>Ask password to change Settings</span><input type="checkbox" id="lockchk" onchange="lockToggle(this)"></label>
+  <div class="fsec">Change / reset password</div>
+  <div class="grid"><div><label>Old password</label><input id="pw_o" type="password" autocomplete="off"></div><div><label>New password</label><input id="pw_n" type="password" autocomplete="off"></div><div><label>Confirm new password</label><input id="pw_c" type="password" autocomplete="off"></div></div>
+  <button onclick="pwChange()" style="width:100%;margin-top:12px">Save new password</button></details>
+ <details class="card"><summary>Worker Mobile Numbers</summary><div id="wk"></div></details>
+ <details class="card" id="yrcard" ontoggle="if(this.open)yrFill()"><summary>Year-wise Patient Report</summary>
+  <div class="yrg">
+   <div><label>Start year</label><select id="yr_y" onchange="yrInfo()"></select></div>
+   <div><label>Sub centre</label><select id="yr_sc" onchange="yrInfo()"></select></div>
+   <div><label>Category</label><select id="yr_c" onchange="yrInfo()"><option value="all">All categories</option><option value="ds">DS – Pulmonary (Micro. confirmed)</option><option value="ep">EP TB</option><option value="mdr">MDR</option></select></div>
+   <div><label>Status</label><select id="yr_s" onchange="yrInfo()"><option value="all">Active + Completed</option><option value="active">Active only</option><option value="done">Completed only</option></select></div>
+  </div>
+  <div id="yr_info" class="yrinfo"></div>
+  <div class="tb4 yrb"><button class="gray" onclick="yrCSV()">⬇ Excel (CSV)</button><button onclick="yrPDFdl()">⬇ PDF</button></div>
+ </details>
+  <details class="card" id="acccard" ontoggle="if(this.open)accInfo()"><summary>Google Accounts (Drive)</summary>
+  <div id="accinfo"></div>
+  <div class="bar" style="margin-top:12px"><button onclick="gate(accAdd)" style="flex:1 1 100%">➕ Add Google account</button></div></details>
+  <details class="card"><summary>Backup &amp; Restore (Google Drive)</summary>
+  <div class="bar"><button onclick="backup()" style="flex:1 1 150px">☁ Backup to Google Drive</button><button class="gray" onclick="gate(restoreMenu)" style="flex:1 1 150px">☁ Restore from Google Drive</button></div>
+  <div class="bar" style="margin-top:8px"><button onclick="gate(()=>$('rf').click())" style="flex:1 1 100%">⬆ Import data from JSON file (one-time)</button><input id="rf" type="file" accept=".json,application/json" style="display:none" onchange="importJson(this)"></div>
+  
+  <div id="saved" style="margin-top:4px"></div></details>
+ <details class="card"><summary>Message Templates</summary><label>Message – individual patient (with own date)</label><textarea id="tp" onfocus="gateIn(this)" rows="4" onchange="saveT()"></textarea>
+  <label style="margin-top:10px">Message – common for all patients (sent together)</label><textarea id="tc" onfocus="gateIn(this)" rows="3" onchange="saveT()"></textarea>
+  <label style="margin-top:10px">Message – worker list heading</label><textarea id="tw" onfocus="gateIn(this)" rows="4" onchange="saveT()"></textarea></details>
+ <div class="card" style="text-align:center"><img src="logo.png" alt="" style="width:84px;height:84px"><div class="ct" style="justify-content:center;margin:6px 0 2px">TB Follow-up Tracker</div></div>
+ </div>
 </section>
 </main>
 
@@ -360,6 +463,7 @@ details.card>*:last-child{margin-bottom:var(--pad)}
  <button id="n_fup" onclick="pg('fup')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 15l2 2 4-4"/></svg>Follow-up</button>
  <button id="n_add" class="add" onclick="pg('add')"><span class="fab"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>Add New Pt</button>
  <button id="n_done" onclick="pg('done')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>Completed<span class="bd" id="cnt_done" style="display:none"></span></button>
+ <button id="n_rep" onclick="pg('rep')"><svg viewBox="0 0 24 24"><path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/></svg>Report</button>
  <button id="n_set" onclick="pg('set')"><svg viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>Settings</button>
 </nav>
 
@@ -375,7 +479,7 @@ const $=id=>document.getElementById(id);
  $('spt').innerHTML=line(W.slice(0,2))+line(W.slice(2));
  let gone=false;const end=()=>{if(gone)return;gone=true;s.classList.add('out');setTimeout(()=>s.remove(),700)};
  s.onclick=end;setTimeout(end,3600)})();
-const DEF=[{"id":"334106857","name":"SOLANKI MANISHA KISHAN","village":"KHAMBHA","phone":"7990584895","sc":"KHAMBHA","site":"MICRO BIO.","type":"NEW","start":"2026-02-09","ipDone":"","cpDone":""},{"id":"334043520","name":"BIJAL BOGHA JETHWA","village":"PRANSLI","phone":"6354540852","sc":"PRANSLI","site":"MICRO BIO.","type":"NEW","start":"2026-08-29","ipDone":"","cpDone":""},{"id":"331506863","name":"JODNI NARANJI RANMALJI","village":"KHAMBHA","phone":"8780575810","sc":"KHAMBHA","site":"MICRO BIO.","type":"NEW","start":"2026-08-22","ipDone":"","cpDone":""},{"id":"286318474","name":"PARMAR SONAL JAYSUKH","village":"KHAMBHA","phone":"9714751240","sc":"KHAMBHA","site":"MICRO BIO.","type":"PT","start":"2026-06-22","ipDone":"","cpDone":""},{"id":"304415425","name":"SOLANKI MOMAL KISHAN","village":"KHAMBHA","phone":"9490584895","sc":"KHAMBHA","site":"MICRO BIO.","type":"PT","start":"2026-07-23","ipDone":"","cpDone":""},{"id":"314033688","name":"SOSA PRAVIN AEBHA","village":"PRANSLI","phone":"6354920822","sc":"PRANSLI","site":"MICRO BIO.","type":"NEW","start":"2026-07-23","ipDone":"","cpDone":""},{"id":"311746805","name":"GAUSWAMI RISHIKESHGIRI RAJENDRAGIRI","village":"GHANTIYA","phone":"9429766707","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-07-21","ipDone":"","cpDone":""},{"id":"286966067","name":"VAINSH RAVI RAMSING","village":"PRANSLI","phone":"9316246656","sc":"PRANSLI","site":"MICRO BIO.","type":"NEW","start":"2026-10-07","ipDone":"","cpDone":""},{"id":"272010691","name":"KANA JASABHAI PARMAR","village":"GHANTIYA","phone":"9313914405","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-05-04","ipDone":"","cpDone":""},{"id":"294482323","name":"RATHOD BACHU TABHABHAI","village":"GHANTIYA","phone":"9913516097","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-07-01","ipDone":"","cpDone":""},{"id":"286966067","name":"RAVJI RAMSINGBHAI VANSH","village":"PRANSLI","phone":"9316246656","sc":"PRANSLI","site":"","type":"NEW","start":"2026-07-10","ipDone":"","cpDone":""},{"id":"266291344","name":"HAMIR ARJAN BHOLA","village":"GHANTIYA","phone":"9998070800","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-04-18","ipDone":"","cpDone":""},{"id":"266082243","name":"RANDHEER NONGHAN PARMAR","village":"MAHOBATPARA","phone":"8460773074","sc":"MAHOBATPARA","site":"MICRO BIO.","type":"NEW","start":"2026-04-20","ipDone":"","cpDone":""},{"id":"63231274","name":"JAYSUKH KURJI PARMAR","village":"KHAMBHA","phone":"8799464094","sc":"KHAMBHA","site":"MICRO BIO.","type":"RE","start":"2026-04-21","ipDone":"","cpDone":""},{"id":"260776165","name":"RAANI CHINA BARAD","village":"PRANSLI","phone":"6353984611","sc":"PRANSLI","site":"","type":"NEW","start":"2026-03-17","ipDone":"","cpDone":""},{"id":"260771134","name":"DIVYESH BABU SOLANKI","village":"BHUVAVADA","phone":"9313035454","sc":"RANGPUR","site":"","type":"NEW","start":"2026-03-14","ipDone":"","cpDone":""},{"id":"254700364","name":"NEETA JAGDISH SODHA","village":"GHANTIYA","phone":"6352114395","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-02-17","ipDone":"","cpDone":""},{"id":"251990480","name":"CHUDASAMA HASMUKH ODHAVJI","village":"TIMBDI","phone":"9228902191","sc":"PRANSLI","site":"MICRO BIO.","type":"RE","start":"2026-02-03","ipDone":"","cpDone":""}];
+const DEF=[];
 const DT={p:"નમસ્તે {NAME} ({VILLAGE}), તમારું આગામી ટીબી ફોલોઅપ ({FUP}) તારીખ {DATE} ના રોજ છે. કૃપા કરી તે દિવસે આરોગ્ય કેન્દ્ર પર ગળફાની તપાસ કરાવવા આવશો. - પ્રાઈમરી હેલ્થ સેન્ટર પ્રાસલી",
 c:"નમસ્તે, તમારી ટીબી ફોલોઅપ (ગળફા) તપાસની તારીખ આવી ગઈ છે. કૃપા કરી આરોગ્ય કેન્દ્ર પર ગળફાની તપાસ કરાવવા આવશો. - પ્રાઈમરી હેલ્થ સેન્ટર પ્રાસલી",
 w:"[વર્કર જાણ] નીચેના દર્દીઓનું આગામી ફોલોઅપ છે. કૃપા કરી દર્દીઓને તપાસ માટે લાવશો:"};
@@ -395,8 +499,38 @@ const saveT=()=>localStorage.setItem('tbT5',JSON.stringify({p:$('tp').value,w:$(
 let warned=false;
 const save=()=>{try{localStorage.setItem('tbData2',JSON.stringify(P));const e=$('saved');if(e)e.textContent='Saved ✔ '+new Date().toLocaleTimeString()}catch(err){if(!warned){warned=true;uiAlert('Browser storage is blocked – data cannot be saved. Do not use private/incognito mode.')}}};
 if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
-function backup(){const o={};['tbData2','tbWk2','tbT4','LS2','VM2'].forEach(k=>{const v=localStorage.getItem(k);if(v!==null)o[k]=v});if(!o.tbData2)o.tbData2=JSON.stringify(P);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:'application/json'}));a.download='TB_FUP_backup_'+todayISO()+'.json';a.click()}
-function restore(inp){const fl=inp.files[0];if(!fl)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o.tbData2)throw 0;dlg('Restore will replace the current data with this backup. Continue?','','Restore',()=>{Object.keys(o).forEach(k=>localStorage.setItem(k,o[k]));location.reload()})}catch(e){uiAlert('Invalid backup file')}};r.readAsText(fl)}
+const BKEYS=['tbData2','tbWk2','tbT5','tbT4','LS2','VM2','tbRep2','tbRep1'];
+function bkInfo(){const e=$('bkinfo');if(!e)return;let t='';try{t=localStorage.getItem('tbLastBk')||''}catch(_){}const a=window.GD&&GD.account();e.textContent=(a?'Active account: '+a+' · ':'No account selected – ')+(t?'Last Google Drive backup: '+t:'No Google Drive backup taken yet.')}
+function accInfo(){const e=$('accinfo');if(!e)return;
+ if(!(window.GD&&GD.native())){e.innerHTML='<div class="yrinfo" style="margin:0">Google accounts work only in the Android app.</div>';return}
+ const act=GD.account(),l=GD.accounts();if(act&&!l.includes(act))l.push(act);
+ e.innerHTML=l.length?l.map(m=>`<div class="ar" style="border-top:0;border-bottom:1px dashed #cfdae6"><div class="an">${esc(m)}${m===act?' <span class="pill ok">Active</span>':''}${m===GD.defaultAccount?' <span class="pill">Default</span>':''}</div><div class="rs">${m===act?'':`<button class="gray" style="padding:7px 12px;font-size:12.5px" data-m="${esc(m)}" onclick="gate(()=>accUse(this.dataset.m))">Use</button>`}${m===GD.defaultAccount?'':`<button class="red" style="padding:7px 12px;font-size:12.5px" data-m="${esc(m)}" onclick="gate(()=>accDel(this.dataset.m))">Remove</button>`}</div></div>`).join(''):'<div class="yrinfo" style="margin:0"><b>No account.</b></div>'}
+async function accAdd(){if(!(window.GD&&GD.native())){uiAlert('Google accounts work only in the Android app.');return}
+ try{const a=await GD.choose();accInfo();bkInfo();toast('Active account: '+a)}catch(e){gdErr(e)}}
+async function accUse(m){try{const a=await GD.choose(m);accInfo();bkInfo();if(a!==m)uiAlert('You selected '+a+' (not '+m+'). It is now the active account.');else toast('Active account: '+a)}catch(e){gdErr(e)}}
+function accDel(m){uiConfirm('Remove '+m+' from this app?',async()=>{await GD.remove(m);accInfo();bkInfo();toast('Account removed')})}
+function bkPack(){const o={};BKEYS.forEach(k=>{const v=localStorage.getItem(k);if(v!==null)o[k]=v});o.tbData2=JSON.stringify(P);o.tbRep2=JSON.stringify(REP);return JSON.stringify(o)}
+const bkName=()=>{const d=new Date(),z=n=>String(n).padStart(2,'0');return 'TB_FUP_backup_'+d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate())+'_'+z(d.getHours())+z(d.getMinutes())+'.json'};
+function gdErr(e){const m=String((e&&e.message)||e||'');if(/cancel|12501|popup_closed|dismiss|user closed/i.test(m))return;
+ uiAlert(/Failed to fetch|NetworkError|network/i.test(m)?'No internet connection. Please connect to the internet and try again.':'Google Drive: '+m)}
+async function backup(){
+ if(!(window.GD&&GD.native())){uiAlert('Backup works only in the Android app (saved to Google Drive).');return}
+ try{toast('Uploading backup to Google Drive…');const n=bkName();await GD.upload(n,bkPack());
+  const t=new Date().toLocaleString('en-GB');try{localStorage.setItem('tbLastBk',t)}catch(_){}bkInfo();
+  accInfo();uiAlert('Backup uploaded to Google Drive ✔')}catch(e){gdErr(e)}}
+function applyBackup(o,label){if(Array.isArray(o))o={tbData2:o};if(!o||typeof o!=='object'||!o.tbData2)throw 0;BKEYS.forEach(k=>{if(o[k]!=null&&typeof o[k]!=='string')o[k]=JSON.stringify(o[k])});
+ dlg('Restore '+(label||'this backup')+'? It will replace ALL current data (patients, follow-ups, monthly report).','','Restore',()=>{
+  BKEYS.forEach(k=>{if(typeof o[k]==='string')localStorage.setItem(k,o[k]);else localStorage.removeItem(k)});location.reload()})}
+function importJson(inp){const fl=inp.files[0];if(!fl)return;const r=new FileReader();
+ r.onload=()=>{inp.value='';try{applyBackup(JSON.parse(r.result),'the data in '+fl.name)}catch(e){uiAlert('Invalid JSON file')}};r.readAsText(fl)}
+async function restoreMenu(){
+ if(!(window.GD&&GD.native())){uiAlert('Restore works only in the Android app (from Google Drive).');return}
+ try{toast('Looking for backups in Google Drive…');const l=await GD.list();
+  if(!l.length){uiAlert('No backup found in your Google Drive (folder: TB Tracker).');return}
+  const b=l.map(x=>{const d=new Date(x.createdTime);return `<button class="gray" style="display:block;width:100%;margin-bottom:8px;text-align:left" data-id="${esc(x.id)}" data-n="${esc(x.name)}" onclick="restoreFrom(this.dataset.id,this.dataset.n)">${d.toLocaleString('en-GB')}<br><small>${esc(x.name)}</small></button>`}).join('');
+  dlg('Choose a backup to restore (latest first)','<div style="max-height:50vh;overflow:auto">'+b+'</div>','Close',null,true)}catch(e){gdErr(e)}}
+async function restoreFrom(id,name){
+ try{toast('Downloading backup…');const o=JSON.parse(await GD.get(id));applyBackup(o,name)}catch(e){if(e===0||e instanceof SyntaxError)uiAlert('Invalid backup file');else gdErr(e)}}
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 const pd=s=>{if(!s)return null;const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12)};
 const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
@@ -456,14 +590,15 @@ function extendP(i){const p=P[i];let o='';for(let m=1;m<=12;m++)o+=`<option valu
 function unext(i){delete P[i].extUntil;save();render()}
 const monthly=(i,p,d,hi)=>d.mo?d.mo.map((dt,k)=>`<div class="${hi('mo'+(k+1))}"><span>MONTH ${k+1} FOLLOW-UP – due ${f(dt,1)}</span>${dp(p['mo'+(k+1)+'d'],`setAct(${i},'mo${k+1}d',this)`,todayISO())}</div>`).join(''):'';
 /* ===== NEW UI ===== */
-const NAVS=['dash','fup','add','done','set'];
+const NAVS=['dash','fup','add','done','rep','set'];
 let CUR=null,CURPG='dash',DF='',OPENSC={};
 const T0=()=>{const t=new Date();t.setHours(0,0,0,0);return t};
 const dayDiff=d=>Math.floor((d-T0())/864e5);
 const E=v=>esc(v==null?'':v);
 const ini=n=>(n||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
 function toast(m){const e=$('toast');e.textContent=m;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2200)}
-function setToday(){const d=new Date();$('today').innerHTML=d.toLocaleDateString('en-GB',{weekday:'long'})+'<br><b>'+d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+'</b>'}
+function setToday(){const d=new Date();$('today').innerHTML=d.toLocaleDateString('en-GB',{weekday:'long'})+'<b>'+d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+'</b><span class="tm">'+d.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true})+'</span>'}
+setInterval(setToday,1000);
 function statusOf(p){const dn=isDone(p),tmr=addD(T0(),1);
  if(dn){const s=stOf(p);return s==='od'?{c:'od',t:'Completed · follow-up overdue'}:s==='mo'?{c:'mo',t:'Completed · due this month'}:{c:'ok',t:'Treatment completed'}}
  const nx=nxt(p);if(nx&&nx.d<tmr){const n=dayDiff(nx.d);return{c:'od',t:n>=0?'Follow-up due today':'Overdue by '+(-n)+' day'+(n==-1?'':'s')}}
@@ -482,11 +617,9 @@ function dashFilter(i){const p=P[i],dn=isDone(p);if(DF==='done')return dn;if(dn)
  if(DF==='mdr')return isMDR(p);if(DF==='ep')return isEP(p);return true}
 function renderDash(){const tmr=addD(T0(),1),w7=addD(tmr,7);let act=0,due=0,wk=0,dn=0,mdr=0,ep=0;
  P.forEach(p=>{if(isDone(p)){dn++;return}act++;const nx=nxt(p);if(nx){if(nx.d<tmr)due++;else if(nx.d<w7)wk++}if(isMDR(p))mdr++;if(isEP(p))ep++});
- const TL=[['all','👥',act,'Active patients','b'],['due','⏰',due,'Due today / overdue','r'],['week','📅',wk,'Next 7 days','a'],['done','✅',dn,'Completed','g'],['mdr','💊',mdr,'MDR (active)','p'],['ep','🩺',ep,'EP TB (active)','t']];
+ const TL=[['all','👥',act,'Active patients','b'],['due','⏰',due,'Due today / overdue','r'],['week','📅',wk,'Next 7 days','a'],['mdr','💊',mdr,'MDR (active)','p'],['ep','🩺',ep,'EP TB (active)','t'],['done','✅',dn,'Completed patients','g']];
  const bodyOf=k=>{const sv=DF;DF=k;let ix=P.map((_,i)=>i).filter(dashFilter);DF=sv;const kf=i=>{const p=P[i],nx=isDone(p)?nxtDone(p):nxt(p);return nx?nx.d.getTime():9e15};if(k==='done')ix.sort((a,b)=>P[a].name<P[b].name?-1:1);else ix.sort((a,b)=>kf(a)-kf(b));return ix.length?ix.map(i=>pcard(i,isDone(P[i]),false)).join(''):'<div class="empty">No patients found</div>'};
  $('tiles').innerHTML=TL.map(x=>`<div class="dtab ${x[4]}${DF===x[0]?' open':''}"><button class="dth" onclick="setDF('${x[0]}')"><i>${x[1]}</i><span>${x[3]}</span><b>${x[2]}</b><em class="chev" style="font-style:normal">›</em></button><div class="dtb">${DF===x[0]?bodyOf(x[0]):''}</div></div>`).join('');
- const gs=groups(false);
- $('scgrid').innerHTML=gs.length?gs.map(g=>{let od=0;g.idx.forEach(i=>{const nx=nxt(P[i]);if(nx&&nx.d<tmr)od++});return `<button class="scc" data-k="${esc('a|'+g.n)}" onclick="goSC(this.dataset.k)"><b>${grpLabel(g.n)}</b><span>${g.idx.length} active</span>${od?`<em>${od} due</em>`:''}</button>`}).join(''):'<div class="empty" style="grid-column:1/-1">No active patients</div>';
  const q=($('q').value||'').trim().toLowerCase();
  $('sres').style.display=q?'':'none';
  if(q){let idx=P.map((_,i)=>i).filter(i=>{const p=P[i];return [p.name,p.id,p.village,p.phone,p.sc].join(' ').toLowerCase().includes(q)});
@@ -520,10 +653,11 @@ function render(){const a=mkList(false),b=mkList(true),tmr=new Date();tmr.setHou
  groups(true).forEach(g=>{r+=`<tr class="grp"><td colspan="12">${grpLabel(g.n)} (${g.idx.length})</td></tr>`;g.idx.forEach((i,n)=>{const p=P[i],d=dates(p);
   r+=`<tr class="${stOf(p)}"><td>${n+1}</td><td class="l">${esc(p.name)}</td><td>${esc(p.id)}</td><td>${esc(p.village)}</td><td>${esc(tyL(p))}</td><td>${f(pd(p.start),1)}</td>${(isMDR(p)&&!isEP(p))?`<td colspan="2">Monthly done ${cntMo(p)}/9</td>`:`<td>${p.ipDone?f(pd(p.ipDone),1):'-'}</td><td>${p.cpDone?f(pd(p.cpDone),1):'-'}</td>`}`+['m6','m12','m18','m24'].map(k=>`<td>${D(d[k])}${p[k+'d']?' ✓':''}</td>`).join('')+'</tr>'})});
  $('dprt').innerHTML=r+'</tbody></table>'
- if(CUR!==null)renderDetail()}
+ renderRep();if(CUR!==null)renderDetail()}
 /* ---- patient detail ---- */
 function openP(i){CUR=i;renderDetail();$('detail').classList.add('on');$('detail').scrollTop=0;document.body.classList.add('noscroll')}
-function closeDetail(){CUR=null;$('detail').classList.remove('on');document.body.classList.remove('noscroll')}
+function collapseAll(){DF='';OPENSC={};document.querySelectorAll('details.card').forEach(d=>{d.open=false})}
+function closeDetail(){const was=CUR!==null;CUR=null;if(was){collapseAll();render()}$('detail').classList.remove('on');document.body.classList.remove('noscroll')}
 function renderDetail(){const i=CUR,p=P[i];if(!p){closeDetail();return}
  const dn=isDone(p),d=dates(p),nx=dn?nxtDone(p):nxt(p),tmr=addD(T0(),1),st=dn?stOf(p):((nx&&nx.d<tmr)?'od':''),S=statusOf(p);
  const hi=k=>(nx&&nx.k===k)?'nx'+(st==='od'?' due':''):'';
@@ -544,14 +678,32 @@ function renderDetail(){const i=CUR,p=P[i];if(!p){closeDetail();return}
  <div class="card"><div class="ct">Follow-up schedule</div><div class="dg">${mid}${ext}</div></div>
  <div class="card"><div class="btns2">${bt}</div></div>`}
 /* ---- navigation ---- */
-function pg(n){closeDetail();CURPG=n;NAVS.forEach(k=>{$('pg_'+k).classList.toggle('on',k===n);$('n_'+k).classList.toggle('on',k===n)});render();window.scrollTo(0,0)}
+const LOCK_PW='RNTCP@123';let UNLOCKED=false;
+const curPw=()=>{try{return localStorage.getItem('tbPw')||LOCK_PW}catch(_){return LOCK_PW}};
+const lockOn=()=>{try{return localStorage.getItem('tbLockOn')!=='0'}catch(_){return true}};
+function lockUI(){const on=lockOn();if($('lockchk'))$('lockchk').checked=on;if(!$('lockinfo'))return;
+ $('lockinfo').innerHTML=!on?'Password lock is <b>OFF</b> – changes need no password.':UNLOCKED?'🔓 <b class="ul">Unlocked</b> – you can change Settings until you leave this tab.':'🔒 <b class="lk">Locked</b> – everything is visible; the password is asked only when you change something.'}
+function askPw(cb){dlg('Enter Settings password','<input id="dinp" type="password" autocomplete="off" placeholder="Password">','OK',()=>{if($('dinp').value===curPw())cb();else uiAlert('Wrong password')})}
+/* run fn only after password (once per visit to the Settings tab) */
+function gate(fn){if(!lockOn()||UNLOCKED)return fn();askPw(()=>{UNLOCKED=true;lockUI();fn()})}
+function gateIn(el){if(!lockOn()||UNLOCKED)return;el.blur();askPw(()=>{UNLOCKED=true;lockUI();el.focus()})}
+function lockToggle(el){const want=el.checked;
+ if(want){try{localStorage.setItem('tbLockOn','1')}catch(_){}UNLOCKED=false;lockUI();toast('Password lock ON');return}
+ el.checked=true;gate(()=>{try{localStorage.setItem('tbLockOn','0')}catch(_){}lockUI();toast('Password lock OFF')})}
+function pwChange(){const o=$('pw_o').value,n=$('pw_n').value,c=$('pw_c').value;
+ if(o!==curPw()){uiAlert('Old password is wrong');return}
+ if(n.length<4){uiAlert('New password must be at least 4 characters');return}
+ if(n!==c){uiAlert('New passwords do not match');return}
+ try{localStorage.setItem('tbPw',n)}catch(_){uiAlert('Storage is blocked - password not saved');return}
+ ['pw_o','pw_n','pw_c'].forEach(i=>$(i).value='');toast('Password changed ✔')}
+function pg(n){UNLOCKED=false;closeDetail();collapseAll();CURPG=n;NAVS.forEach(k=>{$('pg_'+k).classList.toggle('on',k===n);$('n_'+k).classList.toggle('on',k===n)});render();lockUI();window.scrollTo(0,0)}
 window.onAppBack=function(){
  if($('dlg').style.display==='flex'){$('dlg').style.display='none';return true}
  if($('modal').style.display==='block'){$('modal').style.display='none';return true}
  if(CUR!==null){closeDetail();return true}
  if(CURPG!=='dash'){pg('dash');return true}
  return false};
-function renderWk(){$('wk').innerHTML=LS.map((s,n)=>`<div class="wrow"><div class="wn">${n+1}</div><div class="wf"><b>${esc(s)}</b><input inputmode="numeric" maxlength="10" placeholder="10 digit mobile number" value="${esc(WK[s]||'')}" onchange="WK['${esc(s)}']=this.value;localStorage.setItem('tbWk2',JSON.stringify(WK))"></div></div>`).join('')}
+function renderWk(){$('wk').innerHTML=LS.map((s,n)=>`<div class="wrow"><div class="wn">${n+1}</div><div class="wf"><b>${esc(s)}</b><input inputmode="numeric" maxlength="10" placeholder="10 digit mobile number" onfocus="gateIn(this)" value="${esc(WK[s]||'')}" onchange="WK['${esc(s)}']=this.value;localStorage.setItem('tbWk2',JSON.stringify(WK))"></div></div>`).join('')}
 
 let EDIT=null;
 function clearForm(){['id','name','phone','start'].forEach(k=>$('f_'+k).value='');$('f_start').previousElementSibling.value='';$('addbtn').textContent='Add Patient';$('cancelbtn').style.display='none';$('msg').textContent='';$('addTitle').textContent='Add New Patient'}
@@ -623,12 +775,175 @@ function pdfReport(){const W=842,H=595,M=24,RH=15,BL=[.06,.24,.39];let pages=[],
  table('Treatment Completed Patients',[{h:'SR',w:20},{h:'NAME OF PATIENT',w:150},{h:'NIKSHAY ID',w:58},{h:'VILLAGE',w:70},{h:'SC NAME',w:66},{h:'SITE',w:70},{h:'START DATE',w:48},{h:'IP DONE',w:48},{h:'CP DONE',w:48},{h:'6 MONTH',w:48},{h:'12 MONTH',w:48},{h:'18 MONTH',w:48},{h:'24 MONTH',w:48}],B);
  pages.push(c);return pdfBuild(pages)}
 function dlPDF(b,name){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click()}
+
+/* ---- Year-wise report ---- */
+const catOf=p=>isEP(p)&&isMDR(p)?'EP TB + MDR':isEP(p)?'EP TB':isMDR(p)?'MDR':'DS (Pulmonary)';
+function yrFill(){const ys=[...new Set(P.filter(p=>p.start).map(p=>pd(p.start).getFullYear()))].sort((a,b)=>b-a);
+ const sY=$('yr_y'),sS=$('yr_sc'),oy=sY.value,os=sS.value;
+ sY.innerHTML='<option value="all">All years</option>'+ys.map(y=>`<option value="${y}">${y}</option>`).join('');
+ const scs=[...new Set([...LS,...P.map(p=>p.sc||'')].filter(Boolean))];
+ sS.innerHTML='<option value="all">All sub centres</option>'+scs.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');
+ if(oy&&[...sY.options].some(o=>o.value===oy))sY.value=oy;else if(ys.length)sY.value=String(ys.includes(new Date().getFullYear())?new Date().getFullYear():ys[0]);
+ if(os&&[...sS.options].some(o=>o.value===os))sS.value=os;
+ yrInfo()}
+function yrRows(){const y=$('yr_y').value,sc=$('yr_sc').value,ct=$('yr_c').value,st=$('yr_s').value;
+ return P.map((p,i)=>i).filter(i=>{const p=P[i];if(!p.start)return false;
+  if(y!=='all'&&String(pd(p.start).getFullYear())!==y)return false;
+  if(sc!=='all'&&(p.sc||'')!==sc)return false;
+  if(ct==='ds'&&(isEP(p)||isMDR(p)))return false;if(ct==='ep'&&!isEP(p))return false;if(ct==='mdr'&&!isMDR(p))return false;
+  if(st==='active'&&isDone(p))return false;if(st==='done'&&!isDone(p))return false;return true})
+  .sort((a,b)=>(P[a].start>P[b].start?1:-1)||(P[a].name>P[b].name?1:-1))}
+function yrInfo(){const ix=yrRows();let ds=0,ep=0,md=0,dn=0;ix.forEach(i=>{const p=P[i];if(!isEP(p)&&!isMDR(p))ds++;if(isEP(p))ep++;if(isMDR(p))md++;if(isDone(p))dn++});
+ $('yr_info').innerHTML=`<b>${ix.length}</b> patient${ix.length===1?'':'s'} found<br>DS: <b>${ds}</b> · EP TB: <b>${ep}</b> · MDR: <b>${md}</b><br>Active: <b>${ix.length-dn}</b> · Completed: <b>${dn}</b>`}
+function yrName(ext){const g=v=>String($(v).value).replace(/[^A-Za-z0-9]+/g,'_');return 'TB_Patients_'+g('yr_y')+'_'+g('yr_sc')+'_'+g('yr_c')+'.'+ext}
+function yrCSV(){const ix=yrRows();if(!ix.length){uiAlert('No patients found for this selection.');return}
+ const H=['Sr','Name','Nikshay ID','Village','Contact','Sub Centre','Category','Site','Type','Treatment start','Status','IP done','CP done'];
+ const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';const D=v=>v?f(pd(v)):'';
+ const rows=ix.map((i,n)=>{const p=P[i];return [n+1,p.name,p.id,p.village,p.phone,p.sc,catOf(p),p.site,p.type,D(p.start),isDone(p)?'Completed':'Active',D(p.ipDone),D(p.cpDone)]});
+ const t='\ufeff'+[H,...rows].map(r=>r.map(q).join(',')).join('\r\n');
+ dlPDF(new Blob([t],{type:'text/csv;charset=utf-8'}),yrName('csv'))}
+function yrPDFdl(){const ix=yrRows();if(!ix.length){uiAlert('No patients found for this selection.');return}
+ const W=842,H=595,M=24,RH=15,BL=[.06,.24,.39];let pages=[],c='',y=0,cols=[],tw=0;
+ const T=(x,yy,s,fs,b,rgb)=>`BT /F${b?2:1} ${fs} Tf ${(rgb||[0,0,0]).join(' ')} rg ${x} ${yy} Td (${pesc(s)}) Tj ET\n`;
+ const Rc=(x,yy,w,h,rgb)=>`${rgb.join(' ')} rg ${x} ${yy} ${w} ${h} re f\n`;
+ const Ln=(x1,y1,x2,y2)=>`0.8 G 0.5 w ${x1} ${y1} m ${x2} ${y2} l S\n`;
+ const fit=(s,w,fs)=>{s=String(s==null?'':s);const n=Math.floor((w-4)/(fs*.62));return s.length>n?s.slice(0,Math.max(n-1,1))+'.':s};
+ const sel=id=>$(id).selectedOptions[0].textContent;
+ const ttl='Year-wise Patient Report  |  Year: '+sel('yr_y')+'  |  '+sel('yr_sc')+'  |  '+sel('yr_c')+'  |  '+sel('yr_s');
+ const hdr=()=>{let x=M;c+=Rc(M,y-RH,tw,RH,BL);cols.forEach(k=>{c+=T(x+2,y-RH+4.5,k.h,6.5,1,[1,1,1]);x+=k.w});y-=RH};
+ const page=()=>{if(c)pages.push(c);c='';y=H-M;c+=T(M,y-12,'Primary Health Centre :- Pransli',14,1,BL);c+=T(M,y-25,ttl+'   |   Generated on '+f(new Date()),8,0,[.35,.35,.35]);y-=34;hdr()};
+ const table=(cs,gs)=>{cols=cs;tw=cs.reduce((a,k)=>a+k.w,0);page();
+  gs.forEach(g=>{if(y-2*RH<M)page();if(g.label){c+=Rc(M,y-RH,tw,RH,[.89,.93,.97]);c+=T(M+3,y-RH+4.5,g.label,8,1,BL);y-=RH}
+   g.rows.forEach(r=>{if(y-RH<M)page();let x=M;cols.forEach((k,j)=>{c+=T(x+2,y-RH+4.5,fit(r.c[j],k.w,7),7,r.b?1:0);x+=k.w});c+=Ln(M,y-RH,M+tw,y-RH);y-=RH})})};
+ const D=v=>v?f(pd(v)):'-';
+ const names=[...new Set(ix.map(i=>P[i].sc||'NO SUB CENTRE'))];
+ const cnt=(a,fn)=>a.filter(fn).length;
+ const srows=names.map(n=>{const a=ix.filter(i=>(P[i].sc||'NO SUB CENTRE')===n).map(i=>P[i]);return {c:[n,a.length,cnt(a,p=>!isEP(p)&&!isMDR(p)),cnt(a,isEP),cnt(a,isMDR),cnt(a,p=>!isDone(p)),cnt(a,isDone)]}});
+ const all=ix.map(i=>P[i]);srows.push({b:1,c:['TOTAL',all.length,cnt(all,p=>!isEP(p)&&!isMDR(p)),cnt(all,isEP),cnt(all,isMDR),cnt(all,p=>!isDone(p)),cnt(all,isDone)]});
+ table([{h:'SUB CENTRE',w:200},{h:'TOTAL',w:70},{h:'DS',w:70},{h:'EP TB',w:70},{h:'MDR',w:70},{h:'ACTIVE',w:70},{h:'COMPLETED',w:70}],[{rows:srows}]);
+ const G=names.map(n=>{const a=ix.filter(i=>(P[i].sc||'NO SUB CENTRE')===n);return {label:n+'  ('+a.length+')',rows:a.map((i,k)=>{const p=P[i];return {c:[k+1,p.name,p.id,p.village,p.phone,catOf(p),p.type,D(p.start),isDone(p)?'Completed':'Active',D(p.ipDone),D(p.cpDone)]}})}});
+ pages.push(c);c='';y=0;
+ const sv=pages.slice();pages=[];
+ table([{h:'SR',w:22},{h:'NAME OF PATIENT',w:170},{h:'NIKSHAY ID',w:66},{h:'VILLAGE',w:90},{h:'CONTACT',w:64},{h:'CATEGORY',w:84},{h:'TYPE',w:30},{h:'START DATE',w:56},{h:'STATUS',w:56},{h:'IP DONE',w:56},{h:'CP DONE',w:56}],G);
+ pages.push(c);
+ dlPDF(pdfBuild(sv.concat(pages)),yrName('pdf'))}
 function downloadPDF(){dlPDF(pdfReport(),'TB_FUP_'+todayISO()+'.pdf')}
 async function sharePDF(){const b=pdfReport(),name='TB_FUP_'+todayISO()+'.pdf',file=new File([b],name,{type:'application/pdf'});
  if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:'TB Follow-up List - PHC Pransli',text:'TB follow-up and treatment completed patient list.'});return}catch(e){if(e&&e.name==='AbortError')return}}
  dlPDF(b,name);location.href='mailto:?subject='+encodeURIComponent('TB Follow-up List - PHC Pransli')+'&body='+encodeURIComponent('Please find the attached PDF ('+name+').')}
 if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
 window.addEventListener('error',e=>{try{uiAlert('Error: '+e.message)}catch(_){}});
-initSel();setToday();render();pg('dash');
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){setToday();render()}});
+/* ===== Monthly Report (month + year wise sample count) ===== */
+const RC=['CHO','MPHW','FHW','ASHA','OPD'];
+const RCN={CHO:'Community Health Officer',MPHW:'Multi Purpose Health Worker',FHW:'Female Health Worker',ASHA:'ASHA worker',OPD:'OPD samples'};
+const MN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const mkey=(y,m)=>y+'-'+String(m+1).padStart(2,'0');
+const blankE=()=>({CHO:0,MPHW:0,FHW:0,ASHA:{},OPD:0});
+/* old versions saved day-wise (tbRep1: 'YYYY-MM-DD'); convert once to month-wise (tbRep2: 'YYYY-MM') */
+function migrateRep(){const old=L('tbRep1',{}),out={};
+ Object.keys(old).forEach(d=>{const mk=d.slice(0,7);Object.keys(old[d]||{}).forEach(sc=>{const e=old[d][sc]||{},t=out[mk]||(out[mk]={}),o=t[sc]||(t[sc]=blankE());
+  ['CHO','MPHW','FHW','OPD'].forEach(k=>o[k]+=(+e[k]||0));
+  const a=(e.ASHA&&typeof e.ASHA==='object')?e.ASHA:{};
+  Object.keys(a).forEach(n=>{const kk=Object.keys(o.ASHA).find(x=>x.toLowerCase()===n.toLowerCase())||n;o.ASHA[kk]=(o.ASHA[kk]||0)+(+a[n]||0)})})});
+ return out}
+let REP=L('tbRep2',null);
+if(!REP){REP=migrateRep();try{localStorage.setItem('tbRep2',JSON.stringify(REP))}catch(e){}}
+const RS={sc:'',m:new Date().getMonth(),y:new Date().getFullYear(),an:''};
+const saveRep=()=>{try{localStorage.setItem('tbRep2',JSON.stringify(REP))}catch(e){uiAlert('Storage is blocked - report data cannot be saved.')}};
+const ashaSum=a=>Object.keys(a||{}).reduce((s,k)=>s+(+a[k]||0),0);
+const repVals=e=>{e=e||{};return{CHO:+e.CHO||0,MPHW:+e.MPHW||0,FHW:+e.FHW||0,ASHA:ashaSum(e.ASHA),OPD:+e.OPD||0}};
+const rsum=r=>r.CHO+r.MPHW+r.FHW+r.ASHA+r.OPD;
+const zero=()=>({CHO:0,MPHW:0,FHW:0,ASHA:0,OPD:0});
+const mlab=()=>MN[RS.m]+' '+RS.y;
+/* totals of the selected month: {sc:{CHO,MPHW,FHW,ASHA,OPD,asha:{name:count}}} */
+function repAgg(y,m){const mo=REP[mkey(y,m)]||{},out={};
+ Object.keys(mo).forEach(sc=>{const r=repVals(mo[sc]);if(!rsum(r))return;
+  const o=out[sc]=Object.assign(zero(),{asha:{}});RC.forEach(k=>o[k]=r[k]);
+  const a=(mo[sc]&&mo[sc].ASHA&&typeof mo[sc].ASHA==='object')?mo[sc].ASHA:{};
+  Object.keys(a).forEach(n=>{if(+a[n]>0)o.asha[n]=+a[n]})});
+ return out}
+function repList(agg){const n=LS.slice();Object.keys(agg).forEach(s=>{if(!n.includes(s))n.push(s)});return n}
+/* ASHA name-wise rows, grouped by sub centre */
+function ashaRows(agg,names){return names.map(n=>{const a=(agg[n]||{}).asha||{};
+ const l=Object.keys(a).sort((x,y)=>x.localeCompare(y)).map(k=>[k,a[k]]);return{n,l,t:l.reduce((s,x)=>s+x[1],0)}}).filter(g=>g.l.length)}
+function repEnt(make){const k=mkey(RS.y,RS.m);let d=REP[k];if(!d){if(!make)return null;d=REP[k]={}}
+ let e=d[RS.sc];if(!e){if(!make)return null;e=d[RS.sc]=blankE()}
+ if(!e.ASHA||typeof e.ASHA!=='object')e.ASHA={};return e}
+function repTidy(){const k=mkey(RS.y,RS.m),d=REP[k];if(!d)return;const e=d[RS.sc];if(e&&!rsum(repVals(e)))delete d[RS.sc];if(!Object.keys(d).length)delete REP[k]}
+const repDone=()=>{repTidy();saveRep();renderRep()};
+function repAdj(k,n){const e=repEnt(true);e[k]=Math.max(0,(+e[k]||0)+n);repDone()}
+function repSet(k,v){const e=repEnt(true);e[k]=Math.max(0,parseInt(v,10)||0);repDone()}
+const ashaNm=s=>String(s||'').trim().replace(/\s+/g,' ')||'(No name)';
+const ashaKey=(a,nm)=>Object.keys(a).find(k=>k.toLowerCase()===nm.toLowerCase())||nm;
+function repAshaAdj(nm,n){const e=repEnt(true);nm=ashaNm(nm);const k=ashaKey(e.ASHA,nm),v=Math.max(0,(+e.ASHA[k]||0)+n);if(v)e.ASHA[k]=v;else delete e.ASHA[k];repDone()}
+function repAshaSet(nm,v){const e=repEnt(true),k=ashaKey(e.ASHA,ashaNm(nm)),x=Math.max(0,parseInt(v,10)||0);if(x)e.ASHA[k]=x;else delete e.ASHA[k];repDone()}
+function repSc(v){RS.sc=v;renderRep()}
+function repMon(){let m=+$('rp_m').value,y=+$('rp_y').value;const t=new Date();if(y>t.getFullYear()||(y===t.getFullYear()&&m>t.getMonth())){y=t.getFullYear();m=t.getMonth()}RS.m=m;RS.y=y;renderRep()}
+function repNames(sc){const s=new Set();Object.keys(REP).forEach(mk=>{const e=REP[mk][sc];if(e&&e.ASHA)Object.keys(e.ASHA).forEach(n=>{if(n!=='(No name)')s.add(n)})});return [...s].sort()}
+function renderRep(){if(!$('rep_entry'))return;
+ const scs=LS.slice();if(!scs.includes(RS.sc))RS.sc=scs[0]||'';
+ const e=repEnt(false),r=repVals(e),agg=repAgg(RS.y,RS.m),names=repList(agg),TT=zero();
+ names.forEach(n=>{const o=agg[n];if(o)RC.forEach(k=>TT[k]+=o[k])});
+ const row=k=>`<div class="rrow"><div class="rn"><b>${k}</b><small>${RCN[k]}</small></div><div class="rs"><button class="rb m" onclick="repAdj('${k}',-1)" aria-label="Minus">−</button><input class="rc" inputmode="numeric" value="${r[k]}" onchange="repSet('${k}',this.value)"><button class="rb p" onclick="repAdj('${k}',1)" aria-label="Plus">+</button></div></div>`;
+ const ak=e&&e.ASHA?Object.keys(e.ASHA):[];
+ const asha=`<div class="rrow" style="border-bottom:0;padding-bottom:6px"><div class="rn"><b>ASHA</b><small>${RCN.ASHA} · total <u>${r.ASHA}</u></small></div></div>
+ <div class="ashab"><label>ASHA name</label><input id="rp_an" list="rp_names" autocomplete="off" placeholder="Type ASHA name" value="${esc(RS.an)}" oninput="RS.an=this.value"><datalist id="rp_names">${repNames(RS.sc).map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
+ <div class="ashas"><button class="rb m" onclick="repAshaAdj(RS.an,-1)" aria-label="Minus">−</button><span class="muted">Add / remove 1 sample for this ASHA</span><button class="rb p" onclick="repAshaAdj(RS.an,1)" aria-label="Plus">+</button></div>
+ ${ak.length?`<div class="al">${ak.map(n=>`<div class="ar"><div class="an">${esc(n)}</div><div class="rs"><button class="rb m s" data-n="${esc(n)}" onclick="repAshaAdj(this.dataset.n,-1)" aria-label="Minus">−</button><input class="rc s" inputmode="numeric" data-n="${esc(n)}" value="${e.ASHA[n]}" onchange="repAshaSet(this.dataset.n,this.value)"><button class="rb p s" data-n="${esc(n)}" onclick="repAshaAdj(this.dataset.n,1)" aria-label="Plus">+</button></div></div>`).join('')}</div>`:''}</div>`;
+ const ys=new Set([new Date().getFullYear(),new Date().getFullYear()-1,RS.y]);Object.keys(REP).forEach(k=>ys.add(+k.slice(0,4)));
+ $('rep_entry').innerHTML=`<div class="g2"><div><label>Month</label><select id="rp_m" onchange="repMon()">${MN.map((n,i)=>`<option value="${i}" ${i===RS.m?'selected':''}>${n}</option>`).join('')}</select></div><div><label>Year</label><select id="rp_y" onchange="repMon()">${[...ys].sort((a,b)=>b-a).map(y=>`<option value="${y}" ${y===RS.y?'selected':''}>${y}</option>`).join('')}</select></div></div>
+ <label style="margin-top:12px">Sub centre</label><select onchange="repSc(this.value)">${scs.map(s=>`<option value="${esc(s)}" ${s===RS.sc?'selected':''}>${esc(s)}</option>`).join('')}</select>
+ <div class="rtot"><span>${esc(RS.sc)} · ${MN[RS.m].slice(0,3)} ${RS.y}<b>${rsum(r)}</b></span><span>All sub centres<b>${rsum(TT)}</b></span></div>
+ ${row('CHO')}${row('MPHW')}${row('FHW')}${asha}${row('OPD').replace('class="rrow"','class="rrow" style="border-bottom:0"')}`;
+ /* month summary (screen) */
+ const trs=names.map(n=>{const o=agg[n]||zero();return `<tr><td>${esc(n)}</td>${RC.map(k=>`<td class="${o[k]?'':'z'}">${o[k]}</td>`).join('')}<td><b>${rsum(o)}</b></td></tr>`}).join('');
+ const ar=ashaRows(agg,names);
+ const ashaTbl=ar.length?`<div class="st2" style="margin:16px 0 8px">ASHA-wise samples</div><div class="tw"><table class="rt" style="min-width:240px"><thead><tr><th>ASHA NAME</th><th>SAMPLES</th></tr></thead><tbody>${ar.map(g=>`<tr class="tot"><td>${esc(g.n)}</td><td>${g.t}</td></tr>`+g.l.map(x=>`<tr><td style="padding-left:20px">${esc(x[0])}</td><td>${x[1]}</td></tr>`).join('')).join('')}</tbody></table></div>`:`<div class="muted" style="margin-top:12px">No ASHA name-wise samples entered for this month.</div>`;
+ $('rep_sum').innerHTML=`<div class="muted" style="margin:0 0 8px">Report for <b>${mlab()}</b> – shows everything added so far and updates with every entry.</div>
+ <div class="tw"><table class="rt"><thead><tr><th>SUB CENTRE</th>${RC.map(k=>`<th>${k}</th>`).join('')}<th>TOTAL</th></tr></thead><tbody>${trs}<tr class="tot"><td>TOTAL</td>${RC.map(k=>`<td>${TT[k]}</td>`).join('')}<td>${rsum(TT)}</td></tr></tbody></table></div>${ashaTbl}`;
+ /* print sheet: sub centre table + ASHA name-wise table */
+ $('rph').innerHTML='Monthly Sample Report – '+mlab()+'<br><b>Primary Health Centre :- Pransli</b>';
+ let h='<table><thead><tr><th class="l">SUB CENTRE</th>'+RC.map(k=>'<th>'+k+'</th>').join('')+'<th>TOTAL</th></tr></thead><tbody>';
+ names.forEach(n=>{const o=agg[n]||zero();h+='<tr><td class="l">'+esc(n)+'</td>'+RC.map(k=>'<td>'+o[k]+'</td>').join('')+'<td><b>'+rsum(o)+'</b></td></tr>'});
+ h+='<tr class="grp"><td>TOTAL</td>'+RC.map(k=>'<td>'+TT[k]+'</td>').join('')+'<td>'+rsum(TT)+'</td></tr></tbody></table>';
+ if(ar.length){let gt=0;h+='<div class="sh2">ASHA-wise Sample Report – '+mlab()+'</div><table class="ashat"><thead><tr><th>SR</th><th class="l">ASHA NAME</th><th>SAMPLES</th></tr></thead><tbody>';
+  ar.forEach(g=>{gt+=g.t;h+='<tr class="grp"><td colspan="2">'+esc(g.n)+'</td><td>'+g.t+'</td></tr>'+g.l.map((x,k)=>'<tr><td>'+(k+1)+'</td><td class="l">'+esc(x[0])+'</td><td>'+x[1]+'</td></tr>').join('')});
+  h+='<tr class="grp"><td colspan="2">GRAND TOTAL</td><td>'+gt+'</td></tr></tbody></table>'}
+ $('rprt').innerHTML=h}
+function repPrint(){const nat=window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform();if(nat)repPDFdl();else window.print()}
+const repFile=ext=>'TB_Monthly_Report_'+RS.y+'-'+String(RS.m+1).padStart(2,'0')+'.'+ext;
+function repCSV(){const agg=repAgg(RS.y,RS.m),names=repList(agg);if(!Object.keys(agg).length){uiAlert('No samples entered for '+mlab()+'.');return}
+ const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"',TT=zero();
+ names.forEach(n=>{const o=agg[n];if(o)RC.forEach(k=>TT[k]+=o[k])});
+ const rows=[['Monthly Sample Report',mlab()],[],['Sub Centre',...RC,'Total'],...names.map(n=>{const o=agg[n]||zero();return [n,...RC.map(k=>o[k]),rsum(o)]}),['TOTAL',...RC.map(k=>TT[k]),rsum(TT)]];
+ const ar=ashaRows(agg,names);
+ if(ar.length){rows.push([],['ASHA-wise Sample Report',mlab()],[],['Sub Centre','ASHA Name','Samples']);let gt=0;
+  ar.forEach(g=>{g.l.forEach(x=>rows.push([g.n,x[0],x[1]]));rows.push([g.n,'TOTAL',g.t]);gt+=g.t});rows.push(['','GRAND TOTAL',gt])}
+ dlPDF(new Blob(['﻿'+rows.map(r=>r.map(q).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),repFile('csv'))}
+function repPDFdl(){const agg=repAgg(RS.y,RS.m),names=repList(agg);if(!Object.keys(agg).length){uiAlert('No samples entered for '+mlab()+'.');return}
+ const W=842,H=595,M=24,RH=17,BL=[.06,.24,.39];let pages=[],c='',y=0,cols=[],tw=0,ttl='Monthly Sample Report  |  '+mlab();
+ const T=(x,yy,s,fs,b,rgb)=>`BT /F${b?2:1} ${fs} Tf ${(rgb||[0,0,0]).join(' ')} rg ${x} ${yy} Td (${pesc(s)}) Tj ET\n`;
+ const Rc=(x,yy,w,h,rgb)=>`${rgb.join(' ')} rg ${x} ${yy} ${w} ${h} re f\n`;
+ const Ln=(x1,y1,x2,y2)=>`0.8 G 0.5 w ${x1} ${y1} m ${x2} ${y2} l S\n`;
+ const cx=(s,x,w,fs)=>x+(w-String(s).length*fs*.55)/2;
+ const hdr=()=>{let x=M;c+=Rc(M,y-RH,tw,RH,BL);cols.forEach((k,j)=>{c+=T((j&&!k.l)?cx(k.h,x,k.w,7.5):x+3,y-RH+5,k.h,7.5,1,[1,1,1]);x+=k.w});y-=RH};
+ const page=()=>{if(c)pages.push(c);c='';y=H-M;c+=T(M,y-12,'Primary Health Centre :- Pransli',14,1,BL);c+=T(M,y-26,ttl+'   |   Generated on '+f(new Date()),8,0,[.35,.35,.35]);y-=36;hdr()};
+ const table=(cs,gs)=>{cols=cs;tw=cs.reduce((a,k)=>a+k.w,0);page();
+  gs.forEach(g=>{if(y-2*RH<M)page();if(g.label){c+=Rc(M,y-RH,tw,RH,[.89,.93,.97]);c+=T(M+3,y-RH+5,g.label,8.5,1,BL);y-=RH}
+   g.rows.forEach(r=>{if(y-RH<M)page();if(r.b)c+=Rc(M,y-RH,tw,RH,[.93,.95,.98]);let x=M;
+    cols.forEach((k,j)=>{const s=String(r.c[j]==null?'':r.c[j]);c+=T((j&&!k.l)?cx(s,x,k.w,7.5):x+3,y-RH+5,s,7.5,r.b?1:0);x+=k.w});
+    c+=Ln(M,y-RH,M+tw,y-RH);y-=RH})})};
+ const TT=zero();names.forEach(n=>{const o=agg[n];if(o)RC.forEach(k=>TT[k]+=o[k])});
+ const sr=names.map(n=>{const o=agg[n]||zero();return {c:[n,...RC.map(k=>o[k]),rsum(o)]}});sr.push({b:1,c:['TOTAL',...RC.map(k=>TT[k]),rsum(TT)]});
+ table([{h:'SUB CENTRE',w:220},...RC.map(k=>({h:k,w:90})),{h:'TOTAL',w:100}],[{rows:sr}]);
+ /* page 2: ASHA name-wise samples */
+ const ar=ashaRows(agg,names);
+ if(ar.length){ttl='ASHA-wise Sample Report  |  '+mlab();let gt=0;
+  const gs=ar.map(g=>{gt+=g.t;return {label:g.n+'  ('+g.t+' samples)',rows:[...g.l.map((x,k)=>({c:[k+1,x[0],x[1]]})),{b:1,c:['','TOTAL',g.t]}]}});
+  gs.push({rows:[{b:1,c:['','GRAND TOTAL',gt]}]});
+  table([{h:'SR',w:50},{h:'ASHA NAME',w:380,l:1},{h:'SAMPLES',w:120}],gs)}
+ pages.push(c);dlPDF(pdfBuild(pages),repFile('pdf'))}
+
+initSel();setToday();render();bkInfo();pg('dash');
+document.addEventListener('visibilitychange',()=>{if(document.hidden){UNLOCKED=false;lockUI()}else{setToday();render()}});
 </script></body></html>
