@@ -1,9 +1,8 @@
 # TB Follow-up Tracker (Android APK)
 
 - `.github/workflows/main.yml` – GitHub Actions (APK build)
-- `www/index.html` – app (Dashboard, Follow-up, Add New Pt, Completed, Report (mahina-wise), Settings)
+- `www/index.html` – app (Dashboard, Follow-up, Add New Pt, Completed, Settings)
 - `www/logo.png` – NTEP logo
-- `www/gdrive.js` – Google Drive backup / restore (client ID ahi nakhvo – `GOOGLE_DRIVE_SETUP.md`)
 - `www/native-shim.js` – PDF/CSV/Backup save-share, Print ane Android back button
 - `assets/` – app icon ane splash
 - `signing/tracker.jks` – fixed signing key (update vakhte data na jay e mate)
