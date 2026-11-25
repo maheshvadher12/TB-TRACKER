@@ -150,8 +150,8 @@ details summary{cursor:pointer;font-weight:800;color:var(--p);font-size:14px}det
 a.tel{color:var(--p2);text-decoration:none;font-weight:800}
 .btns2{display:flex;flex-wrap:wrap;gap:8px}.btns2 button,.btns2 a{padding:10px 14px;font-size:13px;flex:1 1 auto}
 /* ---------- dialogs ---------- */
-#modal{display:none;position:fixed;inset:0;background:#0009;padding:14px;overflow:auto;z-index:45}#modal .card{max-width:660px;margin:auto}
-#dlg{display:none;position:fixed;inset:0;background:#0009;z-index:50;align-items:center;justify-content:center;padding:14px}#dlg .card{width:100%;max-width:420px;margin:0}
+#modal{display:none;position:fixed;inset:0;background:#0009;padding:14px;overflow:auto;z-index:45}#modal .card{max-width:660px;margin:0 auto;overflow-wrap:anywhere}#modal pre{overflow-wrap:anywhere;word-break:break-word}
+#dlg{display:none;position:fixed;inset:0;overflow:auto;background:#0009;z-index:50;align-items:center;justify-content:center;padding:14px}#dlg .card{width:100%;max-width:420px;margin:0;max-height:calc(100% - 8px);overflow-y:auto;-webkit-overflow-scrolling:touch}#dlg .card a.btn{word-break:break-word;white-space:normal}
 .item{border-bottom:1px solid #e1e8ef;padding:10px 0}.item pre{white-space:pre-wrap;font-family:inherit;font-size:13px;background:#f3f6fa;padding:8px;border-radius:8px}
 .sec{margin-bottom:14px}.sec>b{display:block;font-size:15px;color:var(--p);margin-bottom:4px}.warn{color:var(--bad)}
 #toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 92px);transform:translate(-50%,20px);background:#16222e;color:#fff;padding:10px 18px;border-radius:24px;font-weight:700;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:60}
@@ -451,7 +451,8 @@ details.card>button{display:block;width:calc(100% - 2*var(--pad))}
 <section id="pg_set" class="page noprint">
  <div id="setbody">
  <details class="card" id="pwcard"><summary>Settings Password</summary>
-    <label class="tb2"><span>Ask password to change Settings</span><input type="checkbox" id="lockchk" onchange="lockToggle(this)"></label>
+    <label class="tb2"><span>Ask password to open Settings</span><input type="checkbox" id="lockchk" onchange="lockToggle(this)"></label>
+    <label class="tb2"><span>Unlock with phone fingerprint / face</span><input type="checkbox" id="biochk" onchange="bioToggle(this)"></label><div id="bionote" class="muted" style="margin:-4px 0 8px"></div>
   <div class="fsec">Change / reset password</div>
   <div class="grid"><div><label>Old password</label><input id="pw_o" type="password" autocomplete="off"></div><div><label>New password</label><input id="pw_n" type="password" autocomplete="off"></div><div><label>Confirm new password</label><input id="pw_c" type="password" autocomplete="off"></div></div>
   <button onclick="pwChange()">Save new password</button></details>
@@ -468,7 +469,7 @@ details.card>button{display:block;width:calc(100% - 2*var(--pad))}
  </details>
     <details class="card" id="bkcard" ontoggle="if(this.open)bkInfo()"><summary>Backup &amp; Restore</summary>
   <div id="bkinfo" class="yrinfo"></div>
-  <div class="tb4 yrb"><button onclick="gate(driveBackup)">⬇ Backup</button><button class="gray" onclick="askPw(driveRestore)">⬆ Restore</button></div>
+  <div class="tb4 yrb"><button onclick="gate(driveBackup)">⬇ Backup</button><button class="gray" onclick="unlock(driveRestore)">⬆ Restore</button></div>
   <input id="rf" type="file" accept=".json,application/json,text/plain,*/*" style="display:none" onchange="importJson(this)">
   <p class="info" style="margin-top:12px"><b>Restore never overwrites or duplicates.</b> Only patients that are not already in the app are added. Existing patients and their follow-ups stay exactly as they are.</p>
  </details>
@@ -716,8 +717,8 @@ function renderDetail(){const i=CUR,p=P[i];if(!p){closeDetail();return}
 const LOCK_PW='RNTCP@123';let UNLOCKED=false;
 const curPw=()=>{try{return localStorage.getItem('tbPw')||LOCK_PW}catch(_){return LOCK_PW}};
 const lockOn=()=>{try{return localStorage.getItem('tbLockOn')!=='0'}catch(_){return true}};
-function lockUI(){const on=lockOn();if($('lockchk'))$('lockchk').checked=on;if(!$('lockinfo'))return;
- $('lockinfo').innerHTML=!on?'Password lock is <b>OFF</b> – changes need no password.':UNLOCKED?'🔓 <b class="ul">Unlocked</b> – you can change Settings until you leave this tab.':'🔒 <b class="lk">Locked</b>'}
+function lockUI(){try{bioUI()}catch(_){}const on=lockOn();if($('lockchk'))$('lockchk').checked=on;if(!$('lockinfo'))return;
+ $('lockinfo').innerHTML=!on?'Password lock is <b>OFF</b> – changes need no password.':UNLOCKED?'🔓 <b class="ul">Unlocked</b> – until the app is closed.':'🔒 <b class="lk">Locked</b>'}
 function askPw(cb){dlg('Enter Settings password','<input id="dinp" type="password" autocomplete="off" placeholder="Password"><div style="margin-top:12px"><a href="#" onclick="forgotPw();return false" style="color:#1f6fa8;font-weight:600">Forgot password?</a></div>','OK',()=>{if($('dinp').value===curPw())cb();else uiAlert('Wrong password')})}
 /* run fn only after password (once per visit to the Settings tab) */
 /* ---- Forgot password: reset link goes to the Gmail account ---- */
@@ -730,10 +731,32 @@ function forgotPw(){const c=abCfg();
 async function applyReset(){const c=abCfg();
  try{const j=await abPost({action:'resetFetch'},c);if(!j.pw||String(j.pw).length<4)throw new Error('Invalid');localStorage.setItem('tbPw',String(j.pw));uiAlert('Password changed \u2714 You can now use the new password.')}
  catch(e){const m=abErr(e);uiAlert(/No backup/.test(m)?'New password not set yet. Open the link in your Gmail first, set the password, then try again.':'Failed: '+m)}}
-function gate(fn){if(!lockOn()||UNLOCKED)return fn();askPw(()=>{UNLOCKED=true;lockUI();fn()})}
-function gateIn(el){if(!lockOn()||UNLOCKED)return;el.blur();askPw(()=>{UNLOCKED=true;lockUI();el.focus()})}
+/* ---- unlock: fingerprint/face (Android app) or password. Asked once per app start. ---- */
+const bioPl=()=>{try{const C=window.Capacitor;return(C&&C.isNativePlatform&&C.isNativePlatform()&&C.Plugins&&C.Plugins.BiometricAuthNative)||null}catch(_){return null}};
+const bioOn=()=>{try{return localStorage.getItem('tbBio')==='1'&&!!bioPl()}catch(_){return false}};
+async function bioAvail(){const pl=bioPl();if(!pl)return false;try{const r=await pl.checkBiometry();return !!(r&&r.isAvailable)}catch(_){return false}}
+async function bioAuth(why){const pl=bioPl();if(!pl)return false;try{await pl.authenticate({reason:why||'Unlock Settings',cancelTitle:'Use password',allowDeviceCredential:false,androidTitle:'TB FUP Tracker',androidSubtitle:why||'Unlock Settings'});return true}catch(_){return false}}
+function unlock(cb){if(UNLOCKED){cb();return}
+ const done=viaPw=>{UNLOCKED=true;try{lockUI()}catch(_){}cb();if(viaPw)bioOffer()};
+ if(bioOn()){bioAuth('Unlock Settings').then(ok=>{if(ok)done(false);else askPw(()=>done(false))});return}
+ askPw(()=>done(true))}
+/* first time after install (password entered): offer fingerprint unlock once */
+async function bioOffer(){let asked='';try{asked=localStorage.getItem('tbBioAsked')||''}catch(_){}
+ if(asked||!bioPl())return;try{localStorage.setItem('tbBioAsked','1')}catch(_){}
+ if(!(await bioAvail()))return;
+ setTimeout(()=>dlg('Use fingerprint / face to unlock?','Next time Settings can be opened with your phone fingerprint or face instead of typing the password. You can change this any time in Settings \u2192 Settings Password.','Enable',async()=>{if(await bioAuth('Confirm to enable')){try{localStorage.setItem('tbBio','1')}catch(_){}bioUI();toast('Fingerprint unlock ON')}else uiAlert('Not enabled.')}),400)}
+async function bioToggle(el){
+ if(!el.checked){try{localStorage.setItem('tbBio','0')}catch(_){}toast('Fingerprint unlock OFF');return}
+ el.checked=false;
+ if(!bioPl()){uiAlert('Fingerprint unlock works only in the installed Android app.');return}
+ if(!(await bioAvail())){uiAlert('No fingerprint / face lock is set up on this phone. Add one in phone Settings first.');return}
+ if(await bioAuth('Confirm to enable')){try{localStorage.setItem('tbBio','1')}catch(_){}el.checked=true;toast('Fingerprint unlock ON')}else uiAlert('Not enabled.')}
+function bioUI(){const c=$('biochk'),n=$('bionote');if(!c)return;const pl=!!bioPl();c.disabled=!pl;c.checked=bioOn();
+ if(n)n.textContent=pl?'Opens Settings with your phone fingerprint / face (password is used if it fails).':'Available in the installed Android app only.'}
+function gate(fn){if(!lockOn()||UNLOCKED)return fn();unlock(fn)}
+function gateIn(el){if(!lockOn()||UNLOCKED)return;el.blur();unlock(()=>el.focus())}
 function lockToggle(el){const want=el.checked;
- if(want){try{localStorage.setItem('tbLockOn','1')}catch(_){}UNLOCKED=false;lockUI();toast('Password lock ON');return}
+ if(want){try{localStorage.setItem('tbLockOn','1')}catch(_){}lockUI();toast('Password lock ON');return}
  el.checked=true;gate(()=>{try{localStorage.setItem('tbLockOn','0')}catch(_){}lockUI();toast('Password lock OFF')})}
 function pwChange(){const o=$('pw_o').value,n=$('pw_n').value,c=$('pw_c').value;
  if(o!==curPw()){uiAlert('Old password is wrong');return}
@@ -743,10 +766,10 @@ function pwChange(){const o=$('pw_o').value,n=$('pw_n').value,c=$('pw_c').value;
  ['pw_o','pw_n','pw_c'].forEach(i=>$(i).value='');toast('Password changed ✔')}
 function pgGo(n){
  if(CUR!==null&&DETD){uiConfirm('You have not saved. Leave without saving? The dates you entered will be lost.',()=>{revertDet();pgGo(n)});return}
- if(n==='set'&&CURPG!=='set'&&lockOn()){askPw(()=>{pg0(n);UNLOCKED=true;lockUI()});return}
+ if(n==='set'&&CURPG!=='set'&&lockOn()&&!UNLOCKED){unlock(()=>pg0(n));return}
  pg0(n)}
 function pg(n){if(CURPG==='add'&&n!=='add'&&formDirty()){uiConfirm('You have not saved. Leave without saving? The details you entered will be lost.',()=>{const e=EDIT;cancelEdit();pgGo(n);if(e!==null&&n==='dash')try{openP(e)}catch(_){}});return}pgGo(n)}
-function pg0(n){UNLOCKED=false;closeDetail();collapseAll();CURPG=n;NAVS.forEach(k=>{$('pg_'+k).classList.toggle('on',k===n);$('n_'+k).classList.toggle('on',k===n)});render();lockUI();window.scrollTo(0,0)}
+function pg0(n){closeDetail();collapseAll();CURPG=n;NAVS.forEach(k=>{$('pg_'+k).classList.toggle('on',k===n);$('n_'+k).classList.toggle('on',k===n)});render();lockUI();window.scrollTo(0,0)}
 window.onAppBack=function(){
  if($('dlg').style.display==='flex'){$('dlg').style.display='none';return true}
  if($('modal').style.display==='block'){$('modal').style.display='none';return true}
@@ -1090,5 +1113,5 @@ function acOff(){uiConfirm('Disconnect Google Drive on this phone?',()=>{abS('tb
 monthCheck();setInterval(()=>{monthCheck();abRun(false)},30*60000);setTimeout(()=>abRun(false),5000);
 window.addEventListener('online',()=>abRun(false));
 
-document.addEventListener('visibilitychange',()=>{if(document.hidden){UNLOCKED=false;lockUI()}else{setToday();monthCheck();render();abRun(false)}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){}else{setToday();monthCheck();render();abRun(false)}});
 </script></body></html>
