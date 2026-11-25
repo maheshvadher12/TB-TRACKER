@@ -173,6 +173,9 @@ a.tel{color:var(--p2);text-decoration:none;font-weight:800}
  tr{page-break-inside:avoid}tr.grp{break-after:avoid}
  tr.grp td{background:#e3edf7;font-weight:800;text-align:left;font-size:10pt}
  tr.od td{background:#fdecea;color:#b0132b;font-weight:600}tr.mo td{background:#fff4c2;font-weight:600}
+ .sh2{text-align:center;font-weight:800;font-size:10.5pt;margin:16px 0 6px}
+ .ashat{width:60%!important;margin:0 auto}
+ .ashat th.l{text-align:left}
 }
 
 /* ===== alignment polish ===== */
@@ -296,15 +299,63 @@ button.green,button.gray,button.red,main button:not([class]),a.btn{
 button.green:active,button.gray:active,button.red:active,main button:not([class]):active,a.btn:active{
  transform:scale(.97);opacity:.72;box-shadow:inset 0 .5px 0 rgba(255,255,255,.5),0 1px 2px rgba(15,40,70,.15)}
 .tb4,.tb3{padding-bottom:0}.infb{margin-bottom:10px}
-/* sync */
-.brand{position:relative}
-.sdot{position:absolute;right:-1px;bottom:-1px;width:13px;height:13px;border-radius:50%;border:2px solid #fff;display:none;box-shadow:0 1px 3px rgba(0,0,0,.3)}
-.sdot.ok{display:block;background:#22c55e}.sdot.pend{display:block;background:#f59e0b}.sdot.err{display:block;background:#ef4444}
-.sdot.busy{display:block;background:#3b82f6;animation:sdp 1s ease-in-out infinite}
-@keyframes sdp{50%{transform:scale(1.3);opacity:.6}}
-.syst{padding:9px 12px;border-radius:12px;font-size:13px;font-weight:700;background:#f5f8fb;border:1px solid var(--line);color:var(--txt)}
-.syst.ok{color:#138808;background:#eaf7ea}.syst.err{color:#b42318;background:#fdecea}.syst.pend{color:#b45309;background:#fff4e0}.syst.busy{color:#1d6fa5;background:#e8f2fb}
-details.card>input{width:calc(100% - 2*var(--pad));box-sizing:border-box}
+/* ===== Monthly Report ===== */
+.bnav button{font-size:10px}
+@media (max-width:360px){.fab{width:50px;height:50px}.bnav button{font-size:9.5px}}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dnav{display:flex;align-items:center;gap:8px}.dnav .dp{flex:1}
+.rb{width:44px;height:44px;padding:0;border-radius:12px;font-size:26px;line-height:1;font-weight:700;display:flex;align-items:center;justify-content:center;color:#fff;flex:none;box-shadow:none}
+.rb.m{background:var(--bad)}.rb.p{background:var(--ok)}.rb.n{background:#e8f1fa;color:var(--p)}
+.rb:disabled{opacity:.35}
+.rb.s{width:36px;height:36px;font-size:22px;border-radius:10px}
+.rc{width:66px;flex:none;text-align:center;font-size:19px;font-weight:800;padding:8px 4px;color:var(--p)}
+.rc.s{width:54px;font-size:16px;padding:6px 2px}
+.rrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.rrow .rn{flex:1;min-width:0}.rn b{display:block;color:var(--p);font-size:15px;letter-spacing:.3px}.rn small{color:var(--mut);font-size:11.5px}.rn u{text-decoration:none;font-weight:800;color:var(--ok)}
+.rs{display:flex;align-items:center;gap:8px;flex:none}
+.rtot{display:flex;gap:10px;margin:14px 0 4px}
+.rtot span{flex:1;background:#f5f8fb;border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:11.5px;color:var(--mut);font-weight:700}
+.rtot b{display:block;font-size:22px;color:var(--p);line-height:1.2}
+.ashab{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px;margin:2px 0 6px}
+.ashas{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.ashas .muted{flex:1;text-align:center;font-size:11.5px}
+.al{margin-top:10px}.ar{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px dashed #cfdae6}
+.ar .an{flex:1;min-width:0;font-weight:700;color:var(--p);font-size:13.5px;overflow-wrap:anywhere}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+.rt{width:100%;border-collapse:collapse;font-size:12.5px;min-width:330px}
+.rt th{background:var(--p);color:#fff;padding:9px 4px;font-size:10.5px;letter-spacing:.3px}
+.rt td{padding:9px 4px;text-align:center;border-top:1px solid var(--line);font-weight:600}
+.rt td:first-child,.rt th:first-child{text-align:left;padding-left:10px}
+.rt tr.tot td{background:#e8f1fa;font-weight:800;color:var(--p)}
+.rt td.z{color:#a9b6c3;font-weight:500}
+.rt tr.cl{cursor:pointer}
+#lockinfo b.lk{color:var(--bad)}#lockinfo b.ul{color:var(--ok)}.rt tr.cl:active td{background:#f1f6fb}
+
+/* ===== v9: uniform spacing / alignment ===== */
+details.card>*:not(summary)+*{margin-top:12px!important}
+details.card .bar{gap:12px}
+details.card .bar>button{flex:1 1 140px;min-height:48px;margin:0}
+details.card .fsec{margin:0}
+details.card .grid{gap:12px}
+.yrg>div:nth-child(4){grid-column:1/-1}
+details.card .tb2{margin:0}
+details.card>button{display:block;width:calc(100% - 2*var(--pad))}
+#pwcard .tb2 span{text-transform:none;letter-spacing:0;font-size:14px}
+/* bottom nav: Add New Pt is a normal tab (after Dashboard) */
+.bnav{align-items:stretch}
+.bnav button{justify-content:center}
+.bnav .add{margin-top:0}
+.fab{width:auto;height:auto;background:none;box-shadow:none;border:0;border-radius:0;color:inherit}
+.bnav .fab svg{width:23px;height:23px;stroke-width:2;color:inherit}
+.bnav .add.on::after{display:block}
+.actbar button.infb{margin-bottom:18px}
+.actbar .tb4{margin-top:0}
+.rcv{min-width:46px;text-align:center;font-size:20px;font-weight:800;color:var(--p)}
+.scpick{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-height:52vh;overflow:auto;padding:4px 2px}
+.scpick button{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:46px;font-size:13.5px;text-align:left}
+.scpick button small{background:rgba(255,255,255,.35);border-radius:10px;padding:1px 8px;font-weight:800}
+#dmsg{white-space:pre-line}
+.abf input{width:100%}
 </style></head><body>
 <div id="splash">
  <div class="sp-bg"></div><div class="sp-dots"><i></i><i></i><i></i><i></i></div>
@@ -317,7 +368,7 @@ details.card>input{width:calc(100% - 2*var(--pad));box-sizing:border-box}
 </div>
 
 <header class="top noprint">
- <div class="brand"><span class="badge"><img src="logo.png" alt=""></span><i id="syncdot" class="sdot off"></i></div>
+ <div class="brand"><span class="badge"><img src="logo.png" alt=""></span></div>
  <div class="ttl"><h1>PHC Pransli</h1><small>TB FUP Tracker</small></div>
  <div class="dt" id="today"></div>
 </header>
@@ -366,7 +417,7 @@ details.card>input{width:calc(100% - 2*var(--pad));box-sizing:border-box}
    <div><label>DS / MDR</label><select id="f_drug"><option value="DS">DS</option><option value="MDR">MDR</option></select></div>
    <div><label>DATE OF TREATMENT INITIATION</label><span class="dp"><input type="text" readonly placeholder="dd/mm/yyyy"><input type="date" class="dpi" id="f_start" onclick="try{this.showPicker()}catch(e){}" onchange="this.previousElementSibling.value=fromISO(this.value)"></span></div>
   </div>
-  <div class="bar" style="margin-top:16px"><button id="addbtn" onclick="addP()" style="flex:1 1 140px">Add Patient</button><button id="cancelbtn" class="gray" style="display:none" onclick="cancelEdit()">Cancel</button></div>
+  <div class="bar" style="margin-top:16px"><button id="addbtn" onclick="addP()" style="flex:1 1 140px">💾 Save</button><button id="cancelbtn" class="gray" style="display:none" onclick="cancelEdit()">Cancel</button></div>
   <div id="msg" style="margin-top:8px"></div>
  </div>
  <div class="st2">Recently added</div>
@@ -386,20 +437,26 @@ details.card>input{width:calc(100% - 2*var(--pad));box-sizing:border-box}
  <div class="sheet"><h2>Treatment Completed Patients<br><b>Primary Health Centre :- Pransli</b></h2><div id="dprt"></div></div>
 </section>
 
+<!-- ================= MONTHLY REPORT ================= -->
+<section id="pg_rep" class="page">
+ <div class="noprint">
+  <div class="card"><div class="ct">Monthly Report · Sample Entry (month-wise)</div><div id="rep_entry"></div></div>
+  <div class="card"><div class="ct">Monthly Report · Summary</div><div id="rep_sum"></div>
+   <div class="tb4" style="margin-top:12px"><button onclick="repPrint()">🖨 PRINT</button><button class="gray" onclick="repPDFdl()">⬇ PDF</button><button class="green" onclick="repCSV()">⬇ Excel</button></div></div>
+ </div>
+ <div class="sheet"><h2 id="rph"></h2><div id="rprt"></div></div>
+</section>
+
 <!-- ================= SETTINGS ================= -->
 <section id="pg_set" class="page noprint">
- <details class="card" id="sycard" ontoggle="if(this.open)syncUI()"><summary>Cloud Sync (all phones)</summary>
-  <div class="muted" style="margin-bottom:10px">Patients added or changed on any phone update on all connected phones automatically.</div>
-  <label>Web App URL</label><input id="sy_url" type="url" inputmode="url" placeholder="https://script.google.com/macros/s/.../exec" autocapitalize="off" autocomplete="off">
-  <label style="margin-top:10px">Secret key</label><input id="sy_key" type="text" placeholder="same key on every phone" autocapitalize="off" autocomplete="off">
-  <div id="syncst" class="syst off" style="margin-top:12px">Sync is OFF</div>
-  <div class="tb4 yrb" style="margin-top:12px"><button class="green" onclick="syncConnect()">Connect &amp; Sync</button><button onclick="syncNow()">Sync now</button></div>
-  <div class="tb4" style="margin-top:12px;grid-template-columns:1fr"><button class="gray" onclick="syncOff()">Turn OFF sync</button></div>
-  <p class="info" style="margin-top:12px">Keep the phone date &amp; time on <b>Automatic</b>. Works offline – changes are sent when internet returns.</p>
- </details>
- <details class="card"><summary>Worker Mobile Numbers</summary><div class="muted" style="margin:-4px 0 6px">Sub centre wise – used for sending SMS to workers.</div><div id="wk"></div></details>
+ <div id="setbody">
+ <details class="card" id="pwcard"><summary>Settings Password</summary>
+    <label class="tb2"><span>Ask password to change Settings</span><input type="checkbox" id="lockchk" onchange="lockToggle(this)"></label>
+  <div class="fsec">Change / reset password</div>
+  <div class="grid"><div><label>Old password</label><input id="pw_o" type="password" autocomplete="off"></div><div><label>New password</label><input id="pw_n" type="password" autocomplete="off"></div><div><label>Confirm new password</label><input id="pw_c" type="password" autocomplete="off"></div></div>
+  <button onclick="pwChange()">Save new password</button></details>
+ <details class="card"><summary>Worker Mobile Numbers</summary><div id="wk"></div></details>
  <details class="card" id="yrcard" ontoggle="if(this.open)yrFill()"><summary>Year-wise Patient Report</summary>
-  <div class="muted" style="margin-bottom:10px">Select year, sub centre and category – then download the report.</div>
   <div class="yrg">
    <div><label>Start year</label><select id="yr_y" onchange="yrInfo()"></select></div>
    <div><label>Sub centre</label><select id="yr_sc" onchange="yrInfo()"></select></div>
@@ -409,14 +466,24 @@ details.card>input{width:calc(100% - 2*var(--pad));box-sizing:border-box}
   <div id="yr_info" class="yrinfo"></div>
   <div class="tb4 yrb"><button class="gray" onclick="yrCSV()">⬇ Excel (CSV)</button><button onclick="yrPDFdl()">⬇ PDF</button></div>
  </details>
-  <details class="card"><summary>Backup &amp; Restore</summary>
-  <div class="bar"><button onclick="backup()">⬇ Download Backup</button><button class="gray" onclick="$('rf').click()">⬆ Restore Backup</button><input id="rf" type="file" accept=".json" style="display:none" onchange="restore(this)"></div>
-  <div id="saved" style="margin-top:8px"></div>
-  <p class="info" style="margin-top:8px">All data is saved only on this phone. It is erased only if you use <b>Clear data</b> in phone settings or uninstall the app. Take a backup regularly.</p></details>
- <details class="card"><summary>Message Templates</summary><label>Message – individual patient (with own date)</label><textarea id="tp" rows="4" onchange="saveT()"></textarea>
-  <label style="margin-top:10px">Message – common for all patients (sent together)</label><textarea id="tc" rows="3" onchange="saveT()"></textarea>
-  <label style="margin-top:10px">Message – worker list heading</label><textarea id="tw" rows="4" onchange="saveT()"></textarea></details>
- <div class="card" style="text-align:center"><img src="logo.png" alt="" style="width:84px;height:84px"><div class="ct" style="justify-content:center;margin:6px 0 2px">TB Follow-up Tracker</div><div class="muted">Primary Health Centre Pransli · TB Harega, Desh Jeetega</div></div>
+    <details class="card" id="bkcard" ontoggle="if(this.open)bkInfo()"><summary>Backup &amp; Restore</summary>
+  <div id="bkinfo" class="yrinfo"></div>
+  <div class="tb4 yrb"><button onclick="gate(driveBackup)">⬇ Backup</button><button class="gray" onclick="askPw(driveRestore)">⬆ Restore</button></div>
+  <input id="rf" type="file" accept=".json,application/json,text/plain,*/*" style="display:none" onchange="importJson(this)">
+  <p class="info" style="margin-top:12px"><b>Restore never overwrites or duplicates.</b> Only patients that are not already in the app are added. Existing patients and their follow-ups stay exactly as they are.</p>
+ </details>
+ <details class="card" id="accard" ontoggle="if(this.open)acUI()"><summary>Account</summary>
+  <div class="abf"><label>Gmail account (Google Drive backup)</label><input id="ac_mail" type="email" inputmode="email" placeholder="name@gmail.com" autocapitalize="off" autocomplete="off" onfocus="gateIn(this)">
+  <div id="ac_adv"><label style="margin-top:10px">Backup server URL</label><input id="ab_url" type="url" inputmode="url" placeholder="https://script.google.com/macros/s/.../exec" autocapitalize="off" autocomplete="off" onfocus="gateIn(this)">
+  <label style="margin-top:10px">Secret key</label><input id="ab_key" type="password" placeholder="same key as in the script" autocapitalize="off" autocomplete="off" onfocus="gateIn(this)"></div></div>
+  <div id="ab_st" class="yrinfo"></div>
+  <div class="tb4 yrb"><button class="green" onclick="gate(acSave)">Save &amp; Connect</button><button class="gray" onclick="gate(acOff)">Disconnect</button></div>
+ </details>
+  <details class="card"><summary>Message Templates</summary><label>Message – individual patient (with own date)</label><textarea id="tp" onfocus="gateIn(this)" rows="4" onchange="saveT()"></textarea>
+  <label style="margin-top:10px">Message – common for all patients (sent together)</label><textarea id="tc" onfocus="gateIn(this)" rows="3" onchange="saveT()"></textarea>
+  <label style="margin-top:10px">Message – worker list heading</label><textarea id="tw" onfocus="gateIn(this)" rows="4" onchange="saveT()"></textarea></details>
+ <div class="card" style="text-align:center"><img src="logo.png" alt="" style="width:84px;height:84px"><div class="ct" style="justify-content:center;margin:6px 0 2px">TB Follow-up Tracker</div></div>
+ </div>
 </section>
 </main>
 
@@ -424,9 +491,10 @@ details.card>input{width:calc(100% - 2*var(--pad));box-sizing:border-box}
 
 <nav class="bnav noprint">
  <button id="n_dash" onclick="pg('dash')"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Dashboard</button>
- <button id="n_fup" onclick="pg('fup')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 15l2 2 4-4"/></svg>Follow-up</button>
  <button id="n_add" class="add" onclick="pg('add')"><span class="fab"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>Add New Pt</button>
+ <button id="n_fup" onclick="pg('fup')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 15l2 2 4-4"/></svg>Follow-up</button>
  <button id="n_done" onclick="pg('done')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>Completed<span class="bd" id="cnt_done" style="display:none"></span></button>
+ <button id="n_rep" onclick="pg('rep')"><svg viewBox="0 0 24 24"><path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/></svg>Report</button>
  <button id="n_set" onclick="pg('set')"><svg viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>Settings</button>
 </nav>
 
@@ -442,7 +510,7 @@ const $=id=>document.getElementById(id);
  $('spt').innerHTML=line(W.slice(0,2))+line(W.slice(2));
  let gone=false;const end=()=>{if(gone)return;gone=true;s.classList.add('out');setTimeout(()=>s.remove(),700)};
  s.onclick=end;setTimeout(end,3600)})();
-const DEF=[{"id":"334106857","name":"SOLANKI MANISHA KISHAN","village":"KHAMBHA","phone":"7990584895","sc":"KHAMBHA","site":"MICRO BIO.","type":"NEW","start":"2026-02-09","ipDone":"","cpDone":""},{"id":"334043520","name":"BIJAL BOGHA JETHWA","village":"PRANSLI","phone":"6354540852","sc":"PRANSLI","site":"MICRO BIO.","type":"NEW","start":"2026-08-29","ipDone":"","cpDone":""},{"id":"331506863","name":"JODNI NARANJI RANMALJI","village":"KHAMBHA","phone":"8780575810","sc":"KHAMBHA","site":"MICRO BIO.","type":"NEW","start":"2026-08-22","ipDone":"","cpDone":""},{"id":"286318474","name":"PARMAR SONAL JAYSUKH","village":"KHAMBHA","phone":"9714751240","sc":"KHAMBHA","site":"MICRO BIO.","type":"PT","start":"2026-06-22","ipDone":"","cpDone":""},{"id":"304415425","name":"SOLANKI MOMAL KISHAN","village":"KHAMBHA","phone":"9490584895","sc":"KHAMBHA","site":"MICRO BIO.","type":"PT","start":"2026-07-23","ipDone":"","cpDone":""},{"id":"314033688","name":"SOSA PRAVIN AEBHA","village":"PRANSLI","phone":"6354920822","sc":"PRANSLI","site":"MICRO BIO.","type":"NEW","start":"2026-07-23","ipDone":"","cpDone":""},{"id":"311746805","name":"GAUSWAMI RISHIKESHGIRI RAJENDRAGIRI","village":"GHANTIYA","phone":"9429766707","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-07-21","ipDone":"","cpDone":""},{"id":"286966067","name":"VAINSH RAVI RAMSING","village":"PRANSLI","phone":"9316246656","sc":"PRANSLI","site":"MICRO BIO.","type":"NEW","start":"2026-10-07","ipDone":"","cpDone":""},{"id":"272010691","name":"KANA JASABHAI PARMAR","village":"GHANTIYA","phone":"9313914405","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-05-04","ipDone":"","cpDone":""},{"id":"294482323","name":"RATHOD BACHU TABHABHAI","village":"GHANTIYA","phone":"9913516097","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-07-01","ipDone":"","cpDone":""},{"id":"286966067","name":"RAVJI RAMSINGBHAI VANSH","village":"PRANSLI","phone":"9316246656","sc":"PRANSLI","site":"","type":"NEW","start":"2026-07-10","ipDone":"","cpDone":""},{"id":"266291344","name":"HAMIR ARJAN BHOLA","village":"GHANTIYA","phone":"9998070800","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-04-18","ipDone":"","cpDone":""},{"id":"266082243","name":"RANDHEER NONGHAN PARMAR","village":"MAHOBATPARA","phone":"8460773074","sc":"MAHOBATPARA","site":"MICRO BIO.","type":"NEW","start":"2026-04-20","ipDone":"","cpDone":""},{"id":"63231274","name":"JAYSUKH KURJI PARMAR","village":"KHAMBHA","phone":"8799464094","sc":"KHAMBHA","site":"MICRO BIO.","type":"RE","start":"2026-04-21","ipDone":"","cpDone":""},{"id":"260776165","name":"RAANI CHINA BARAD","village":"PRANSLI","phone":"6353984611","sc":"PRANSLI","site":"","type":"NEW","start":"2026-03-17","ipDone":"","cpDone":""},{"id":"260771134","name":"DIVYESH BABU SOLANKI","village":"BHUVAVADA","phone":"9313035454","sc":"RANGPUR","site":"","type":"NEW","start":"2026-03-14","ipDone":"","cpDone":""},{"id":"254700364","name":"NEETA JAGDISH SODHA","village":"GHANTIYA","phone":"6352114395","sc":"GHANTIYA","site":"MICRO BIO.","type":"NEW","start":"2026-02-17","ipDone":"","cpDone":""},{"id":"251990480","name":"CHUDASAMA HASMUKH ODHAVJI","village":"TIMBDI","phone":"9228902191","sc":"PRANSLI","site":"MICRO BIO.","type":"RE","start":"2026-02-03","ipDone":"","cpDone":""}];
+const DEF=[];
 const DT={p:"નમસ્તે {NAME} ({VILLAGE}), તમારું આગામી ટીબી ફોલોઅપ ({FUP}) તારીખ {DATE} ના રોજ છે. કૃપા કરી તે દિવસે આરોગ્ય કેન્દ્ર પર ગળફાની તપાસ કરાવવા આવશો. - પ્રાઈમરી હેલ્થ સેન્ટર પ્રાસલી",
 c:"નમસ્તે, તમારી ટીબી ફોલોઅપ (ગળફા) તપાસની તારીખ આવી ગઈ છે. કૃપા કરી આરોગ્ય કેન્દ્ર પર ગળફાની તપાસ કરાવવા આવશો. - પ્રાઈમરી હેલ્થ સેન્ટર પ્રાસલી",
 w:"[વર્કર જાણ] નીચેના દર્દીઓનું આગામી ફોલોઅપ છે. કૃપા કરી દર્દીઓને તપાસ માટે લાવશો:"};
@@ -460,10 +528,43 @@ P.forEach(p=>{if(p.site==='MICRO BIO.')p.site='Microbiologically confirmed';else
 const T=Object.assign({},DT,L('tbT5',{}));$('tp').value=T.p;$('tw').value=T.w;$('tc').value=T.c;
 const saveT=()=>localStorage.setItem('tbT5',JSON.stringify({p:$('tp').value,w:$('tw').value,c:$('tc').value}));
 let warned=false;
-const save=()=>{try{localStorage.setItem('tbData2',JSON.stringify(P));const e=$('saved');if(e)e.textContent='Saved ✔ '+new Date().toLocaleTimeString()}catch(err){if(!warned){warned=true;uiAlert('Browser storage is blocked – data cannot be saved. Do not use private/incognito mode.')}}};
+var DETD=false,DETSNAP='';
+const save=()=>{DETD=false;try{localStorage.setItem('tbData2',JSON.stringify(P));const e=$('saved');if(e)e.textContent='Saved ✔ '+new Date().toLocaleTimeString()}catch(err){if(!warned){warned=true;uiAlert('Browser storage is blocked – data cannot be saved. Do not use private/incognito mode.')}}};
 if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
-function backup(){const o={};['tbData2','tbWk2','tbT4','LS2','VM2'].forEach(k=>{const v=localStorage.getItem(k);if(v!==null)o[k]=v});if(!o.tbData2)o.tbData2=JSON.stringify(P);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:'application/json'}));a.download='TB_FUP_backup_'+todayISO()+'.json';a.click()}
-function restore(inp){const fl=inp.files[0];if(!fl)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o.tbData2)throw 0;dlg('Restore will replace the current data with this backup. Continue?','','Restore',()=>{localStorage.removeItem('tbSyncSnap');Object.keys(o).forEach(k=>localStorage.setItem(k,o[k]));location.reload()})}catch(e){uiAlert('Invalid backup file')}};r.readAsText(fl)}
+const BKEYS=['tbData2','tbWk2','tbT5','tbT4','LS2','VM2','tbRep2','tbRep1'];
+function bkInfo(){const e=$('bkinfo');if(!e)return;let t='';try{t=localStorage.getItem('tbLastBk')||''}catch(_){}
+ const c=(typeof abCfg==='function')?abCfg():{};
+ e.innerHTML='Patients in app: <b>'+P.length+'</b><br>'+(c.mail&&c.url&&c.key?'Google Drive: <b>'+esc(c.mail)+'</b>':'<span style="color:#b42318">Google Drive not connected \u2013 open Account</span>')+'<br>'+(t?'Last backup: <b>'+t+'</b>':'No backup taken yet.')}
+function bkPack(){const o={};BKEYS.forEach(k=>{const v=localStorage.getItem(k);if(v!==null)o[k]=v});o.tbData2=JSON.stringify(P);o.tbRep2=JSON.stringify(REP);return JSON.stringify(o)}
+const bkName=()=>{const d=new Date(),z=n=>String(n).padStart(2,'0');return 'TB_FUP_backup_'+d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate())+'_'+z(d.getHours())+z(d.getMinutes())+'.json'};
+function backup(){try{const u=URL.createObjectURL(new Blob([bkPack()],{type:'application/json'}));const a=document.createElement('a');a.href=u;a.download=bkName();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),120000);
+  try{localStorage.setItem('tbLastBk',new Date().toLocaleString('en-GB'))}catch(_){}bkInfo();toast('Backup file ready \u2013 choose Google Drive to save')}catch(e){uiAlert('Backup failed: '+((e&&e.message)||e))}}
+/* ---- Restore = add only NEW data. Nothing existing is overwritten, changed, deleted or duplicated ---- */
+const nkey=p=>{const id=String(p.id||'').replace(/\s+/g,'').toUpperCase();if(id)return 'I:'+id;return 'N:'+[p.name,p.village,p.start,p.phone].map(x=>String(x||'').trim().toUpperCase()).join('|')};
+function applyBackup(o,label){
+ if(Array.isArray(o))o={tbData2:o};
+ if(!o||typeof o!=='object'||!o.tbData2)throw 0;
+ const pj=x=>{if(x==null)return null;if(typeof x==='string'){try{return JSON.parse(x)}catch(e){return null}}return x};
+ const inc=pj(o.tbData2);if(!Array.isArray(inc))throw 0;
+ const have=new Set(P.map(nkey)),add=[];let skip=0;
+ inc.forEach(p=>{if(!p||typeof p!=='object'||!p.name)return;const k=nkey(p);if(have.has(k)){skip++;return}have.add(k);add.push(p)});
+ const lsIn=pj(o.LS2),vmIn=pj(o.VM2)||{},wkIn=pj(o.tbWk2)||{},repIn=pj(o.tbRep2)||{};
+ const newSc=Array.isArray(lsIn)?lsIn.filter(x=>x&&!LS.includes(x)):[];
+ const newVil=Object.keys(vmIn).filter(v=>!(v in VM));
+ const newWk=Object.keys(wkIn).filter(sc=>wkIn[sc]&&!WK[sc]);
+ const newRep=Object.keys(repIn).filter(m=>!(m in REP));
+ if(!add.length&&!newSc.length&&!newVil.length&&!newWk.length&&!newRep.length){uiAlert('Nothing new to add. All '+skip+' patients in this file are already in the app. No change was made.');return}
+ const body='<div class="yrinfo" style="margin:0;text-align:left">New patients to add: <b>'+add.length+'</b><br>Already in app (skipped): <b>'+skip+'</b>'+(newRep.length?'<br>New report months: <b>'+newRep.length+'</b>':'')+'<br><br>Existing data will NOT be changed or deleted.</div>';
+ dlg('Add new data from '+(label||'this file')+'?',body,'Add new data',()=>{
+  add.forEach(p=>P.push(p));save();
+  if(newSc.length){newSc.forEach(x=>LS.push(x));localStorage.setItem('LS2',JSON.stringify(LS))}
+  if(newVil.length){const x=L('VM2',{});newVil.forEach(v=>{x[v]=vmIn[v];VM[v]=vmIn[v]});localStorage.setItem('VM2',JSON.stringify(x))}
+  if(newWk.length){const x=L('tbWk2',{});newWk.forEach(sc=>{x[sc]=wkIn[sc];WK[sc]=wkIn[sc]});localStorage.setItem('tbWk2',JSON.stringify(x))}
+  if(newRep.length){newRep.forEach(m=>{REP[m]=repIn[m]});saveRep()}
+  SEL={};render();initSel();bkInfo();
+  setTimeout(()=>uiAlert('Done \u2714  '+add.length+' new patient'+(add.length==1?'':'s')+' added, '+skip+' already present (not changed).'),50)})}
+function importJson(inp){const fl=inp.files[0];if(!fl)return;const r=new FileReader();
+ r.onload=()=>{inp.value='';try{applyBackup(JSON.parse(r.result),fl.name)}catch(e){uiAlert('Invalid backup file')}};r.readAsText(fl)}
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 const pd=s=>{if(!s)return null;const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12)};
 const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
@@ -514,7 +615,7 @@ function dlg(msg,body,ok,cb,single){$('dmsg').textContent=msg;$('dbody').innerHT
 const uiAlert=m=>dlg(m,'','OK',null,true),uiConfirm=(m,cb)=>dlg(m,'','Yes',cb);
 function setAct(i,k,e){const iso=e.value;if(iso&&iso>todayISO()){uiAlert('A date later than today cannot be entered');render();return}
  if(k==='cpDone')P[i].restored=false;
- P[i][k]=iso;save();render();if(k==='cpDone'&&iso&&isDone(P[i]))uiAlert(P[i].name+': CP follow-up done. Patient moved to Treatment Completed.')}
+ P[i][k]=iso;if(CUR===i){DETD=true}else save();render();if(k==='cpDone'&&iso&&isDone(P[i]))uiAlert(P[i].name+': CP follow-up done. Patient moved to Treatment Completed.')}
 function fin(i,v){if(!v){P[i].done=false;P[i].cpDone='';P[i].fupDate='';P[i].restored=true;SEL[i]=false;save();render();return}
  uiConfirm(P[i].name+': treatment completed? Patient will move to Treatment Completed.',()=>{P[i].done=true;SEL[i]=false;save();render()})}
 function extendP(i){const p=P[i];let o='';for(let m=1;m<=12;m++)o+=`<option value="${m}"${m==3?' selected':''}>${m} month${m>1?'s':''}</option>`;
@@ -523,7 +624,7 @@ function extendP(i){const p=P[i];let o='';for(let m=1;m<=12;m++)o+=`<option valu
 function unext(i){delete P[i].extUntil;save();render()}
 const monthly=(i,p,d,hi)=>d.mo?d.mo.map((dt,k)=>`<div class="${hi('mo'+(k+1))}"><span>MONTH ${k+1} FOLLOW-UP – due ${f(dt,1)}</span>${dp(p['mo'+(k+1)+'d'],`setAct(${i},'mo${k+1}d',this)`,todayISO())}</div>`).join(''):'';
 /* ===== NEW UI ===== */
-const NAVS=['dash','fup','add','done','set'];
+const NAVS=['dash','fup','add','done','rep','set'];
 let CUR=null,CURPG='dash',DF='',OPENSC={};
 const T0=()=>{const t=new Date();t.setHours(0,0,0,0);return t};
 const dayDiff=d=>Math.floor((d-T0())/864e5);
@@ -550,7 +651,7 @@ function dashFilter(i){const p=P[i],dn=isDone(p);if(DF==='done')return dn;if(dn)
  if(DF==='mdr')return isMDR(p);if(DF==='ep')return isEP(p);return true}
 function renderDash(){const tmr=addD(T0(),1),w7=addD(tmr,7);let act=0,due=0,wk=0,dn=0,mdr=0,ep=0;
  P.forEach(p=>{if(isDone(p)){dn++;return}act++;const nx=nxt(p);if(nx){if(nx.d<tmr)due++;else if(nx.d<w7)wk++}if(isMDR(p))mdr++;if(isEP(p))ep++});
- const TL=[['all','👥',act,'Active patients','b'],['due','⏰',due,'Due today / overdue','r'],['week','📅',wk,'Next 7 days','a'],['done','✅',dn,'Completed','g'],['mdr','💊',mdr,'MDR (active)','p'],['ep','🩺',ep,'EP TB (active)','t']];
+ const TL=[['all','👥',act,'Active patients','b'],['due','⏰',due,'Due today / overdue','r'],['week','📅',wk,'Next 7 days','a'],['mdr','💊',mdr,'MDR (active)','p'],['ep','🩺',ep,'EP TB (active)','t'],['done','✅',dn,'Completed patients','g']];
  const bodyOf=k=>{const sv=DF;DF=k;let ix=P.map((_,i)=>i).filter(dashFilter);DF=sv;const kf=i=>{const p=P[i],nx=isDone(p)?nxtDone(p):nxt(p);return nx?nx.d.getTime():9e15};if(k==='done')ix.sort((a,b)=>P[a].name<P[b].name?-1:1);else ix.sort((a,b)=>kf(a)-kf(b));return ix.length?ix.map(i=>pcard(i,isDone(P[i]),false)).join(''):'<div class="empty">No patients found</div>'};
  $('tiles').innerHTML=TL.map(x=>`<div class="dtab ${x[4]}${DF===x[0]?' open':''}"><button class="dth" onclick="setDF('${x[0]}')"><i>${x[1]}</i><span>${x[3]}</span><b>${x[2]}</b><em class="chev" style="font-style:normal">›</em></button><div class="dtb">${DF===x[0]?bodyOf(x[0]):''}</div></div>`).join('');
  const q=($('q').value||'').trim().toLowerCase();
@@ -586,11 +687,12 @@ function render(){const a=mkList(false),b=mkList(true),tmr=new Date();tmr.setHou
  groups(true).forEach(g=>{r+=`<tr class="grp"><td colspan="12">${grpLabel(g.n)} (${g.idx.length})</td></tr>`;g.idx.forEach((i,n)=>{const p=P[i],d=dates(p);
   r+=`<tr class="${stOf(p)}"><td>${n+1}</td><td class="l">${esc(p.name)}</td><td>${esc(p.id)}</td><td>${esc(p.village)}</td><td>${esc(tyL(p))}</td><td>${f(pd(p.start),1)}</td>${(isMDR(p)&&!isEP(p))?`<td colspan="2">Monthly done ${cntMo(p)}/9</td>`:`<td>${p.ipDone?f(pd(p.ipDone),1):'-'}</td><td>${p.cpDone?f(pd(p.cpDone),1):'-'}</td>`}`+['m6','m12','m18','m24'].map(k=>`<td>${D(d[k])}${p[k+'d']?' ✓':''}</td>`).join('')+'</tr>'})});
  $('dprt').innerHTML=r+'</tbody></table>'
- if(CUR!==null)renderDetail()}
+ renderRep();if(CUR!==null)renderDetail()}
 /* ---- patient detail ---- */
-function openP(i){CUR=i;renderDetail();$('detail').classList.add('on');$('detail').scrollTop=0;document.body.classList.add('noscroll')}
+function openP(i){CUR=i;DETD=false;DETSNAP=JSON.stringify(P[i]);renderDetail();$('detail').classList.add('on');$('detail').scrollTop=0;document.body.classList.add('noscroll')}
 function collapseAll(){DF='';OPENSC={};document.querySelectorAll('details.card').forEach(d=>{d.open=false})}
-function closeDetail(){const was=CUR!==null;CUR=null;if(was){collapseAll();render()}$('detail').classList.remove('on');document.body.classList.remove('noscroll')}
+function closeDetail(){if(CUR!==null&&DETD){uiConfirm('You have not saved. Leave without saving? The dates you entered will be lost.',()=>{revertDet();closeDetail0();render()});return}closeDetail0()}
+function closeDetail0(){const was=CUR!==null;CUR=null;if(was){collapseAll();render()}$('detail').classList.remove('on');document.body.classList.remove('noscroll')}
 function renderDetail(){const i=CUR,p=P[i];if(!p){closeDetail();return}
  const dn=isDone(p),d=dates(p),nx=dn?nxtDone(p):nxt(p),tmr=addD(T0(),1),st=dn?stOf(p):((nx&&nx.d<tmr)?'od':''),S=statusOf(p);
  const hi=k=>(nx&&nx.k===k)?'nx'+(st==='od'?' due':''):'';
@@ -605,23 +707,56 @@ function renderDetail(){const i=CUR,p=P[i];if(!p){closeDetail();return}
  if(nx){const dd=dayDiff(nx.d);nb=`<div class="nxb ${st}"><div><small>NEXT FOLLOW-UP</small><b>${f(nx.d,1)}</b></div><span>${FEN[nx.k]}<br>${dd<0?'Overdue by '+(-dd)+' day'+(dd==-1?'':'s'):dd===0?'Today':'In '+dd+' day'+(dd==1?'':'s')}</span></div>`}
  else if(isEP(p)&&!dn&&p.start){nb=`<div class="nxb"><div><small>TREATMENT END DATE</small><b>${f(endOf(p),1)}</b></div><span>EP TB</span></div>`}
  else nb=`<div class="nxb ok"><div><small>FOLLOW-UP</small><b>${p.extUntil?'Treatment extended':'No pending follow-up'}</b></div></div>`;
- const bt=`${ph?`<a class="btn green" href="tel:${ph}">📞 Call</a>`:''}${spec(p)?`<button class="green" onclick="extendP(${i})">➕ Extend Treatment</button>`:''}${spec(p)&&!dn?`<button class="green" onclick="fin(${i},true)">✔ Completed</button>`:''}${p.extUntil?`<button class="gray" onclick="unext(${i})">Remove extension</button>`:''}${dn?`<button class="gray" onclick="fin(${i},false)">↩ Restore</button>`:''}<button class="gray" onclick="editP(${i})">✎ Edit</button><button class="red" onclick="del(${i})">✖ Delete</button>`;
+ const bt=`${DETD?`<button class="green" style="flex:1 1 100%" onclick="saveDet()">💾 Save</button>`:''}${ph?`<a class="btn green" href="tel:${ph}">📞 Call</a>`:''}${nx?`<button class="green" onclick="msgP(${i})">💬 Message</button>`:''}${spec(p)?`<button class="green" onclick="extendP(${i})">➕ Extend Treatment</button>`:''}${spec(p)&&!dn?`<button class="green" onclick="fin(${i},true)">✔ Completed</button>`:''}${p.extUntil?`<button class="gray" onclick="unext(${i})">Remove extension</button>`:''}${dn?`<button class="gray" onclick="fin(${i},false)">↩ Restore</button>`:''}<button class="gray" onclick="editP(${i})">✎ Edit</button><button class="red" onclick="del(${i})">✖ Delete</button>`;
  $('dcont').innerHTML=`<div class="card prof"><div class="av">${E(ini(p.name))}</div><div><h2>${E(p.name)}</h2><p>${E(p.sc||'-')} SC · ${E(p.village)}</p><span class="pill ${S.c}">${S.t}</span></div></div>${nb}
  <div class="card"><div class="ct">Patient information</div><div class="dg">${info}</div></div>
  <div class="card"><div class="ct">Follow-up schedule</div><div class="dg">${mid}${ext}</div></div>
  <div class="card"><div class="btns2">${bt}</div></div>`}
 /* ---- navigation ---- */
-function pg(n){closeDetail();collapseAll();CURPG=n;NAVS.forEach(k=>{$('pg_'+k).classList.toggle('on',k===n);$('n_'+k).classList.toggle('on',k===n)});render();window.scrollTo(0,0)}
+const LOCK_PW='RNTCP@123';let UNLOCKED=false;
+const curPw=()=>{try{return localStorage.getItem('tbPw')||LOCK_PW}catch(_){return LOCK_PW}};
+const lockOn=()=>{try{return localStorage.getItem('tbLockOn')!=='0'}catch(_){return true}};
+function lockUI(){const on=lockOn();if($('lockchk'))$('lockchk').checked=on;if(!$('lockinfo'))return;
+ $('lockinfo').innerHTML=!on?'Password lock is <b>OFF</b> – changes need no password.':UNLOCKED?'🔓 <b class="ul">Unlocked</b> – you can change Settings until you leave this tab.':'🔒 <b class="lk">Locked</b>'}
+function askPw(cb){dlg('Enter Settings password','<input id="dinp" type="password" autocomplete="off" placeholder="Password"><div style="margin-top:12px"><a href="#" onclick="forgotPw();return false" style="color:#1f6fa8;font-weight:600">Forgot password?</a></div>','OK',()=>{if($('dinp').value===curPw())cb();else uiAlert('Wrong password')})}
+/* run fn only after password (once per visit to the Settings tab) */
+/* ---- Forgot password: reset link goes to the Gmail account ---- */
+function forgotPw(){const c=abCfg();
+ if(!abReady(c)){uiAlert('Google account is not set up in this app, so a reset link cannot be sent.');return}
+ dlg('Reset password','A password reset link will be sent to <b>'+esc(c.mail)+'</b>. Open the link from your Gmail and set a new password.','Send link',async()=>{
+  if(navigator.onLine===false){uiAlert('No internet connection.');return}
+  try{toast('Sending\u2026');await abPost({action:'resetRequest'},c)}catch(e){uiAlert('Could not send: '+abErr(e));return}
+  dlg('Link sent','Check Gmail ('+c.mail+') \u2013 also the Spam folder. Open the link and set your new password (valid 30 minutes). Then come back here and press the button below.','I have set it \u2013 Apply',applyReset)})}
+async function applyReset(){const c=abCfg();
+ try{const j=await abPost({action:'resetFetch'},c);if(!j.pw||String(j.pw).length<4)throw new Error('Invalid');localStorage.setItem('tbPw',String(j.pw));uiAlert('Password changed \u2714 You can now use the new password.')}
+ catch(e){const m=abErr(e);uiAlert(/No backup/.test(m)?'New password not set yet. Open the link in your Gmail first, set the password, then try again.':'Failed: '+m)}}
+function gate(fn){if(!lockOn()||UNLOCKED)return fn();askPw(()=>{UNLOCKED=true;lockUI();fn()})}
+function gateIn(el){if(!lockOn()||UNLOCKED)return;el.blur();askPw(()=>{UNLOCKED=true;lockUI();el.focus()})}
+function lockToggle(el){const want=el.checked;
+ if(want){try{localStorage.setItem('tbLockOn','1')}catch(_){}UNLOCKED=false;lockUI();toast('Password lock ON');return}
+ el.checked=true;gate(()=>{try{localStorage.setItem('tbLockOn','0')}catch(_){}lockUI();toast('Password lock OFF')})}
+function pwChange(){const o=$('pw_o').value,n=$('pw_n').value,c=$('pw_c').value;
+ if(o!==curPw()){uiAlert('Old password is wrong');return}
+ if(n.length<4){uiAlert('New password must be at least 4 characters');return}
+ if(n!==c){uiAlert('New passwords do not match');return}
+ try{localStorage.setItem('tbPw',n)}catch(_){uiAlert('Storage is blocked - password not saved');return}
+ ['pw_o','pw_n','pw_c'].forEach(i=>$(i).value='');toast('Password changed ✔')}
+function pgGo(n){
+ if(CUR!==null&&DETD){uiConfirm('You have not saved. Leave without saving? The dates you entered will be lost.',()=>{revertDet();pgGo(n)});return}
+ if(n==='set'&&CURPG!=='set'&&lockOn()){askPw(()=>{pg0(n);UNLOCKED=true;lockUI()});return}
+ pg0(n)}
+function pg(n){if(CURPG==='add'&&n!=='add'&&formDirty()){uiConfirm('You have not saved. Leave without saving? The details you entered will be lost.',()=>{const e=EDIT;cancelEdit();pgGo(n);if(e!==null&&n==='dash')try{openP(e)}catch(_){}});return}pgGo(n)}
+function pg0(n){UNLOCKED=false;closeDetail();collapseAll();CURPG=n;NAVS.forEach(k=>{$('pg_'+k).classList.toggle('on',k===n);$('n_'+k).classList.toggle('on',k===n)});render();lockUI();window.scrollTo(0,0)}
 window.onAppBack=function(){
  if($('dlg').style.display==='flex'){$('dlg').style.display='none';return true}
  if($('modal').style.display==='block'){$('modal').style.display='none';return true}
  if(CUR!==null){closeDetail();return true}
  if(CURPG!=='dash'){pg('dash');return true}
  return false};
-function renderWk(){$('wk').innerHTML=LS.map((s,n)=>`<div class="wrow"><div class="wn">${n+1}</div><div class="wf"><b>${esc(s)}</b><input inputmode="numeric" maxlength="10" placeholder="10 digit mobile number" value="${esc(WK[s]||'')}" onchange="WK['${esc(s)}']=this.value;localStorage.setItem('tbWk2',JSON.stringify(WK))"></div></div>`).join('')}
+function renderWk(){$('wk').innerHTML=LS.map((s,n)=>`<div class="wrow"><div class="wn">${n+1}</div><div class="wf"><b>${esc(s)}</b><input inputmode="numeric" maxlength="10" placeholder="10 digit mobile number" onfocus="gateIn(this)" value="${esc(WK[s]||'')}" onchange="WK['${esc(s)}']=this.value;localStorage.setItem('tbWk2',JSON.stringify(WK))"></div></div>`).join('')}
 
 let EDIT=null;
-function clearForm(){['id','name','phone','start'].forEach(k=>$('f_'+k).value='');$('f_start').previousElementSibling.value='';$('addbtn').textContent='Add Patient';$('cancelbtn').style.display='none';$('msg').textContent='';$('addTitle').textContent='Add New Patient'}
+function clearForm(){['id','name','phone','start'].forEach(k=>$('f_'+k).value='');$('f_start').previousElementSibling.value='';$('addbtn').textContent='💾 Save';$('cancelbtn').style.display='none';$('msg').textContent='';$('addTitle').textContent='Add New Patient'}
 function cancelEdit(){EDIT=null;clearForm()}
 function editP(i){const p=P[i];EDIT=i;pg('add');
  $('f_name').value=p.name;$('f_id').value=p.id;$('f_phone').value=p.phone;
@@ -630,13 +765,26 @@ function editP(i){const p=P[i];EDIT=i;pg('add');
  $('f_site').value=p.site||'Microbiologically confirmed';
  if(![...$('f_type').options].some(o=>o.value===p.type)){const o=document.createElement('option');o.textContent=p.type;$('f_type').appendChild(o)}
  $('f_type').value=p.type;$('f_drug').value=p.drug||'DS';$('f_start').value=p.start;$('f_start').previousElementSibling.value=fromISO(p.start);
- $('addbtn').textContent='Update';$('cancelbtn').style.display='';$('msg').textContent='Editing: '+p.name;$('addTitle').textContent='Edit Patient';$('addbtn').textContent='Update Patient'}
+ $('cancelbtn').style.display='';$('msg').textContent='Editing: '+p.name;$('addTitle').textContent='Edit Patient';$('addbtn').textContent='💾 Save'}
 function addP(){const g=k=>$('f_'+k).value.trim();
  if(!g('name')||!g('start')||!g('phone')||!g('sc')||!g('village')||g('village')==='__new'){$('msg').textContent='Select sub centre and village, and enter name, number and start date';return}
  const o={id:g('id'),name:g('name').toUpperCase(),village:g('village'),phone:g('phone'),sc:g('sc'),site:g('site'),type:g('type'),drug:g('drug'),start:g('start')};
  const upd=EDIT!==null,ei=EDIT;if(upd){Object.assign(P[EDIT],o);EDIT=null}else P.push(Object.assign(o,{ipDone:'',cpDone:''}));
  save();render();clearForm();toast(upd?'Patient updated ✔':'Patient added ✔');$('msg').textContent=upd?'Updated ✔':'Added ✔';if(upd){pg('dash');openP(ei)}}
-function del(i){uiConfirm(P[i].name+': delete this patient?',()=>{P.splice(i,1);SEL={};closeDetail();save();render()})}
+function msgP(i){const p=P[i],n=isDone(p)?nxtDone(p):nxt(p);if(!n){uiAlert('No follow-up pending for this patient');return}
+ const pn=num(p.phone),wn=num(WK[p.sc||'']),pt=fillT($('tp').value,p,n),
+  wt=$('tw').value+'\n1) '+p.name+' ('+p.village+', '+p.phone+') \u2013 '+NAMES[n.k]+' \u2013 '+f(n.d,1)+'\n'+FOOT,
+  A=(no,t,l)=>no?`<a class="btn green" style="display:block;margin-top:8px;text-align:center" href="${smsLink(no,t)}" onclick="$('dlg').style.display='none'">${l}</a>`:`<div class="warn" style="margin-top:8px">${l} \u2013 (no number)</div>`;
+ dlg('Send message \u2013 '+p.name,
+  A(pn,pt,'Patient only')+A(wn,wt,'Worker only ('+esc(p.sc||'-')+')')+A(pn&&wn?pn+','+wn:'',pt,'Patient + Worker (both together)')+
+  '<small style="display:block;margin-top:8px">Both = one SMS sent to patient and worker together (patient message).</small>','Close',null,true)}
+/* ---- ask before leaving the Add/Edit form with unsaved details ---- */
+function saveDet(){save();render();toast('Saved \u2714')}
+function revertDet(){if(DETD&&CUR!==null&&DETSNAP){try{P[CUR]=JSON.parse(DETSNAP)}catch(_){}}DETD=false}
+function formDirty(){const v=k=>($('f_'+k).value||'').trim();
+ if(EDIT!==null&&P[EDIT]){const q=P[EDIT];return v('name').toUpperCase()!==String(q.name||'').toUpperCase()||v('id')!==String(q.id||'')||v('phone')!==String(q.phone||'')||v('start')!==String(q.start||'')||v('village')!==String(q.village||'')||v('sc')!==String(q.sc||'')||v('site')!==String(q.site||'')||v('type')!==String(q.type||'')||v('drug')!==String(q.drug||'DS')}
+ return !!(v('name')||v('id')||v('phone')||v('start'))}
+function del(i){uiConfirm(P[i].name+': delete this patient?',()=>{DETD=false;P.splice(i,1);SEL={};closeDetail();save();render()})}
 function selAllDone(v){P.forEach((p,i)=>{if(isDone(p))SEL[i]=v});render()}
 function selAll(v){P.forEach((p,i)=>SEL[i]=v&&!isDone(p));render()}
 const num=s=>{const d=String(s||'').replace(/\D/g,'');return d.length>=10?'+91'+d.slice(-10):''};
@@ -748,94 +896,199 @@ async function sharePDF(){const b=pdfReport(),name='TB_FUP_'+todayISO()+'.pdf',f
  dlPDF(b,name);location.href='mailto:?subject='+encodeURIComponent('TB Follow-up List - PHC Pransli')+'&body='+encodeURIComponent('Please find the attached PDF ('+name+').')}
 if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
 window.addEventListener('error',e=>{try{uiAlert('Error: '+e.message)}catch(_){}});
+/* ===== Monthly Report (month + year wise sample count) ===== */
+const RC=['CHO','MPHW','FHW','ASHA','OPD'];
+const RCN={CHO:'Community Health Officer',MPHW:'Multi Purpose Health Worker',FHW:'Female Health Worker',ASHA:'ASHA worker',OPD:'OPD samples'};
+const MN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const mkey=(y,m)=>y+'-'+String(m+1).padStart(2,'0');
+const blankE=()=>({CHO:0,MPHW:0,FHW:0,ASHA:{},OPD:0});
+/* old versions saved day-wise (tbRep1: 'YYYY-MM-DD'); convert once to month-wise (tbRep2: 'YYYY-MM') */
+function migrateRep(){const old=L('tbRep1',{}),out={};
+ Object.keys(old).forEach(d=>{const mk=d.slice(0,7);Object.keys(old[d]||{}).forEach(sc=>{const e=old[d][sc]||{},t=out[mk]||(out[mk]={}),o=t[sc]||(t[sc]=blankE());
+  ['CHO','MPHW','FHW','OPD'].forEach(k=>o[k]+=(+e[k]||0));
+  const a=(e.ASHA&&typeof e.ASHA==='object')?e.ASHA:{};
+  Object.keys(a).forEach(n=>{const kk=Object.keys(o.ASHA).find(x=>x.toLowerCase()===n.toLowerCase())||n;o.ASHA[kk]=(o.ASHA[kk]||0)+(+a[n]||0)})})});
+ return out}
+let REP=L('tbRep2',null);
+if(!REP){REP=migrateRep();try{localStorage.setItem('tbRep2',JSON.stringify(REP))}catch(e){}}
+const RS={sc:'',m:new Date().getMonth(),y:new Date().getFullYear(),an:''};
+const saveRep=()=>{try{localStorage.setItem('tbRep2',JSON.stringify(REP))}catch(e){uiAlert('Storage is blocked - report data cannot be saved.')}};
+const ashaSum=a=>Object.keys(a||{}).reduce((s,k)=>s+(+a[k]||0),0);
+const repVals=e=>{e=e||{};return{CHO:+e.CHO||0,MPHW:+e.MPHW||0,FHW:+e.FHW||0,ASHA:ashaSum(e.ASHA),OPD:+e.OPD||0}};
+const rsum=r=>r.CHO+r.MPHW+r.FHW+r.ASHA+r.OPD;
+const zero=()=>({CHO:0,MPHW:0,FHW:0,ASHA:0,OPD:0});
+const mlab=()=>MN[RS.m]+' '+RS.y;
+/* totals of the selected month: {sc:{CHO,MPHW,FHW,ASHA,OPD,asha:{name:count}}} */
+function repAgg(y,m){const mo=REP[mkey(y,m)]||{},out={};
+ Object.keys(mo).forEach(sc=>{const r=repVals(mo[sc]);if(!rsum(r))return;
+  const o=out[sc]=Object.assign(zero(),{asha:{}});RC.forEach(k=>o[k]=r[k]);
+  const a=(mo[sc]&&mo[sc].ASHA&&typeof mo[sc].ASHA==='object')?mo[sc].ASHA:{};
+  Object.keys(a).forEach(n=>{if(+a[n]>0)o.asha[n]=+a[n]})});
+ return out}
+function repList(agg){const n=LS.slice();Object.keys(agg).forEach(s=>{if(!n.includes(s))n.push(s)});return n}
+/* ASHA name-wise rows, grouped by sub centre */
+function ashaRows(agg,names){return names.map(n=>{const a=(agg[n]||{}).asha||{};
+ const l=Object.keys(a).sort((x,y)=>x.localeCompare(y)).map(k=>[k,a[k]]);return{n,l,t:l.reduce((s,x)=>s+x[1],0)}}).filter(g=>g.l.length)}
+function repEnt(make,sc){const k=mkey(RS.y,RS.m);let d=REP[k];if(!d){if(!make)return null;d=REP[k]={}}
+ let e=d[sc];if(!e){if(!make)return null;e=d[sc]=blankE()}
+ if(!e.ASHA||typeof e.ASHA!=='object')e.ASHA={};return e}
+function repTidy(sc){const k=mkey(RS.y,RS.m),d=REP[k];if(!d)return;const e=d[sc];if(e&&!rsum(repVals(e)))delete d[sc];if(!Object.keys(d).length)delete REP[k]}
+const repDone=sc=>{repTidy(sc);saveRep();renderRep()};
+function repAdjSc(k,sc,n){const e=repEnt(true,sc);e[k]=Math.max(0,(+e[k]||0)+n);repDone(sc)}
+function repSetSc(k,sc,v){const e=repEnt(true,sc);e[k]=Math.max(0,parseInt(v,10)||0);repDone(sc)}
+const ashaNm=s=>String(s||'').trim().replace(/\s+/g,' ')||'(No name)';
+const ashaKey=(a,nm)=>Object.keys(a).find(k=>k.toLowerCase()===nm.toLowerCase())||nm;
+function repAshaAdjSc(nm,sc,n){const e=repEnt(true,sc);nm=ashaNm(nm);const k=ashaKey(e.ASHA,nm),v=Math.max(0,(+e.ASHA[k]||0)+n);if(v)e.ASHA[k]=v;else delete e.ASHA[k];repDone(sc)}
+function repAshaSetSc(nm,sc,v){const e=repEnt(true,sc),k=ashaKey(e.ASHA,ashaNm(nm)),x=Math.max(0,parseInt(v,10)||0);if(x)e.ASHA[k]=x;else delete e.ASHA[k];repDone(sc)}
+/* worker first -> sub centre pop-up */
+const RP={k:'',n:0,nm:''};RS.last={};
+function repCnt(k,sc,nm){const e=((REP[mkey(RS.y,RS.m)]||{})[sc])||{};if(k==='ASHA'){const a=e.ASHA||{},kk=Object.keys(a).find(x=>x.toLowerCase()===nm.toLowerCase());return kk?+a[kk]||0:0}return +e[k]||0}
+function repHome(nm){let best='',bc=0;const t={};Object.keys(REP).forEach(mk=>Object.keys(REP[mk]).forEach(sc=>{const a=(REP[mk][sc]||{}).ASHA||{};Object.keys(a).forEach(n=>{if(n.toLowerCase()===nm.toLowerCase())t[sc]=(t[sc]||0)+(+a[n]||0)})}));Object.keys(t).forEach(sc=>{if(t[sc]>bc){bc=t[sc];best=sc}});return best}
+function repPick(k,n){const nm=k==='ASHA'?ashaNm(RS.an):'';
+ if(k==='ASHA'&&n>0&&!String(RS.an||'').trim()){uiAlert('Type the ASHA name first.');return}
+ let list=LS.slice();Object.keys(REP).forEach(mk=>Object.keys(REP[mk]).forEach(sc=>{if(!list.includes(sc))list.push(sc)}));
+ if(n<0)list=list.filter(sc=>repCnt(k,sc,nm)>0);
+ if(!list.length){toast('Nothing to remove for '+k+(nm&&k==='ASHA'?' ('+nm+')':''));return}
+ const pref=k==='ASHA'?repHome(nm):(RS.last[k]||'');
+ if(pref&&list.includes(pref))list=[pref].concat(list.filter(x=>x!==pref));
+ RP.k=k;RP.n=n;RP.nm=nm;
+ const body='<div class="scpick">'+list.map(sc=>{const c=repCnt(k,sc,nm);return `<button class="${sc===pref?'green':'gray'}" data-s="${esc(sc)}" onclick="repPicked(this.dataset.s)">${esc(sc)}${c?'<small>'+c+'</small>':''}</button>`}).join('')+'</div>';
+ dlg((n>0?'Add 1 sample':'Remove 1 sample')+' \u2013 '+k+(k==='ASHA'?' ('+nm+')':'')+'\nSelect sub centre',body,'Cancel',null,true)}
+function repPicked(sc){$('dlg').style.display='none';const k=RP.k,n=RP.n;
+ if(k==='ASHA'){RS.an='';repAshaAdjSc(RP.nm,sc,n)}else repAdjSc(k,sc,n);
+ RS.last[k]=sc;toast((n>0?'+1 ':'\u22121 ')+k+' \u00b7 '+sc)}
+
+function repMon(){let m=+$('rp_m').value,y=+$('rp_y').value;const t=new Date();if(y>t.getFullYear()||(y===t.getFullYear()&&m>t.getMonth())){y=t.getFullYear();m=t.getMonth()}RS.m=m;RS.y=y;renderRep()}
+function repNames(){const s=new Set();Object.keys(REP).forEach(mk=>Object.keys(REP[mk]).forEach(sc=>{const e=REP[mk][sc];if(e&&e.ASHA)Object.keys(e.ASHA).forEach(n=>{if(n!=='(No name)')s.add(n)})}));return [...s].sort()}
+function renderRep(){if(!$('rep_entry'))return;
+ const agg=repAgg(RS.y,RS.m),names=repList(agg),TT=zero();
+ names.forEach(n=>{const o=agg[n];if(o)RC.forEach(k=>TT[k]+=o[k])});
+ const mo=REP[mkey(RS.y,RS.m)]||{};
+ const row=k=>`<div class="rrow"><div class="rn"><b>${k}</b><small>${RCN[k]}</small></div><div class="rs"><button class="rb m" onclick="repPick('${k}',-1)" aria-label="Minus">\u2212</button><b class="rcv">${TT[k]}</b><button class="rb p" onclick="repPick('${k}',1)" aria-label="Plus">+</button></div></div>`;
+ const asha=`<div class="rrow" style="border-bottom:0;padding-bottom:6px"><div class="rn"><b>ASHA</b><small>${RCN.ASHA} \u00b7 total <u>${TT.ASHA}</u></small></div></div>
+ <div class="ashab"><label>ASHA name</label><input id="rp_an" list="rp_names" autocomplete="off" placeholder="Type ASHA name" value="${esc(RS.an)}" oninput="RS.an=this.value"><datalist id="rp_names">${repNames().map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
+ <div class="ashas"><button class="rb m" onclick="repPick('ASHA',-1)" aria-label="Minus">\u2212</button><span class="muted">Add / remove 1 sample for this ASHA</span><button class="rb p" onclick="repPick('ASHA',1)" aria-label="Plus">+</button></div>
+ </div>`;
+ const ys=new Set([new Date().getFullYear(),new Date().getFullYear()-1,RS.y]);Object.keys(REP).forEach(k=>ys.add(+k.slice(0,4)));
+ $('rep_entry').innerHTML=`<div class="g2"><div><label>Month</label><select id="rp_m" onchange="repMon()">${MN.map((n,i)=>`<option value="${i}" ${i===RS.m?'selected':''}>${n}</option>`).join('')}</select></div><div><label>Year</label><select id="rp_y" onchange="repMon()">${[...ys].sort((a,b)=>b-a).map(y=>`<option value="${y}" ${y===RS.y?'selected':''}>${y}</option>`).join('')}</select></div></div>
+ <div class="rtot"><span>All sub centres · ${MN[RS.m].slice(0,3)} ${RS.y}<b>${rsum(TT)}</b></span></div>
+ <div class="muted" style="margin:10px 0 0">Tap <b>+</b> on a worker, then choose the sub centre in the pop-up.</div>
+ ${row('CHO')}${row('MPHW')}${row('FHW')}${asha}${row('OPD').replace('class="rrow"','class="rrow" style="border-bottom:0"')}`;
+ /* month summary (screen) */
+ const trs=names.map(n=>{const o=agg[n]||zero();return `<tr><td>${esc(n)}</td>${RC.map(k=>`<td class="${o[k]?'':'z'}">${o[k]}</td>`).join('')}<td><b>${rsum(o)}</b></td></tr>`}).join('');
+ const ar=ashaRows(agg,names);
+ const ashaTbl=ar.length?`<div class="st2" style="margin:16px 0 8px">ASHA-wise samples</div><div class="tw"><table class="rt" style="min-width:240px"><thead><tr><th>ASHA NAME</th><th>SAMPLES</th></tr></thead><tbody>${ar.map(g=>`<tr class="tot"><td>${esc(g.n)}</td><td>${g.t}</td></tr>`+g.l.map(x=>`<tr><td style="padding-left:20px">${esc(x[0])}</td><td>${x[1]}</td></tr>`).join('')).join('')}</tbody></table></div>`:`<div class="muted" style="margin-top:12px">No ASHA name-wise samples entered for this month.</div>`;
+ $('rep_sum').innerHTML=`<div class="muted" style="margin:0 0 8px">Report for <b>${mlab()}</b> – shows everything added so far and updates with every entry.</div>
+ <div class="tw"><table class="rt"><thead><tr><th>SUB CENTRE</th>${RC.map(k=>`<th>${k}</th>`).join('')}<th>TOTAL</th></tr></thead><tbody>${trs}<tr class="tot"><td>TOTAL</td>${RC.map(k=>`<td>${TT[k]}</td>`).join('')}<td>${rsum(TT)}</td></tr></tbody></table></div>${ashaTbl}`;
+ /* print sheet: sub centre table + ASHA name-wise table */
+ $('rph').innerHTML='Monthly Sample Report – '+mlab()+'<br><b>Primary Health Centre :- Pransli</b>';
+ let h='<table><thead><tr><th class="l">SUB CENTRE</th>'+RC.map(k=>'<th>'+k+'</th>').join('')+'<th>TOTAL</th></tr></thead><tbody>';
+ names.forEach(n=>{const o=agg[n]||zero();h+='<tr><td class="l">'+esc(n)+'</td>'+RC.map(k=>'<td>'+o[k]+'</td>').join('')+'<td><b>'+rsum(o)+'</b></td></tr>'});
+ h+='<tr class="grp"><td>TOTAL</td>'+RC.map(k=>'<td>'+TT[k]+'</td>').join('')+'<td>'+rsum(TT)+'</td></tr></tbody></table>';
+ if(ar.length){let gt=0;h+='<div class="sh2">ASHA-wise Sample Report – '+mlab()+'</div><table class="ashat"><thead><tr><th>SR</th><th class="l">ASHA NAME</th><th>SAMPLES</th></tr></thead><tbody>';
+  ar.forEach(g=>{gt+=g.t;h+='<tr class="grp"><td colspan="2">'+esc(g.n)+'</td><td>'+g.t+'</td></tr>'+g.l.map((x,k)=>'<tr><td>'+(k+1)+'</td><td class="l">'+esc(x[0])+'</td><td>'+x[1]+'</td></tr>').join('')});
+  h+='<tr class="grp"><td colspan="2">GRAND TOTAL</td><td>'+gt+'</td></tr></tbody></table>'}
+ $('rprt').innerHTML=h}
+function repPrint(){const nat=window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform();if(nat)repPDFdl();else window.print()}
+const repFile=ext=>'TB_Monthly_Report_'+RS.y+'-'+String(RS.m+1).padStart(2,'0')+'.'+ext;
+function repCSV(){const agg=repAgg(RS.y,RS.m),names=repList(agg);if(!Object.keys(agg).length){uiAlert('No samples entered for '+mlab()+'.');return}
+ const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"',TT=zero();
+ names.forEach(n=>{const o=agg[n];if(o)RC.forEach(k=>TT[k]+=o[k])});
+ const rows=[['Monthly Sample Report',mlab()],[],['Sub Centre',...RC,'Total'],...names.map(n=>{const o=agg[n]||zero();return [n,...RC.map(k=>o[k]),rsum(o)]}),['TOTAL',...RC.map(k=>TT[k]),rsum(TT)]];
+ const ar=ashaRows(agg,names);
+ if(ar.length){rows.push([],['ASHA-wise Sample Report',mlab()],[],['Sub Centre','ASHA Name','Samples']);let gt=0;
+  ar.forEach(g=>{g.l.forEach(x=>rows.push([g.n,x[0],x[1]]));rows.push([g.n,'TOTAL',g.t]);gt+=g.t});rows.push(['','GRAND TOTAL',gt])}
+ dlPDF(new Blob(['﻿'+rows.map(r=>r.map(q).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),repFile('csv'))}
+function repPDFdl(){const b=repPDFbuild();if(b)dlPDF(b,repFile('pdf'))}
+function repPDFbuild(quiet){const agg=repAgg(RS.y,RS.m),names=repList(agg);if(!Object.keys(agg).length){if(!quiet)uiAlert('No samples entered for '+mlab()+'.');return null}
+ const W=842,H=595,M=24,RH=17,BL=[.06,.24,.39];let pages=[],c='',y=0,cols=[],tw=0,ttl='Monthly Sample Report  |  '+mlab();
+ const T=(x,yy,s,fs,b,rgb)=>`BT /F${b?2:1} ${fs} Tf ${(rgb||[0,0,0]).join(' ')} rg ${x} ${yy} Td (${pesc(s)}) Tj ET\n`;
+ const Rc=(x,yy,w,h,rgb)=>`${rgb.join(' ')} rg ${x} ${yy} ${w} ${h} re f\n`;
+ const Ln=(x1,y1,x2,y2)=>`0.8 G 0.5 w ${x1} ${y1} m ${x2} ${y2} l S\n`;
+ const cx=(s,x,w,fs)=>x+(w-String(s).length*fs*.55)/2;
+ const hdr=()=>{let x=M;c+=Rc(M,y-RH,tw,RH,BL);cols.forEach((k,j)=>{c+=T((j&&!k.l)?cx(k.h,x,k.w,7.5):x+3,y-RH+5,k.h,7.5,1,[1,1,1]);x+=k.w});y-=RH};
+ const page=()=>{if(c)pages.push(c);c='';y=H-M;c+=T(M,y-12,'Primary Health Centre :- Pransli',14,1,BL);c+=T(M,y-26,ttl+'   |   Generated on '+f(new Date()),8,0,[.35,.35,.35]);y-=36;hdr()};
+ const table=(cs,gs)=>{cols=cs;tw=cs.reduce((a,k)=>a+k.w,0);page();
+  gs.forEach(g=>{if(y-2*RH<M)page();if(g.label){c+=Rc(M,y-RH,tw,RH,[.89,.93,.97]);c+=T(M+3,y-RH+5,g.label,8.5,1,BL);y-=RH}
+   g.rows.forEach(r=>{if(y-RH<M)page();if(r.b)c+=Rc(M,y-RH,tw,RH,[.93,.95,.98]);let x=M;
+    cols.forEach((k,j)=>{const s=String(r.c[j]==null?'':r.c[j]);c+=T((j&&!k.l)?cx(s,x,k.w,7.5):x+3,y-RH+5,s,7.5,r.b?1:0);x+=k.w});
+    c+=Ln(M,y-RH,M+tw,y-RH);y-=RH})})};
+ const TT=zero();names.forEach(n=>{const o=agg[n];if(o)RC.forEach(k=>TT[k]+=o[k])});
+ const sr=names.map(n=>{const o=agg[n]||zero();return {c:[n,...RC.map(k=>o[k]),rsum(o)]}});sr.push({b:1,c:['TOTAL',...RC.map(k=>TT[k]),rsum(TT)]});
+ table([{h:'SUB CENTRE',w:220},...RC.map(k=>({h:k,w:90})),{h:'TOTAL',w:100}],[{rows:sr}]);
+ /* page 2: ASHA name-wise samples */
+ const ar=ashaRows(agg,names);
+ if(ar.length){ttl='ASHA-wise Sample Report  |  '+mlab();let gt=0;
+  const gs=ar.map(g=>{gt+=g.t;return {label:g.n+'  ('+g.t+' samples)',rows:[...g.l.map((x,k)=>({c:[k+1,x[0],x[1]]})),{b:1,c:['','TOTAL',g.t]}]}});
+  gs.push({rows:[{b:1,c:['','GRAND TOTAL',gt]}]});
+  table([{h:'SR',w:50},{h:'ASHA NAME',w:380,l:1},{h:'SAMPLES',w:120}],gs)}
+ pages.push(c);return pdfBuild(pages)}
+
 initSel();setToday();render();pg('dash');
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){setToday();render()}});
-</script><script>
-/* ===== Cloud sync (Google Sheet via Apps Script) ===== */
-(function(){
-'use strict';
-const CK='tbSyncCfg',SK='tbSyncSnap',KEYS=['tbData2','tbWk2','LS2','VM2'],CHUNK=40;
-const rd=(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}};
-const rawSet=Storage.prototype.setItem;
-let applying=false,busy=false,timer=null,state='off',msg='';
-let cfg=Object.assign({url:'',key:'',on:false,since:0,last:0},rd(CK,{}));
-const wr=(k,v)=>{applying=true;try{rawSet.call(localStorage,k,v)}catch(e){}applying=false};
-Storage.prototype.setItem=function(k,v){rawSet.call(this,k,v);if(!applying&&cfg.on&&KEYS.indexOf(k)>=0)sched()};
-const saveCfg=()=>wr(CK,JSON.stringify(cfg));
-const st=o=>JSON.stringify(o,(k,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.keys(v).sort().reduce((a,x)=>(a[x]=v[x],a),{}):v);
-const hs=s=>{let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return h+':'+s.length};
-const hasCfg=()=>['tbWk2','LS2','VM2'].some(k=>localStorage.getItem(k)!==null);
-const cfgBody=()=>({WK:rd('tbWk2',{}),LS:rd('LS2',null),VM:rd('VM2',{})});
-function applyCfg(d){try{wr('tbWk2',JSON.stringify(d.WK||{}));if(d.LS)wr('LS2',JSON.stringify(d.LS));wr('VM2',JSON.stringify(d.VM||{}));
- WK=Object.assign({},DWK,d.WK||{});if(d.LS)LS=d.LS;VM=Object.assign({},V0,d.VM||{});
- try{renderWk()}catch(e){}try{if(!$('f_name').value)fillSel('f_sc',LS,$('f_sc').value)}catch(e){}}catch(e){}}
-function ensureUid(){const seen=new Set();let ch=false;
- P.forEach(p=>{if(!p.uid){let u=p.id&&String(p.id).trim()?'N'+String(p.id).trim():(p.name?'H'+hs([p.name,p.village,p.start,p.phone].join('|')).replace(/[^0-9a-z]/gi,''):'R'+Date.now().toString(36)+Math.random().toString(36).slice(2,7));
-  if(seen.has(u))u+='_'+hs([p.name,p.village,p.start,p.phone].join('|')).replace(/[^0-9a-z]/gi,'');while(seen.has(u))u+='x';p.uid=u;ch=true}seen.add(p.uid)});
- if(ch)wr('tbData2',JSON.stringify(P))}
-async function post(b){const c=new AbortController(),t=setTimeout(()=>c.abort(),30000);
- try{const r=await fetch(cfg.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({key:cfg.key},b)),signal:c.signal,redirect:'follow'});
-  const j=await r.json();if(!j.ok)throw new Error(j.err==='key'?'Wrong sync key':(j.err||'Server error'));return j}finally{clearTimeout(t)}}
-function collect(snap){const items=[],sent={};
- P.forEach(p=>{const h=hs(st(p)),s=snap[p.uid];if(!s||s.h!==h){items.push({uid:p.uid,base:s?s.v:0,d:JSON.stringify(p)});sent[p.uid]={h}}});
- const have=new Set(P.map(p=>p.uid));
- Object.keys(snap).forEach(u=>{if(u!=='__cfg'&&!have.has(u)&&!snap[u].del){items.push({uid:u,base:snap[u].v,del:1});sent[u]={del:1}}});
- if(hasCfg()){const h=hs(st(cfgBody())),s=snap.__cfg;if(!s||s.h!==h){items.push({uid:'__cfg',base:s?s.v:0,d:JSON.stringify(cfgBody())});sent.__cfg={h}}}
- return{items,sent}}
-function applyIn(j,snap,sent){const rej=new Set(j.rej||[]);let n=0,lost=0;
- (j.items||[]).forEach(it=>{const u=it.uid,sn=sent[u];
-  if(sn&&!rej.has(u)){snap[u]=sn.del?{del:1,v:it.sv}:{h:sn.h,v:it.sv};return}
-  if(u==='__cfg'){if(it.del)return;applyCfg(JSON.parse(it.d));snap[u]={h:hs(st(cfgBody())),v:it.sv};n++;if(rej.has(u))lost++;return}
-  const i=P.findIndex(p=>p.uid===u);
-  if(it.del){if(i>=0){P.splice(i,1);n++}snap[u]={del:1,v:it.sv}}
-  else{const d=JSON.parse(it.d);if(i>=0)P[i]=d;else P.push(d);snap[u]={h:hs(st(d)),v:it.sv};n++}
-  if(rej.has(u))lost++});
- return{n,lost}}
-function persist(snap){wr('tbData2',JSON.stringify(P));wr(SK,JSON.stringify(snap));saveCfg()}
-async function sync(){
- if(busy||!cfg.on||!cfg.url)return;
- if(navigator.onLine===false){setState('pend','No internet');return}
- busy=true;setState('busy');let rec=0,lost=0;
- const curU=(typeof CUR!=='undefined'&&CUR!==null&&P[CUR])?P[CUR].uid:null,edU=(typeof EDIT!=='undefined'&&EDIT!==null&&P[EDIT])?P[EDIT].uid:null;
- try{
-  ensureUid();
-  let snap=rd(SK,null);
-  if(snap===null){snap={};const j=await post({action:'sync',since:0,items:[]});const r=applyIn(j,snap,{});rec+=r.n;cfg.since=j.since;persist(snap)}
-  for(let g=0;g<60;g++){
-   const c=collect(snap),batch=c.items.slice(0,CHUNK),sent={};batch.forEach(x=>sent[x.uid]=c.sent[x.uid]);
-   const j=await post({action:'sync',since:cfg.since,items:batch});
-   const r=applyIn(j,snap,sent);rec+=r.n;lost+=r.lost;cfg.since=j.since;persist(snap);
-   if(c.items.length<=CHUNK)break}
-  cfg.last=Date.now();saveCfg();setState('ok');
-  if(rec>0){SEL={};
-   if(curU){const i=P.findIndex(p=>p.uid===curU);if(i<0)closeDetail();else CUR=i}
-   if(edU){const i=P.findIndex(p=>p.uid===edU);EDIT=i<0?null:i}
-   render();if(CUR!==null)try{renderDetail()}catch(e){}
-   try{toast(rec+' update'+(rec>1?'s':'')+' received \u2714')}catch(e){}}
-  if(lost>0)try{uiAlert(lost+' change(s) of yours were replaced by newer data from another phone.')}catch(e){}
- }catch(e){const m=String(e&&e.message||e);setState('err',/fetch|abort|network/i.test(m)?'Server not reachable (check internet / URL)':m)}
- finally{busy=false}}
-function sched(){clearTimeout(timer);if(!cfg.on)return;setState('pend');timer=setTimeout(sync,2500)}
-function setState(s,m){state=s;msg=m||'';paint()}
-function paint(){const d=$('syncdot'),t=$('syncst');if(d)d.className='sdot '+(cfg.on?state:'off');
- if(!t)return;const L={ok:'\u2714 Synced '+(cfg.last?new Date(cfg.last).toLocaleTimeString():''),busy:'Syncing\u2026',pend:msg||'Waiting to sync\u2026',err:'\u26A0 '+msg,off:'Sync is OFF'};
- t.innerHTML=cfg.on?L[state]||'':L.off;t.className='syst '+(cfg.on?state:'off')}
-window.syncUI=function(){$('sy_url').value=cfg.url||'';$('sy_key').value=cfg.key||'';paint()};
-window.syncConnect=async function(){
- const u=($('sy_url').value||'').trim(),k=($('sy_key').value||'').trim();
- if(!/^https:\/\/script\.google\.com\/.+\/exec/.test(u)){uiAlert('Web App URL is wrong. It must start with https://script.google.com/ and end with /exec');return}
- if(!k){uiAlert('Enter the secret key.');return}
- const old=Object.assign({},cfg);cfg.url=u;cfg.key=k;
- setState('busy');cfg.on=true;
- try{await post({action:'ping'})}catch(e){cfg=old;paint();const m=String(e&&e.message||e);uiAlert(/key/i.test(m)?'Wrong secret key.':'Cannot reach server. Check internet and URL.\n'+m);return}
- if(cfg.on&&!old.on||old.url!==u||old.key!==k){localStorage.removeItem(SK);cfg.since=0}
- saveCfg();toast('Connected \u2714');sync()};
-window.syncNow=function(){if(!cfg.on){uiAlert('Connect first.');return}sync()};
-window.syncOff=function(){uiConfirm('Turn OFF sync on this phone? Data stays on this phone but will not update from other phones.',()=>{cfg.on=false;saveCfg();paint()})};
-setInterval(()=>sync(),60000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});
-window.addEventListener('online',()=>sync());
-setTimeout(()=>{paint();sync()},1500);
-})();
-</script>
-</body></html>
+/* ===== New month + weekly Google Drive auto backup ===== */
+const AB_URL='https://script.google.com/macros/s/AKfycbwuolcYmEElql9xrkOTuhWqERz5xZQgWBUjNvy0MevP4BBSxxz6njF25EYTWIQ2VOZg_A/exec',AB_KEY='RNTCP@123',AB_MAIL='maheshvadher12@gmail.com';   /* <-- put YOUR Web App URL, secret key and Gmail here once; every phone then saves to / restores from YOUR Drive */
+/* (old note) */
+const abG=k=>{try{return localStorage.getItem(k)}catch(_){return null}},abS=(k,v)=>{try{localStorage.setItem(k,v)}catch(_){}};
+const curMk=()=>{const t=new Date();return mkey(t.getFullYear(),t.getMonth())};
+const prevYM=()=>{const t=new Date();t.setDate(1);t.setMonth(t.getMonth()-1);return{y:t.getFullYear(),m:t.getMonth()}};
+function monthCheck(){const cur=curMk(),last=abG('tbRepCur');if(last===cur)return;abS('tbRepCur',cur);
+ const t=new Date();RS.y=t.getFullYear();RS.m=t.getMonth();try{renderRep()}catch(e){}
+ if(last){const[y,m]=last.split('-').map(Number);setTimeout(()=>uiAlert('New month started: '+MN[t.getMonth()]+' '+t.getFullYear()+'.\n'+MN[m-1]+' '+y+' report is saved \u2013 you can see it any time from Month / Year. Sample counts for the new month start from 0.'),400);setTimeout(()=>abRun(false),3000)}}
+const abCfg=()=>({url:(abG('tbAbUrl')||AB_URL||'').trim(),key:(abG('tbAbKey')||AB_KEY||'').trim(),mail:(abG('tbAbMail')||AB_MAIL||'').trim(),on:abG('tbAbOn')!=='0',last:+abG('tbAbLast')||0});
+const abDev=()=>{let d=abG('tbDev');if(!d){d=Math.random().toString(36).slice(2,6);abS('tbDev',d)}return d};
+const abReady=c=>!!(c.url&&c.key&&c.mail);
+function abStat(){const c=abCfg(),e=$('ab_st');if(!e)return;
+ if(!abReady(c)){e.innerHTML='Not connected. Enter your Gmail and press <b>Save &amp; Connect</b>.';return}
+ e.innerHTML=(c.on?'Connected: <b>'+esc(c.mail)+'</b>':'Disconnected')+'<br>Last backup to Drive: <b>'+(c.last?new Date(c.last).toLocaleString('en-GB'):'never')+'</b>'+(abG('tbAbErr')?'<br><span style="color:#b42318">Last error: '+esc(abG('tbAbErr'))+'</span>':'')}
+function acUI(){const c=abCfg();$('ac_mail').value=c.mail;$('ab_url').value=c.url;$('ab_key').value=c.key;$('ac_adv').style.display=(AB_URL&&AB_KEY)?'none':'';abStat()}
+const abErr=e=>{const m=String((e&&e.message)||e);return /fetch|abort|network|failed to/i.test(m)?'Server not reachable (check internet)':m};
+async function abPost(b,c){const ac=new AbortController(),t=setTimeout(()=>ac.abort(),60000);
+ try{const r=await fetch(c.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({key:c.key,email:c.mail},b)),signal:ac.signal,redirect:'follow'});
+  const j=await r.json();if(!j.ok)throw new Error(j.err==='key'?'Wrong secret key':j.err==='email'?'This Gmail does not match the Drive account of the backup server':j.err==='none'?'No backup found in Google Drive':(j.err||'Server error'));return j}finally{clearTimeout(t)}}
+const abB64=blob=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=rej;r.readAsDataURL(blob)});
+let abBusy=false;
+async function abRun(force){if(abBusy)return;const c=abCfg();if(!abReady(c)){if(force)uiAlert('Google Drive is not connected. Open Settings \u2192 Account, enter your Gmail and press Save & Connect.');return}if(!c.on&&!force)return;
+ const monthDue=abG('tbAbMonth')!==curMk(),weekDue=!c.last||Date.now()-c.last>=7*864e5;
+ if(!force&&!weekDue&&!monthDue)return;
+ if(navigator.onLine===false){if(force)uiAlert('No internet connection.');return}
+ abBusy=true;if(force)toast('Saving to Google Drive\u2026');
+ try{const d=new Date(),z=n=>String(n).padStart(2,'0'),ds=d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate()),dv=abDev();
+  await abPost({action:'save',folder:'Backups',name:'TB_FUP_backup_'+ds+'_'+dv+'.json',mime:'application/json',text:bkPack(),overwrite:true},c);
+  const pv=prevYM(),pk=mkey(pv.y,pv.m);
+  if(REP[pk]&&Object.keys(REP[pk]).length){
+   const sy=RS.y,sm=RS.m;let pdf=null;RS.y=pv.y;RS.m=pv.m;try{pdf=repPDFbuild(true)}finally{RS.y=sy;RS.m=sm}
+   if(pdf)await abPost({action:'save',folder:'Monthly Reports',name:'Report_'+pk+'_Pransli.pdf',mime:'application/pdf',b64:await abB64(pdf),overwrite:true},c);
+   await abPost({action:'save',folder:'Monthly Reports',name:'Report_'+pk+'_figures.json',mime:'application/json',text:JSON.stringify({month:pk,data:REP[pk]},null,1),overwrite:true},c)}
+  abS('tbAbLast',String(Date.now()));abS('tbAbMonth',curMk());try{localStorage.removeItem('tbAbErr')}catch(_){}
+  try{localStorage.setItem('tbLastBk',new Date().toLocaleString('en-GB'))}catch(_){}
+  abStat();bkInfo();if(force)uiAlert('Backup saved to Google Drive \u2714')}
+ catch(e){const t=abErr(e);abS('tbAbErr',t);abStat();if(force)uiAlert('Backup failed: '+t)}
+ finally{abBusy=false}}
+function driveBackup(){abRun(true)}
+async function driveRestore(){const c=abCfg();
+ if(!abReady(c)){uiAlert('Google Drive is not connected. Open Settings \u2192 Account, enter your Gmail and press Save & Connect.');return}
+ if(navigator.onLine===false){uiAlert('No internet connection.');return}
+ try{toast('Reading backup from Google Drive\u2026');const j=await abPost({action:'latest'},c);applyBackup(JSON.parse(j.text),'Google Drive ('+(j.name||'latest backup')+')')}
+ catch(e){uiAlert('Restore failed: '+abErr(e))}}
+async function acSave(){const mail=(($('ac_mail').value||'').trim().toLowerCase())||AB_MAIL.toLowerCase(),url=(($('ab_url').value||'').trim())||AB_URL,key=(($('ab_key').value||'').trim())||AB_KEY;
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)){uiAlert('Enter a valid Gmail address.');return}
+ if(!/^https:\/\/script\.google\.com\/.+\/exec/.test(url)||!key){uiAlert('Backup server URL / secret key is missing or wrong.');return}
+ try{toast('Connecting\u2026');await abPost({action:'ping'},{url,key,mail})}catch(e){uiAlert('Could not connect: '+abErr(e));return}
+ abS('tbAbMail',mail);abS('tbAbUrl',url);abS('tbAbKey',key);abS('tbAbOn','1');try{localStorage.removeItem('tbAbErr')}catch(_){}abStat();bkInfo();toast('Connected \u2714');abRun(true)}
+function acOff(){uiConfirm('Disconnect Google Drive on this phone?',()=>{abS('tbAbOn','0');['tbAbMail','tbAbUrl','tbAbKey'].forEach(k=>{try{localStorage.removeItem(k)}catch(_){}});if($('ac_mail'))acUI();bkInfo();toast('Disconnected')})}
+
+/* ---- show/hide password (eye) on every password box ---- */
+(function(){const OPEN='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+ SHUT='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.9 17.9A10.9 10.9 0 0 1 12 20C5 20 1 12 1 12a18.5 18.5 0 0 1 5.1-5.9M9.9 4.2A10.7 10.7 0 0 1 12 4c7 0 11 8 11 8a18.6 18.6 0 0 1-2.2 3.2M1 1l22 22"/><path d="M14.1 14.1a3 3 0 1 1-4.2-4.2"/></svg>';
+ function eye(i){if(i.dataset.eye||i.type!=='password')return;i.dataset.eye='1';
+  const w=document.createElement('div');w.style.cssText='position:relative;display:block;width:100%';i.parentNode.insertBefore(w,i);w.appendChild(i);i.style.paddingRight='46px';
+  const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Show password');b.innerHTML=OPEN;
+  b.style.cssText='position:absolute;right:6px;top:50%;transform:translateY(-50%);width:36px;height:36px;min-height:0;padding:0;margin:0;border:0;background:transparent;box-shadow:none;color:#4a6a85;display:flex;align-items:center;justify-content:center;cursor:pointer';
+  b.onclick=e=>{e.preventDefault();e.stopPropagation();const show=i.type==='password';i.type=show?'text':'password';b.innerHTML=show?SHUT:OPEN;i.focus()};w.appendChild(b)}
+ const scan=r=>(r.querySelectorAll?r.querySelectorAll('input[type=password]'):[]).forEach(eye);
+ scan(document);new MutationObserver(m=>m.forEach(x=>x.addedNodes.forEach(n=>{if(n.nodeType===1){if(n.matches&&n.matches('input[type=password]'))eye(n);else scan(n)}}))).observe(document.body,{childList:true,subtree:true})})();
+monthCheck();setInterval(()=>{monthCheck();abRun(false)},30*60000);setTimeout(()=>abRun(false),5000);
+window.addEventListener('online',()=>abRun(false));
+
+document.addEventListener('visibilitychange',()=>{if(document.hidden){UNLOCKED=false;lockUI()}else{setToday();monthCheck();render();abRun(false)}});
+</script></body></html>
