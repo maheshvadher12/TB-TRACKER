@@ -469,7 +469,7 @@ details.card>textarea,details.card>input,details.card>select{width:calc(100% - 2
  </details>
     <details class="card" id="bkcard" ontoggle="if(this.open)bkInfo()"><summary>Backup &amp; Restore</summary>
   <div id="bkinfo" class="yrinfo"></div>
-  <div class="tb4 yrb"><button onclick="gate(driveBackup)">⬇ Backup</button><button class="gray" onclick="askPw(driveRestore)">⬆ Restore</button></div>
+  <div class="tb4 yrb"><button onclick="askPw(driveBackup)">⬇ Backup</button><button class="gray" onclick="driveRestore()">⬆ Restore</button></div>
   <input id="rf" type="file" accept=".json,application/json,text/plain,*/*" style="display:none" onchange="importJson(this)">
  </details>
  <details class="card" id="accard" ontoggle="if(this.open)acUI()"><summary>Account</summary>
@@ -721,7 +721,7 @@ function renderDetail(){const i=CUR,p=P[i];if(!p){closeDetail();return}
 const LOCK_PW='pransli123';
 const curPw=()=>{try{return localStorage.getItem('tbPw')||LOCK_PW}catch(_){return LOCK_PW}};
 function lockUI(){}
-function askPw(cb){dlg('Enter password to Restore','<input id="dinp" type="password" autocomplete="off" placeholder="Password"><div style="margin-top:12px"><a href="#" onclick="forgotPw();return false" style="color:#1f6fa8;font-weight:600">Forgot password?</a></div>','OK',()=>{if($('dinp').value===curPw())cb();else uiAlert('Wrong password')})}
+function askPw(cb){dlg('Enter password to Backup','<input id="dinp" type="password" autocomplete="off" placeholder="Password"><div style="margin-top:12px"><a href="#" onclick="forgotPw();return false" style="color:#1f6fa8;font-weight:600">Forgot password?</a></div>','OK',()=>{if($('dinp').value===curPw())cb();else uiAlert('Wrong password')})}
 /* ---- Forgot password: reset link goes to the Gmail account ---- */
 function forgotPw(){const c=abCfg();
  if(!abReady(c)){uiAlert('Google account is not set up in this app, so a reset link cannot be sent.');return}
@@ -1073,7 +1073,7 @@ async function abRun(force){if(abBusy)return;if(!P.length){if(force)uiAlert('No 
  if(navigator.onLine===false){if(force)uiAlert('No internet connection.');return}
  abBusy=true;if(force)toast('Saving to Google Drive\u2026');
  try{const d=new Date(),z=n=>String(n).padStart(2,'0'),ds=d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate()),dv=abDev();
-  await abPost({action:'save',folder:'Backups',name:'TB_FUP_backup_'+ds+'_'+dv+'.json',mime:'application/json',text:bkPack(),overwrite:true},c);
+  await abPost({action:'save',folder:'Backups',name:'TB_FUP_backup.json',mime:'application/json',text:bkPack(),overwrite:true},c);
   const pv=prevYM(),pk=mkey(pv.y,pv.m);
   if(REP[pk]&&Object.keys(REP[pk]).length){
    const sy=RS.y,sm=RS.m;let pdf=null;RS.y=pv.y;RS.m=pv.m;try{pdf=repPDFbuild(true)}finally{RS.y=sy;RS.m=sm}
@@ -1086,9 +1086,15 @@ async function abRun(force){if(abBusy)return;if(!P.length){if(force)uiAlert('No 
  finally{abBusy=false}}
 function driveBackup(){abRun(true)}
 async function driveRestore(){const c=abCfg();
- if(!abReady(c)){uiAlert('Google Drive is not connected. Open Settings \u2192 Account, enter your Gmail and press Save & Connect.');return}
+ if(!abReady(c)){uiAlert('Google Drive is not connected. Open Settings \u2192 Account and press Save & Connect.');return}
  if(navigator.onLine===false){uiAlert('No internet connection.');return}
- try{toast('Reading backup from Google Drive\u2026');const j=await abPost({action:'latest'},c);applyBackup(JSON.parse(j.text),'Google Drive ('+(j.name||'latest backup')+')')}
+ try{toast('Reading backup from Google Drive\u2026');const j=await abPost({action:'latest'},c);
+  let o=JSON.parse(j.text);if(Array.isArray(o))o={tbData2:JSON.stringify(o)};
+  const pj=x=>{if(typeof x==='string'){try{return JSON.parse(x)}catch(e){return null}}return x};
+  const inc=pj(o.tbData2);if(!Array.isArray(inc))throw new Error('Backup file is not valid');
+  try{BKEYS.forEach(k=>{if(o[k]!==undefined&&o[k]!==null)localStorage.setItem(k,typeof o[k]==='string'?o[k]:JSON.stringify(o[k]));else localStorage.removeItem(k)});
+   localStorage.setItem('tbData2',JSON.stringify(inc))}catch(e){uiAlert('Restore failed: '+((e&&e.message)||e));return}
+  toast('Restored \u2714');setTimeout(()=>location.reload(),600)}
  catch(e){uiAlert('Restore failed: '+abErr(e))}}
 async function acSave(){const mail=(($('ac_mail').value||'').trim().toLowerCase())||AB_MAIL.toLowerCase(),url=(($('ab_url').value||'').trim())||AB_URL,key=(($('ab_key').value||'').trim())||AB_KEY;
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)){uiAlert('Enter a valid Gmail address.');return}

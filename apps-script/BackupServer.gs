@@ -65,9 +65,16 @@ function count_(txt) {
   } catch (x) { return 0; }
 }
 
-// Newest backup that really contains patients (empty backups are ignored)
+// Restore reads the single backup file (TB_FUP_backup.json).
+// Fallback for older installs: newest .json that really contains patients.
 function latest_() {
-  var it = folder_('Backups').getFiles(), list = [];
+  var dir = folder_('Backups');
+  var one = dir.getFilesByName('TB_FUP_backup.json');
+  if (one.hasNext()) {
+    var f1 = one.next();
+    return { ok: true, name: f1.getName(), text: f1.getBlob().getDataAsString('UTF-8') };
+  }
+  var it = dir.getFiles(), list = [];
   while (it.hasNext()) {
     var f = it.next();
     if (/\.json$/i.test(f.getName())) list.push(f);
