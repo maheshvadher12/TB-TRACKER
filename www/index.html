@@ -946,7 +946,7 @@ function repAshaSetSc(nm,sc,v){const e=repEnt(true,sc),k=ashaKey(e.ASHA,ashaNm(n
 const RP={k:'',n:0,nm:''};RS.last={};
 function repCnt(k,sc,nm){const e=((REP[mkey(RS.y,RS.m)]||{})[sc])||{};if(k==='ASHA'){const a=e.ASHA||{},kk=Object.keys(a).find(x=>x.toLowerCase()===nm.toLowerCase());return kk?+a[kk]||0:0}return +e[k]||0}
 function repHome(nm){let best='',bc=0;const t={};Object.keys(REP).forEach(mk=>Object.keys(REP[mk]).forEach(sc=>{const a=(REP[mk][sc]||{}).ASHA||{};Object.keys(a).forEach(n=>{if(n.toLowerCase()===nm.toLowerCase())t[sc]=(t[sc]||0)+(+a[n]||0)})}));Object.keys(t).forEach(sc=>{if(t[sc]>bc){bc=t[sc];best=sc}});return best}
-function repPick(k,n){RP.k=k;RP.n=n;RP.nm='';const who='';
+function repPick(k,n){RP.k=k;RP.n=n;RP.nm='';const who='',nm='';
  if(k==='ASHA'&&n<0){const mo=REP[mkey(RS.y,RS.m)]||{},items=[];
   Object.keys(mo).forEach(v=>{const a=(mo[v]&&mo[v].ASHA)||{};Object.keys(a).forEach(nm=>{if(+a[nm]>0)items.push([nm,v,+a[nm]])})});
   if(!items.length){toast('Nothing to remove for ASHA');return}
