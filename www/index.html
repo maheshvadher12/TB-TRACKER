@@ -98,7 +98,7 @@ main{max-width:880px;margin:-10px auto 0;padding:14px 12px 120px}
 .srch::before{content:"🔍";position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.6}
 /* ---------- forms / buttons ---------- */
 label{display:block;font-size:11px;font-weight:800;color:#51647a;margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
-input,select,textarea{width:100%;padding:11px 12px;border:1.5px solid #cfd9e4;border-radius:12px;background:#fbfdff;font:inherit;color:inherit}
+input,select,textarea{box-sizing:border-box;max-width:100%;width:100%;padding:11px 12px;border:1.5px solid #cfd9e4;border-radius:12px;background:#fbfdff;font:inherit;color:inherit}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--p2);box-shadow:0 0 0 3px rgba(29,111,165,.18)}
 input:disabled,select:disabled{background:#eef2f6;color:#8896a5}
 input[type=checkbox]{width:20px;height:20px;padding:0;accent-color:var(--ok);box-shadow:none}
@@ -356,6 +356,11 @@ details.card>button{display:block;width:calc(100% - 2*var(--pad))}
 .scpick button small{background:rgba(255,255,255,.35);border-radius:10px;padding:1px 8px;font-weight:800}
 #dmsg{white-space:pre-line}
 .abf input{width:100%}
+.ashaed{margin-bottom:10px}.ashaed label{display:block}.ashaed textarea{width:100%;box-sizing:border-box;min-height:48px;font:inherit}
+textarea{resize:vertical;display:block}
+details.card>textarea,details.card>input,details.card>select{width:calc(100% - 2*var(--pad))!important;max-width:calc(100% - 2*var(--pad))!important;box-sizing:border-box!important}
+.ashaed{padding:10px;border:1px solid var(--line);border-radius:12px;background:#fbfdff}.alist{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}.arow{display:flex;gap:8px;align-items:center}.arow input{flex:1;min-width:0}.arow .arm{flex:none;width:44px;min-height:44px;padding:0;margin:0;background:#fde8e8;color:#b42318;border:1px solid #f3c1c1;box-shadow:none}.aadd{width:100%;min-height:44px;margin:0}
+.tsave{width:100%;min-height:44px;margin-top:8px}
 </style></head><body>
 <div id="splash">
  <div class="sp-bg"></div><div class="sp-dots"><i></i><i></i><i></i><i></i></div>
@@ -450,13 +455,8 @@ details.card>button{display:block;width:calc(100% - 2*var(--pad))}
 <!-- ================= SETTINGS ================= -->
 <section id="pg_set" class="page noprint">
  <div id="setbody">
- <details class="card" id="pwcard"><summary>Settings Password</summary>
-    <label class="tb2"><span>Ask password to open Settings</span><input type="checkbox" id="lockchk" onchange="lockToggle(this)"></label>
-    <label class="tb2"><span>Unlock with phone fingerprint / face</span><input type="checkbox" id="biochk" onchange="bioToggle(this)"></label><div id="bionote" class="muted" style="margin:-4px 0 8px"></div>
-  <div class="fsec">Change / reset password</div>
-  <div class="grid"><div><label>Old password</label><input id="pw_o" type="password" autocomplete="off"></div><div><label>New password</label><input id="pw_n" type="password" autocomplete="off"></div><div><label>Confirm new password</label><input id="pw_c" type="password" autocomplete="off"></div></div>
-  <button onclick="pwChange()">Save new password</button></details>
  <details class="card"><summary>Worker Mobile Numbers</summary><div id="wk"></div></details>
+ <details class="card" ontoggle="if(this.open)renderAshaEd()"><summary>ASHA List (village-wise)</summary><div class="muted" style="margin-bottom:8px">One ASHA name per line. These names appear when you add an ASHA sample in Report.</div><div id="ashaed"></div><div class="tb4" style="grid-template-columns:1fr;margin-top:12px"><button class="green" onclick="gate(ashaSave)">Save ASHA list</button></div></details>
  <details class="card" id="yrcard" ontoggle="if(this.open)yrFill()"><summary>Year-wise Patient Report</summary>
   <div class="yrg">
    <div><label>Start year</label><select id="yr_y" onchange="yrInfo()"></select></div>
@@ -469,20 +469,19 @@ details.card>button{display:block;width:calc(100% - 2*var(--pad))}
  </details>
     <details class="card" id="bkcard" ontoggle="if(this.open)bkInfo()"><summary>Backup &amp; Restore</summary>
   <div id="bkinfo" class="yrinfo"></div>
-  <div class="tb4 yrb"><button onclick="gate(driveBackup)">⬇ Backup</button><button class="gray" onclick="unlock(driveRestore)">⬆ Restore</button></div>
+  <div class="tb4 yrb"><button onclick="gate(driveBackup)">⬇ Backup</button><button class="gray" onclick="askPw(driveRestore)">⬆ Restore</button></div>
   <input id="rf" type="file" accept=".json,application/json,text/plain,*/*" style="display:none" onchange="importJson(this)">
-  <p class="info" style="margin-top:12px"><b>Restore never overwrites or duplicates.</b> Only patients that are not already in the app are added. Existing patients and their follow-ups stay exactly as they are.</p>
  </details>
  <details class="card" id="accard" ontoggle="if(this.open)acUI()"><summary>Account</summary>
-  <div class="abf"><label>Gmail account (Google Drive backup)</label><input id="ac_mail" type="email" inputmode="email" placeholder="name@gmail.com" autocapitalize="off" autocomplete="off" onfocus="gateIn(this)">
+  <div class="abf" style="display:none"><label>Gmail account (Google Drive backup)</label><input id="ac_mail" type="email" inputmode="email" placeholder="name@gmail.com" autocapitalize="off" autocomplete="off" onfocus="gateIn(this)">
   <div id="ac_adv"><label style="margin-top:10px">Backup server URL</label><input id="ab_url" type="url" inputmode="url" placeholder="https://script.google.com/macros/s/.../exec" autocapitalize="off" autocomplete="off" onfocus="gateIn(this)">
   <label style="margin-top:10px">Secret key</label><input id="ab_key" type="password" placeholder="same key as in the script" autocapitalize="off" autocomplete="off" onfocus="gateIn(this)"></div></div>
   <div id="ab_st" class="yrinfo"></div>
   <div class="tb4 yrb"><button class="green" onclick="gate(acSave)">Save &amp; Connect</button><button class="gray" onclick="gate(acOff)">Disconnect</button></div>
  </details>
-  <details class="card"><summary>Message Templates</summary><label>Message – individual patient (with own date)</label><textarea id="tp" onfocus="gateIn(this)" rows="4" onchange="saveT()"></textarea>
-  <label style="margin-top:10px">Message – common for all patients (sent together)</label><textarea id="tc" onfocus="gateIn(this)" rows="3" onchange="saveT()"></textarea>
-  <label style="margin-top:10px">Message – worker list heading</label><textarea id="tw" onfocus="gateIn(this)" rows="4" onchange="saveT()"></textarea></details>
+  <details class="card"><summary>Message Templates</summary><label>Message – individual patient (with own date)</label><textarea id="tp" onfocus="gateIn(this)" rows="4"></textarea><button type="button" class="green tsave" onclick="saveT('tp')">💾 Save</button>
+  <label style="margin-top:10px">Message – common for all patients (sent together)</label><textarea id="tc" onfocus="gateIn(this)" rows="3"></textarea><button type="button" class="green tsave" onclick="saveT('tc')">💾 Save</button>
+  <label style="margin-top:10px">Message – worker list heading</label><textarea id="tw" onfocus="gateIn(this)" rows="4"></textarea><button type="button" class="green tsave" onclick="saveT('tw')">💾 Save</button></details>
  <div class="card" style="text-align:center"><img src="logo.png" alt="" style="width:84px;height:84px"><div class="ct" style="justify-content:center;margin:6px 0 2px">TB Follow-up Tracker</div></div>
  </div>
 </section>
@@ -526,13 +525,17 @@ const MAP=[['PRANSLI','9016146166',['PRANSLI','TIMBDI']],
 const V0={},DWK={};MAP.forEach(m=>{DWK[m[0]]=m[1];m[2].forEach(v=>V0[v]=m[0])});
 let P=L('tbData2',DEF),VM=Object.assign({},V0,L('VM2',{})),LS=L('LS2',MAP.map(m=>m[0])),WK=Object.assign({},DWK,L('tbWk2',{})),SEL={};
 P.forEach(p=>{if(p.site==='MICRO BIO.')p.site='Microbiologically confirmed';else if(p.site==='EP')p.site='EP TB'});
-const T=Object.assign({},DT,L('tbT5',{}));$('tp').value=T.p;$('tw').value=T.w;$('tc').value=T.c;
-const saveT=()=>localStorage.setItem('tbT5',JSON.stringify({p:$('tp').value,w:$('tw').value,c:$('tc').value}));
+const T=Object.assign({},DT,L('tbT5',{}));let TS={p:T.p,w:T.w,c:T.c};
+const TID={tp:'p',tc:'c',tw:'w'};
+function tplReset(){['tp','tc','tw'].forEach(i=>{if($(i))$(i).value=TS[TID[i]]})}
+tplReset();
+function saveT(id){const k=TID[id];TS[k]=$(id).value;try{localStorage.setItem('tbT5',JSON.stringify({p:TS.p,w:TS.w,c:TS.c}))}catch(_){}toast('Message saved \u2714')}
+
 let warned=false;
 var DETD=false,DETSNAP='';
 const save=()=>{DETD=false;try{localStorage.setItem('tbData2',JSON.stringify(P));const e=$('saved');if(e)e.textContent='Saved ✔ '+new Date().toLocaleTimeString()}catch(err){if(!warned){warned=true;uiAlert('Browser storage is blocked – data cannot be saved. Do not use private/incognito mode.')}}};
 if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
-const BKEYS=['tbData2','tbWk2','tbT5','tbT4','LS2','VM2','tbRep2','tbRep1'];
+const BKEYS=['tbData2','tbWk2','tbT5','tbT4','LS2','VM2','tbRep2','tbRep1','tbAsha'];
 function bkInfo(){const e=$('bkinfo');if(!e)return;let t='';try{t=localStorage.getItem('tbLastBk')||''}catch(_){}
  const c=(typeof abCfg==='function')?abCfg():{};
  e.innerHTML='Patients in app: <b>'+P.length+'</b><br>'+(c.mail&&c.url&&c.key?'Google Drive: <b>'+esc(c.mail)+'</b>':'<span style="color:#b42318">Google Drive not connected \u2013 open Account</span>')+'<br>'+(t?'Last backup: <b>'+t+'</b>':'No backup taken yet.')}
@@ -562,6 +565,7 @@ function applyBackup(o,label){
   if(newVil.length){const x=L('VM2',{});newVil.forEach(v=>{x[v]=vmIn[v];VM[v]=vmIn[v]});localStorage.setItem('VM2',JSON.stringify(x))}
   if(newWk.length){const x=L('tbWk2',{});newWk.forEach(sc=>{x[sc]=wkIn[sc];WK[sc]=wkIn[sc]});localStorage.setItem('tbWk2',JSON.stringify(x))}
   if(newRep.length){newRep.forEach(m=>{REP[m]=repIn[m]});saveRep()}
+  try{const ai=pj(o.tbAsha)||{},st=L('tbAsha',{});let ch=0;Object.keys(ai).forEach(v=>{(ai[v]||[]).forEach(n=>{if(!ashaOf(v).includes(n)){AV[v]=ashaOf(v).concat(n);st[v]=AV[v];ch=1}})});if(ch)localStorage.setItem('tbAsha',JSON.stringify(st))}catch(e){}
   SEL={};render();initSel();bkInfo();
   setTimeout(()=>uiAlert('Done \u2714  '+add.length+' new patient'+(add.length==1?'':'s')+' added, '+skip+' already present (not changed).'),50)})}
 function importJson(inp){const fl=inp.files[0];if(!fl)return;const r=new FileReader();
@@ -714,13 +718,10 @@ function renderDetail(){const i=CUR,p=P[i];if(!p){closeDetail();return}
  <div class="card"><div class="ct">Follow-up schedule</div><div class="dg">${mid}${ext}</div></div>
  <div class="card"><div class="btns2">${bt}</div></div>`}
 /* ---- navigation ---- */
-const LOCK_PW='RNTCP@123';let UNLOCKED=false;
+const LOCK_PW='pransli123';
 const curPw=()=>{try{return localStorage.getItem('tbPw')||LOCK_PW}catch(_){return LOCK_PW}};
-const lockOn=()=>{try{return localStorage.getItem('tbLockOn')!=='0'}catch(_){return true}};
-function lockUI(){try{bioUI()}catch(_){}const on=lockOn();if($('lockchk'))$('lockchk').checked=on;if(!$('lockinfo'))return;
- $('lockinfo').innerHTML=!on?'Password lock is <b>OFF</b> – changes need no password.':UNLOCKED?'🔓 <b class="ul">Unlocked</b> – until the app is closed.':'🔒 <b class="lk">Locked</b>'}
-function askPw(cb){dlg('Enter Settings password','<input id="dinp" type="password" autocomplete="off" placeholder="Password"><div style="margin-top:12px"><a href="#" onclick="forgotPw();return false" style="color:#1f6fa8;font-weight:600">Forgot password?</a></div>','OK',()=>{if($('dinp').value===curPw())cb();else uiAlert('Wrong password')})}
-/* run fn only after password (once per visit to the Settings tab) */
+function lockUI(){}
+function askPw(cb){dlg('Enter password to Restore','<input id="dinp" type="password" autocomplete="off" placeholder="Password"><div style="margin-top:12px"><a href="#" onclick="forgotPw();return false" style="color:#1f6fa8;font-weight:600">Forgot password?</a></div>','OK',()=>{if($('dinp').value===curPw())cb();else uiAlert('Wrong password')})}
 /* ---- Forgot password: reset link goes to the Gmail account ---- */
 function forgotPw(){const c=abCfg();
  if(!abReady(c)){uiAlert('Google account is not set up in this app, so a reset link cannot be sent.');return}
@@ -731,45 +732,13 @@ function forgotPw(){const c=abCfg();
 async function applyReset(){const c=abCfg();
  try{const j=await abPost({action:'resetFetch'},c);if(!j.pw||String(j.pw).length<4)throw new Error('Invalid');localStorage.setItem('tbPw',String(j.pw));uiAlert('Password changed \u2714 You can now use the new password.')}
  catch(e){const m=abErr(e);uiAlert(/No backup/.test(m)?'New password not set yet. Open the link in your Gmail first, set the password, then try again.':'Failed: '+m)}}
-/* ---- unlock: fingerprint/face (Android app) or password. Asked once per app start. ---- */
-const bioPl=()=>{try{const C=window.Capacitor;return(C&&C.isNativePlatform&&C.isNativePlatform()&&C.Plugins&&C.Plugins.BiometricAuthNative)||null}catch(_){return null}};
-const bioOn=()=>{try{return localStorage.getItem('tbBio')==='1'&&!!bioPl()}catch(_){return false}};
-async function bioAvail(){const pl=bioPl();if(!pl)return false;try{const r=await pl.checkBiometry();return !!(r&&r.isAvailable)}catch(_){return false}}
-async function bioAuth(why){const pl=bioPl();if(!pl)return false;try{await pl.authenticate({reason:why||'Unlock Settings',cancelTitle:'Use password',allowDeviceCredential:false,androidTitle:'TB FUP Tracker',androidSubtitle:why||'Unlock Settings'});return true}catch(_){return false}}
-function unlock(cb){if(UNLOCKED){cb();return}
- const done=viaPw=>{UNLOCKED=true;try{lockUI()}catch(_){}cb();if(viaPw)bioOffer()};
- if(bioOn()){bioAuth('Unlock Settings').then(ok=>{if(ok)done(false);else askPw(()=>done(false))});return}
- askPw(()=>done(true))}
-/* first time after install (password entered): offer fingerprint unlock once */
-async function bioOffer(){let asked='';try{asked=localStorage.getItem('tbBioAsked')||''}catch(_){}
- if(asked||!bioPl())return;try{localStorage.setItem('tbBioAsked','1')}catch(_){}
- if(!(await bioAvail()))return;
- setTimeout(()=>dlg('Use fingerprint / face to unlock?','Next time Settings can be opened with your phone fingerprint or face instead of typing the password. You can change this any time in Settings \u2192 Settings Password.','Enable',async()=>{if(await bioAuth('Confirm to enable')){try{localStorage.setItem('tbBio','1')}catch(_){}bioUI();toast('Fingerprint unlock ON')}else uiAlert('Not enabled.')}),400)}
-async function bioToggle(el){
- if(!el.checked){try{localStorage.setItem('tbBio','0')}catch(_){}toast('Fingerprint unlock OFF');return}
- el.checked=false;
- if(!bioPl()){uiAlert('Fingerprint unlock works only in the installed Android app.');return}
- if(!(await bioAvail())){uiAlert('No fingerprint / face lock is set up on this phone. Add one in phone Settings first.');return}
- if(await bioAuth('Confirm to enable')){try{localStorage.setItem('tbBio','1')}catch(_){}el.checked=true;toast('Fingerprint unlock ON')}else uiAlert('Not enabled.')}
-function bioUI(){const c=$('biochk'),n=$('bionote');if(!c)return;const pl=!!bioPl();c.disabled=!pl;c.checked=bioOn();
- if(n)n.textContent=pl?'Opens Settings with your phone fingerprint / face (password is used if it fails).':'Available in the installed Android app only.'}
-function gate(fn){if(!lockOn()||UNLOCKED)return fn();unlock(fn)}
-function gateIn(el){if(!lockOn()||UNLOCKED)return;el.blur();unlock(()=>el.focus())}
-function lockToggle(el){const want=el.checked;
- if(want){try{localStorage.setItem('tbLockOn','1')}catch(_){}lockUI();toast('Password lock ON');return}
- el.checked=true;gate(()=>{try{localStorage.setItem('tbLockOn','0')}catch(_){}lockUI();toast('Password lock OFF')})}
-function pwChange(){const o=$('pw_o').value,n=$('pw_n').value,c=$('pw_c').value;
- if(o!==curPw()){uiAlert('Old password is wrong');return}
- if(n.length<4){uiAlert('New password must be at least 4 characters');return}
- if(n!==c){uiAlert('New passwords do not match');return}
- try{localStorage.setItem('tbPw',n)}catch(_){uiAlert('Storage is blocked - password not saved');return}
- ['pw_o','pw_n','pw_c'].forEach(i=>$(i).value='');toast('Password changed ✔')}
+function gate(fn){return fn()}
+function gateIn(el){}
 function pgGo(n){
  if(CUR!==null&&DETD){uiConfirm('You have not saved. Leave without saving? The dates you entered will be lost.',()=>{revertDet();pgGo(n)});return}
- if(n==='set'&&CURPG!=='set'&&lockOn()&&!UNLOCKED){unlock(()=>pg0(n));return}
  pg0(n)}
 function pg(n){if(CURPG==='add'&&n!=='add'&&formDirty()){uiConfirm('You have not saved. Leave without saving? The details you entered will be lost.',()=>{const e=EDIT;cancelEdit();pgGo(n);if(e!==null&&n==='dash')try{openP(e)}catch(_){}});return}pgGo(n)}
-function pg0(n){closeDetail();collapseAll();CURPG=n;NAVS.forEach(k=>{$('pg_'+k).classList.toggle('on',k===n);$('n_'+k).classList.toggle('on',k===n)});render();lockUI();window.scrollTo(0,0)}
+function pg0(n){try{tplReset()}catch(_){}closeDetail();collapseAll();CURPG=n;NAVS.forEach(k=>{$('pg_'+k).classList.toggle('on',k===n);$('n_'+k).classList.toggle('on',k===n)});render();lockUI();window.scrollTo(0,0)}
 window.onAppBack=function(){
  if($('dlg').style.display==='flex'){$('dlg').style.display='none';return true}
  if($('modal').style.display==='block'){$('modal').style.display='none';return true}
@@ -795,8 +764,8 @@ function addP(){const g=k=>$('f_'+k).value.trim();
  const upd=EDIT!==null,ei=EDIT;if(upd){Object.assign(P[EDIT],o);EDIT=null}else P.push(Object.assign(o,{ipDone:'',cpDone:''}));
  save();render();clearForm();toast(upd?'Patient updated ✔':'Patient added ✔');$('msg').textContent=upd?'Updated ✔':'Added ✔';if(upd){pg('dash');openP(ei)}}
 function msgP(i){const p=P[i],n=isDone(p)?nxtDone(p):nxt(p);if(!n){uiAlert('No follow-up pending for this patient');return}
- const pn=num(p.phone),wn=num(WK[p.sc||'']),pt=fillT($('tp').value,p,n),
-  wt=$('tw').value+'\n1) '+p.name+' ('+p.village+', '+p.phone+') \u2013 '+NAMES[n.k]+' \u2013 '+f(n.d,1)+'\n'+FOOT,
+ const pn=num(p.phone),wn=num(WK[p.sc||'']),pt=fillT(TS.p,p,n),
+  wt=TS.w+'\n1) '+p.name+' ('+p.village+', '+p.phone+') \u2013 '+NAMES[n.k]+' \u2013 '+f(n.d,1)+'\n'+FOOT,
   A=(no,t,l)=>no?`<a class="btn green" style="display:block;margin-top:8px;text-align:center" href="${smsLink(no,t)}" onclick="$('dlg').style.display='none'">${l}</a>`:`<div class="warn" style="margin-top:8px">${l} \u2013 (no number)</div>`;
  dlg('Send message \u2013 '+p.name,
   A(pn,pt,'Patient only')+A(wn,wt,'Worker only ('+esc(p.sc||'-')+')')+A(pn&&wn?pn+','+wn:'',pt,'Patient + Worker (both together)')+
@@ -816,11 +785,11 @@ const smsLink=(n,t)=>'sms:'+n+(/iPhone|iPad/.test(navigator.userAgent)?'&':'?')+
 function inform(dn){const sel=P.map((p,i)=>i).filter(i=>SEL[i]&&isDone(P[i])===!!dn);if(!sel.length){uiAlert('Please tick (✔) the patients first');return}
  const W={},pts=[],skip=[];
  sel.forEach(i=>{const p=P[i],n=dn?nxtDone(p):nxt(p);if(!n){skip.push(p.name);return}
-  pts.push({p,t:fillT($('tp').value,p,n)});(W[p.sc||'']=W[p.sc||'']||[]).push(p.name+' ('+p.village+', '+p.phone+') – '+NAMES[n.k]+' – '+f(n.d,1))});
- const lst=a=>a.map((x,k)=>(k+1)+') '+x).join('\n'),head=$('tw').value;
+  pts.push({p,t:fillT(TS.p,p,n)});(W[p.sc||'']=W[p.sc||'']||[]).push(p.name+' ('+p.village+', '+p.phone+') – '+NAMES[n.k]+' – '+f(n.d,1))});
+ const lst=a=>a.map((x,k)=>(k+1)+') '+x).join('\n'),head=TS.w;
  const wl=Object.keys(W).map(sc=>({sc,nm:num(WK[sc]),c:W[sc].length,t:head+'\n'+lst(W[sc])+'\n'+FOOT}));
  const allW=head+'\n'+Object.keys(W).map(sc=>'['+(sc||'NO SC')+']\n'+lst(W[sc])).join('\n')+'\n'+FOOT;
- const wn=[...new Set(wl.map(x=>x.nm).filter(Boolean))],pn=[...new Set(pts.map(x=>num(x.p.phone)).filter(Boolean))],common=$('tc').value;
+ const wn=[...new Set(wl.map(x=>x.nm).filter(Boolean))],pn=[...new Set(pts.map(x=>num(x.p.phone)).filter(Boolean))],common=TS.c;
  const cp=t=>`<button class="gray" onclick="navigator.clipboard&&navigator.clipboard.writeText(${esc(JSON.stringify(t))})">Copy</button>`;
  const A=(n,t,l,c)=>`<a class="btn ${c||''}" href="${smsLink(n,t)}">${l}</a>`,nonum='<span class="warn">(no number)</span>';
  let h=`<div class="sec"><b>Workers (${wl.length})</b>`+(wn.length?`<div class="bar" style="margin:6px 0">${A(wn.join(','),allW,'📨 Send to ALL workers together','green')}${cp(allW)}</div>`:'')
@@ -948,7 +917,17 @@ function repAgg(y,m){const mo=REP[mkey(y,m)]||{},out={};
   const a=(mo[sc]&&mo[sc].ASHA&&typeof mo[sc].ASHA==='object')?mo[sc].ASHA:{};
   Object.keys(a).forEach(n=>{if(+a[n]>0)o.asha[n]=+a[n]})});
  return out}
-function repList(agg){const n=LS.slice();Object.keys(agg).forEach(s=>{if(!n.includes(s))n.push(s)});return n}
+const DASHA={'PRANSLI':['PUSHPA BEN CHAUHAN','MUNNIBEN JADAV','RASHILABEN RATHOD','JAYABEN CHAUHAN'],'TIMBDI':['MANISHABEN BARAD'],
+'MORADIYA':['MANISHABEN BARAD','PARITABEN CHAUHAN','JAYABEN CHAUHAN','NIRIKSHABEN BHOLA'],'KHERA':['JAYABEN NAKUM'],'BHUVATIMBI':['VARSHABEN MORI'],
+'RANGPUR':['DAIBEN SAU','MANJULABEN MER','SARLABEN SAU'],'PIPALVA':['HETALBEN VAZA','HANSHABEN CHAVDA'],'BHUVAVADA':['PRAVINABEN KAMALIYA'],
+'GHANTIYA':['JINIBEN VADHER','BHAVNABEN VAGH'],'PRACHI':['MANISHABEN GAUSWAMI','SHANTIBEN HARIYANI'],'ALIDRA':['KUSHUM BEN MORI'],
+'MAHOBATPARA':['MOTIBEN GOHIL','HANSHABEN PARMAR'],'GANGETHA':['CHAMPABEN GAUSWAMI'],'VASAVAD':['MEETABEN GOHIL','KADVIBEN ZALA'],
+'KHAMBHA':['SHARDABEN GOSAI','JASHIBEN DODIYA'],'TOBARA':['DAXABEN ZORA'],'ANANDPARA':['PANIBEN PATAT']};
+let AV=Object.assign({},DASHA,L('tbAsha',{}));
+const ashaOf=v=>(AV[v]||[]).slice();
+const villagesOf=sc=>Object.keys(VM).filter(v=>VM[v]===sc);
+const scOf=v=>VM[v]||(LS.includes(v)?v:'');
+function repList(agg){const n=[];LS.forEach(sc=>{const vs=villagesOf(sc);(vs.length?vs:[sc]).forEach(v=>{if(!n.includes(v))n.push(v)})});Object.keys(agg).forEach(s=>{if(!n.includes(s))n.push(s)});return n}
 /* ASHA name-wise rows, grouped by sub centre */
 function ashaRows(agg,names){return names.map(n=>{const a=(agg[n]||{}).asha||{};
  const l=Object.keys(a).sort((x,y)=>x.localeCompare(y)).map(k=>[k,a[k]]);return{n,l,t:l.reduce((s,x)=>s+x[1],0)}}).filter(g=>g.l.length)}
@@ -967,20 +946,41 @@ function repAshaSetSc(nm,sc,v){const e=repEnt(true,sc),k=ashaKey(e.ASHA,ashaNm(n
 const RP={k:'',n:0,nm:''};RS.last={};
 function repCnt(k,sc,nm){const e=((REP[mkey(RS.y,RS.m)]||{})[sc])||{};if(k==='ASHA'){const a=e.ASHA||{},kk=Object.keys(a).find(x=>x.toLowerCase()===nm.toLowerCase());return kk?+a[kk]||0:0}return +e[k]||0}
 function repHome(nm){let best='',bc=0;const t={};Object.keys(REP).forEach(mk=>Object.keys(REP[mk]).forEach(sc=>{const a=(REP[mk][sc]||{}).ASHA||{};Object.keys(a).forEach(n=>{if(n.toLowerCase()===nm.toLowerCase())t[sc]=(t[sc]||0)+(+a[n]||0)})}));Object.keys(t).forEach(sc=>{if(t[sc]>bc){bc=t[sc];best=sc}});return best}
-function repPick(k,n){const nm=k==='ASHA'?ashaNm(RS.an):'';
- if(k==='ASHA'&&n>0&&!String(RS.an||'').trim()){uiAlert('Type the ASHA name first.');return}
- let list=LS.slice();Object.keys(REP).forEach(mk=>Object.keys(REP[mk]).forEach(sc=>{if(!list.includes(sc))list.push(sc)}));
- if(n<0)list=list.filter(sc=>repCnt(k,sc,nm)>0);
- if(!list.length){toast('Nothing to remove for '+k+(nm&&k==='ASHA'?' ('+nm+')':''));return}
- const pref=k==='ASHA'?repHome(nm):(RS.last[k]||'');
+function repPick(k,n){RP.k=k;RP.n=n;RP.nm='';const who='';
+ if(k==='ASHA'&&n<0){const mo=REP[mkey(RS.y,RS.m)]||{},items=[];
+  Object.keys(mo).forEach(v=>{const a=(mo[v]&&mo[v].ASHA)||{};Object.keys(a).forEach(nm=>{if(+a[nm]>0)items.push([nm,v,+a[nm]])})});
+  if(!items.length){toast('Nothing to remove for ASHA');return}
+  const body='<div class="scpick" style="grid-template-columns:1fr">'+items.map(x=>`<button class="gray" data-n="${esc(x[0])}" data-s="${esc(x[1])}" onclick="repAshaMinus(this.dataset.n,this.dataset.s)"><span>${esc(x[0])}<small style="display:block;background:none;padding:0;font-weight:600;opacity:.85">${esc(x[1])}</small></span><small>${x[2]}</small></button>`).join('')+'</div>';
+  dlg('Remove 1 sample \u2013 ASHA\nSelect ASHA',body,'Cancel',null,true);return}
+ if(n<0){const mo=REP[mkey(RS.y,RS.m)]||{};let list=Object.keys(mo).filter(v=>repCnt(k,v,nm)>0);
+  if(!list.length){toast('Nothing to remove for '+k+who);return}
+  const body='<div class="scpick">'+list.map(v=>`<button class="gray" data-s="${esc(v)}" onclick="repPicked(this.dataset.s)"><span>${esc(v)}${scOf(v)&&scOf(v)!==v?'<small style="display:block;background:none;padding:0;font-weight:600;opacity:.85">'+esc(scOf(v))+'</small>':''}</span><small>${repCnt(k,v,nm)}</small></button>`).join('')+'</div>';
+  dlg('Remove 1 sample \u2013 '+k+who+'\nSelect village',body,'Cancel',null,true);return}
+ let list=LS.slice();
+ const pv=RS.last[k==='ASHA'?'ASHAv':k]||'',pref=pv?scOf(pv):'';
  if(pref&&list.includes(pref))list=[pref].concat(list.filter(x=>x!==pref));
- RP.k=k;RP.n=n;RP.nm=nm;
- const body='<div class="scpick">'+list.map(sc=>{const c=repCnt(k,sc,nm);return `<button class="${sc===pref?'green':'gray'}" data-s="${esc(sc)}" onclick="repPicked(this.dataset.s)">${esc(sc)}${c?'<small>'+c+'</small>':''}</button>`}).join('')+'</div>';
- dlg((n>0?'Add 1 sample':'Remove 1 sample')+' \u2013 '+k+(k==='ASHA'?' ('+nm+')':'')+'\nSelect sub centre',body,'Cancel',null,true)}
-function repPicked(sc){$('dlg').style.display='none';const k=RP.k,n=RP.n;
- if(k==='ASHA'){RS.an='';repAshaAdjSc(RP.nm,sc,n)}else repAdjSc(k,sc,n);
- RS.last[k]=sc;toast((n>0?'+1 ':'\u22121 ')+k+' \u00b7 '+sc)}
+ const body='<div class="scpick">'+list.map(sc=>`<button class="${sc===pref?'green':'gray'}" data-s="${esc(sc)}" onclick="repPickSc(this.dataset.s)">${esc(sc)}</button>`).join('')+'</div>';
+ dlg('Add 1 sample \u2013 '+k+who+'\nSelect sub centre',body,'Cancel',null,true)}
+function repPickSc(sc){const k=RP.k,nm=RP.nm;let vs=villagesOf(sc);
+ if(k==='ASHA'){vs=vs.filter(v=>ashaOf(v).length);if(!vs.length){uiAlert('No ASHA is added for '+sc+'. Add names in Settings \u2192 ASHA List.');return}}
+ else if(!vs.length){repPicked(sc);return}
+ const pv=RS.last[k==='ASHA'?'ASHAv':k]||'',pref=vs.includes(pv)?pv:'';
+ const list=pref?[pref].concat(vs.filter(x=>x!==pref)):vs;
+ const body='<div class="scpick">'+list.map(v=>{const c=k==='ASHA'?0:repCnt(k,v,nm);return `<button class="${v===pref?'green':'gray'}" data-s="${esc(v)}" onclick="${k==='ASHA'?'repAshaVil':'repPicked'}(this.dataset.s)">${esc(v)}${c?'<small>'+c+'</small>':''}</button>`}).join('')+'</div>';
+ dlg('Add 1 sample \u2013 '+k+'\n'+sc+' \u2013 select village',body,'Cancel',null,true)}
+function repAshaVil(v){RP.v=v;const names=ashaOf(v);if(!names.length){uiAlert('No ASHA is added for '+v+'. Add names in Settings \u2192 ASHA List.');return}
+ const pn=RS.last.ASHAn||'',pref=names.includes(pn)?pn:'',list=pref?[pref].concat(names.filter(x=>x!==pref)):names;
+ const body='<div class="scpick" style="grid-template-columns:1fr">'+list.map(nm=>{const c=repCnt('ASHA',v,nm);return `<button class="${nm===pref?'green':'gray'}" data-n="${esc(nm)}" onclick="repAshaPicked(this.dataset.n)"><span>${esc(nm)}</span>${c?'<small>'+c+'</small>':''}</button>`}).join('')+'</div>';
+ dlg('Add 1 sample \u2013 ASHA\n'+v+' \u2013 select ASHA',body,'Cancel',null,true)}
+function repAshaPicked(nm){$('dlg').style.display='none';repAshaAdjSc(nm,RP.v,1);RS.last.ASHAv=RP.v;RS.last.ASHAn=nm;toast('+1 ASHA \u00b7 '+nm+' \u00b7 '+RP.v)}
+function repAshaMinus(nm,v){$('dlg').style.display='none';repAshaAdjSc(nm,v,-1);toast('\u22121 ASHA \u00b7 '+nm+' \u00b7 '+v)}
+function repPicked(v){$('dlg').style.display='none';const k=RP.k,n=RP.n;repAdjSc(k,v,n);RS.last[k]=v;toast((n>0?'+1 ':'\u22121 ')+k+' \u00b7 '+v)}
 
+const ashaRow=n=>`<div class="arow"><input type="text" value="${esc(n||'')}" placeholder="ASHA name" autocomplete="off"><button type="button" class="arm" aria-label="Remove" onclick="this.parentNode.remove()">\u2715</button></div>`;
+function renderAshaEd(){const vs=repList({});$('ashaed').innerHTML=vs.map(v=>`<div class="ashaed" data-v="${esc(v)}"><label>${esc(v)}${scOf(v)&&scOf(v)!==v?' <small class="muted">\u00b7 '+esc(scOf(v))+'</small>':''}</label><div class="alist">${ashaOf(v).map(ashaRow).join('')}</div><button type="button" class="gray aadd" onclick="ashaAdd(this)">\uff0b Add ASHA</button></div>`).join('')}
+function ashaAdd(b){const l=b.parentNode.querySelector('.alist');l.insertAdjacentHTML('beforeend',ashaRow(''));const i=l.querySelectorAll('input');i[i.length-1].focus()}
+function ashaSave(){const o={};document.querySelectorAll('#ashaed .ashaed').forEach(box=>{const seen=new Set(),l=[];box.querySelectorAll('.alist input').forEach(inp=>{const x=inp.value.trim().replace(/\s+/g,' ').toUpperCase();if(x&&!seen.has(x)){seen.add(x);l.push(x)}});o[box.dataset.v]=l});
+ AV=Object.assign({},DASHA,o);try{localStorage.setItem('tbAsha',JSON.stringify(o))}catch(e){}toast('ASHA list saved \u2714');renderAshaEd()}
 function repMon(){let m=+$('rp_m').value,y=+$('rp_y').value;const t=new Date();if(y>t.getFullYear()||(y===t.getFullYear()&&m>t.getMonth())){y=t.getFullYear();m=t.getMonth()}RS.m=m;RS.y=y;renderRep()}
 function repNames(){const s=new Set();Object.keys(REP).forEach(mk=>Object.keys(REP[mk]).forEach(sc=>{const e=REP[mk][sc];if(e&&e.ASHA)Object.keys(e.ASHA).forEach(n=>{if(n!=='(No name)')s.add(n)})}));return [...s].sort()}
 function renderRep(){if(!$('rep_entry'))return;
@@ -988,28 +988,25 @@ function renderRep(){if(!$('rep_entry'))return;
  names.forEach(n=>{const o=agg[n];if(o)RC.forEach(k=>TT[k]+=o[k])});
  const mo=REP[mkey(RS.y,RS.m)]||{};
  const row=k=>`<div class="rrow"><div class="rn"><b>${k}</b><small>${RCN[k]}</small></div><div class="rs"><button class="rb m" onclick="repPick('${k}',-1)" aria-label="Minus">\u2212</button><b class="rcv">${TT[k]}</b><button class="rb p" onclick="repPick('${k}',1)" aria-label="Plus">+</button></div></div>`;
- const asha=`<div class="rrow" style="border-bottom:0;padding-bottom:6px"><div class="rn"><b>ASHA</b><small>${RCN.ASHA} \u00b7 total <u>${TT.ASHA}</u></small></div></div>
- <div class="ashab"><label>ASHA name</label><input id="rp_an" list="rp_names" autocomplete="off" placeholder="Type ASHA name" value="${esc(RS.an)}" oninput="RS.an=this.value"><datalist id="rp_names">${repNames().map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
- <div class="ashas"><button class="rb m" onclick="repPick('ASHA',-1)" aria-label="Minus">\u2212</button><span class="muted">Add / remove 1 sample for this ASHA</span><button class="rb p" onclick="repPick('ASHA',1)" aria-label="Plus">+</button></div>
- </div>`;
+ const asha=row('ASHA');
  const ys=new Set([new Date().getFullYear(),new Date().getFullYear()-1,RS.y]);Object.keys(REP).forEach(k=>ys.add(+k.slice(0,4)));
  $('rep_entry').innerHTML=`<div class="g2"><div><label>Month</label><select id="rp_m" onchange="repMon()">${MN.map((n,i)=>`<option value="${i}" ${i===RS.m?'selected':''}>${n}</option>`).join('')}</select></div><div><label>Year</label><select id="rp_y" onchange="repMon()">${[...ys].sort((a,b)=>b-a).map(y=>`<option value="${y}" ${y===RS.y?'selected':''}>${y}</option>`).join('')}</select></div></div>
- <div class="rtot"><span>All sub centres · ${MN[RS.m].slice(0,3)} ${RS.y}<b>${rsum(TT)}</b></span></div>
- <div class="muted" style="margin:10px 0 0">Tap <b>+</b> on a worker, then choose the sub centre in the pop-up.</div>
+ <div class="rtot"><span>All villages · ${MN[RS.m].slice(0,3)} ${RS.y}<b>${rsum(TT)}</b></span></div>
+ <div class="muted" style="margin:10px 0 0">Tap <b>+</b> on a worker, then choose sub centre and village (for ASHA also the ASHA name) in the pop-ups.</div>
  ${row('CHO')}${row('MPHW')}${row('FHW')}${asha}${row('OPD').replace('class="rrow"','class="rrow" style="border-bottom:0"')}`;
  /* month summary (screen) */
- const trs=names.map(n=>{const o=agg[n]||zero();return `<tr><td>${esc(n)}</td>${RC.map(k=>`<td class="${o[k]?'':'z'}">${o[k]}</td>`).join('')}<td><b>${rsum(o)}</b></td></tr>`}).join('');
+ const trs=names.map(n=>{const o=agg[n]||zero();const sc=scOf(n);return `<tr><td>${esc(n)}${sc?'<small style="display:block;font-size:10px;font-weight:600;color:#7a8a9b">'+esc(sc)+'</small>':''}</td>${RC.map(k=>`<td class="${o[k]?'':'z'}">${o[k]}</td>`).join('')}<td><b>${rsum(o)}</b></td></tr>`}).join('');
  const ar=ashaRows(agg,names);
- const ashaTbl=ar.length?`<div class="st2" style="margin:16px 0 8px">ASHA-wise samples</div><div class="tw"><table class="rt" style="min-width:240px"><thead><tr><th>ASHA NAME</th><th>SAMPLES</th></tr></thead><tbody>${ar.map(g=>`<tr class="tot"><td>${esc(g.n)}</td><td>${g.t}</td></tr>`+g.l.map(x=>`<tr><td style="padding-left:20px">${esc(x[0])}</td><td>${x[1]}</td></tr>`).join('')).join('')}</tbody></table></div>`:`<div class="muted" style="margin-top:12px">No ASHA name-wise samples entered for this month.</div>`;
+ const ashaTbl=ar.length?`<div class="st2" style="margin:16px 0 8px">ASHA-wise samples</div><div class="tw"><table class="rt" style="min-width:240px"><thead><tr><th>ASHA NAME</th><th>SAMPLES</th></tr></thead><tbody>${ar.map(g=>`<tr class="tot"><td>${esc(g.n)}${scOf(g.n)&&scOf(g.n)!==g.n?' <span style="font-weight:600;font-size:10px;opacity:.75">\u00b7 '+esc(scOf(g.n))+'</span>':''}</td><td>${g.t}</td></tr>`+g.l.map(x=>`<tr><td style="padding-left:20px">${esc(x[0])}</td><td>${x[1]}</td></tr>`).join('')).join('')}</tbody></table></div>`:`<div class="muted" style="margin-top:12px">No ASHA name-wise samples entered for this month.</div>`;
  $('rep_sum').innerHTML=`<div class="muted" style="margin:0 0 8px">Report for <b>${mlab()}</b> – shows everything added so far and updates with every entry.</div>
- <div class="tw"><table class="rt"><thead><tr><th>SUB CENTRE</th>${RC.map(k=>`<th>${k}</th>`).join('')}<th>TOTAL</th></tr></thead><tbody>${trs}<tr class="tot"><td>TOTAL</td>${RC.map(k=>`<td>${TT[k]}</td>`).join('')}<td>${rsum(TT)}</td></tr></tbody></table></div>${ashaTbl}`;
+ <div class="tw"><table class="rt"><thead><tr><th>VILLAGE</th>${RC.map(k=>`<th>${k}</th>`).join('')}<th>TOTAL</th></tr></thead><tbody>${trs}<tr class="tot"><td>TOTAL</td>${RC.map(k=>`<td>${TT[k]}</td>`).join('')}<td>${rsum(TT)}</td></tr></tbody></table></div>${ashaTbl}`;
  /* print sheet: sub centre table + ASHA name-wise table */
  $('rph').innerHTML='Monthly Sample Report – '+mlab()+'<br><b>Primary Health Centre :- Pransli</b>';
- let h='<table><thead><tr><th class="l">SUB CENTRE</th>'+RC.map(k=>'<th>'+k+'</th>').join('')+'<th>TOTAL</th></tr></thead><tbody>';
- names.forEach(n=>{const o=agg[n]||zero();h+='<tr><td class="l">'+esc(n)+'</td>'+RC.map(k=>'<td>'+o[k]+'</td>').join('')+'<td><b>'+rsum(o)+'</b></td></tr>'});
- h+='<tr class="grp"><td>TOTAL</td>'+RC.map(k=>'<td>'+TT[k]+'</td>').join('')+'<td>'+rsum(TT)+'</td></tr></tbody></table>';
+ let h='<table><thead><tr><th class="l">SUB CENTRE</th><th class="l">VILLAGE</th>'+RC.map(k=>'<th>'+k+'</th>').join('')+'<th>TOTAL</th></tr></thead><tbody>';
+ names.forEach(n=>{const o=agg[n]||zero();h+='<tr><td class="l">'+esc(scOf(n))+'</td><td class="l">'+esc(n)+'</td>'+RC.map(k=>'<td>'+o[k]+'</td>').join('')+'<td><b>'+rsum(o)+'</b></td></tr>'});
+ h+='<tr class="grp"><td colspan="2">TOTAL</td>'+RC.map(k=>'<td>'+TT[k]+'</td>').join('')+'<td>'+rsum(TT)+'</td></tr></tbody></table>';
  if(ar.length){let gt=0;h+='<div class="sh2">ASHA-wise Sample Report – '+mlab()+'</div><table class="ashat"><thead><tr><th>SR</th><th class="l">ASHA NAME</th><th>SAMPLES</th></tr></thead><tbody>';
-  ar.forEach(g=>{gt+=g.t;h+='<tr class="grp"><td colspan="2">'+esc(g.n)+'</td><td>'+g.t+'</td></tr>'+g.l.map((x,k)=>'<tr><td>'+(k+1)+'</td><td class="l">'+esc(x[0])+'</td><td>'+x[1]+'</td></tr>').join('')});
+  ar.forEach(g=>{gt+=g.t;h+='<tr class="grp"><td colspan="2">'+esc(g.n)+(scOf(g.n)&&scOf(g.n)!==g.n?' ('+esc(scOf(g.n))+')':'')+'</td><td>'+g.t+'</td></tr>'+g.l.map((x,k)=>'<tr><td>'+(k+1)+'</td><td class="l">'+esc(x[0])+'</td><td>'+x[1]+'</td></tr>').join('')});
   h+='<tr class="grp"><td colspan="2">GRAND TOTAL</td><td>'+gt+'</td></tr></tbody></table>'}
  $('rprt').innerHTML=h}
 function repPrint(){const nat=window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform();if(nat)repPDFdl();else window.print()}
@@ -1017,10 +1014,10 @@ const repFile=ext=>'TB_Monthly_Report_'+RS.y+'-'+String(RS.m+1).padStart(2,'0')+
 function repCSV(){const agg=repAgg(RS.y,RS.m),names=repList(agg);if(!Object.keys(agg).length){uiAlert('No samples entered for '+mlab()+'.');return}
  const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"',TT=zero();
  names.forEach(n=>{const o=agg[n];if(o)RC.forEach(k=>TT[k]+=o[k])});
- const rows=[['Monthly Sample Report',mlab()],[],['Sub Centre',...RC,'Total'],...names.map(n=>{const o=agg[n]||zero();return [n,...RC.map(k=>o[k]),rsum(o)]}),['TOTAL',...RC.map(k=>TT[k]),rsum(TT)]];
+ const rows=[['Monthly Sample Report',mlab()],[],['Sub Centre','Village',...RC,'Total'],...names.map(n=>{const o=agg[n]||zero();return [scOf(n),n,...RC.map(k=>o[k]),rsum(o)]}),['','TOTAL',...RC.map(k=>TT[k]),rsum(TT)]];
  const ar=ashaRows(agg,names);
- if(ar.length){rows.push([],['ASHA-wise Sample Report',mlab()],[],['Sub Centre','ASHA Name','Samples']);let gt=0;
-  ar.forEach(g=>{g.l.forEach(x=>rows.push([g.n,x[0],x[1]]));rows.push([g.n,'TOTAL',g.t]);gt+=g.t});rows.push(['','GRAND TOTAL',gt])}
+ if(ar.length){rows.push([],['ASHA-wise Sample Report',mlab()],[],['Sub Centre','Village','ASHA Name','Samples']);let gt=0;
+  ar.forEach(g=>{g.l.forEach(x=>rows.push([scOf(g.n),g.n,x[0],x[1]]));rows.push([scOf(g.n),g.n,'TOTAL',g.t]);gt+=g.t});rows.push(['','','GRAND TOTAL',gt])}
  dlPDF(new Blob(['﻿'+rows.map(r=>r.map(q).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),repFile('csv'))}
 function repPDFdl(){const b=repPDFbuild();if(b)dlPDF(b,repFile('pdf'))}
 function repPDFbuild(quiet){const agg=repAgg(RS.y,RS.m),names=repList(agg);if(!Object.keys(agg).length){if(!quiet)uiAlert('No samples entered for '+mlab()+'.');return null}
@@ -1037,19 +1034,19 @@ function repPDFbuild(quiet){const agg=repAgg(RS.y,RS.m),names=repList(agg);if(!O
     cols.forEach((k,j)=>{const s=String(r.c[j]==null?'':r.c[j]);c+=T((j&&!k.l)?cx(s,x,k.w,7.5):x+3,y-RH+5,s,7.5,r.b?1:0);x+=k.w});
     c+=Ln(M,y-RH,M+tw,y-RH);y-=RH})})};
  const TT=zero();names.forEach(n=>{const o=agg[n];if(o)RC.forEach(k=>TT[k]+=o[k])});
- const sr=names.map(n=>{const o=agg[n]||zero();return {c:[n,...RC.map(k=>o[k]),rsum(o)]}});sr.push({b:1,c:['TOTAL',...RC.map(k=>TT[k]),rsum(TT)]});
- table([{h:'SUB CENTRE',w:220},...RC.map(k=>({h:k,w:90})),{h:'TOTAL',w:100}],[{rows:sr}]);
+ const sr=names.map(n=>{const o=agg[n]||zero();return {c:[scOf(n),n,...RC.map(k=>o[k]),rsum(o)]}});sr.push({b:1,c:['','TOTAL',...RC.map(k=>TT[k]),rsum(TT)]});
+ table([{h:'SUB CENTRE',w:130,l:1},{h:'VILLAGE',w:150,l:1},...RC.map(k=>({h:k,w:70})),{h:'TOTAL',w:90}],[{rows:sr}]);
  /* page 2: ASHA name-wise samples */
  const ar=ashaRows(agg,names);
  if(ar.length){ttl='ASHA-wise Sample Report  |  '+mlab();let gt=0;
-  const gs=ar.map(g=>{gt+=g.t;return {label:g.n+'  ('+g.t+' samples)',rows:[...g.l.map((x,k)=>({c:[k+1,x[0],x[1]]})),{b:1,c:['','TOTAL',g.t]}]}});
+  const gs=ar.map(g=>{gt+=g.t;return {label:g.n+(scOf(g.n)&&scOf(g.n)!==g.n?'  \u00b7  '+scOf(g.n):'')+'  ('+g.t+' samples)',rows:[...g.l.map((x,k)=>({c:[k+1,x[0],x[1]]})),{b:1,c:['','TOTAL',g.t]}]}});
   gs.push({rows:[{b:1,c:['','GRAND TOTAL',gt]}]});
   table([{h:'SR',w:50},{h:'ASHA NAME',w:380,l:1},{h:'SAMPLES',w:120}],gs)}
  pages.push(c);return pdfBuild(pages)}
 
 initSel();setToday();render();pg('dash');
 /* ===== New month + weekly Google Drive auto backup ===== */
-const AB_URL='https://script.google.com/macros/s/AKfycbwuolcYmEElql9xrkOTuhWqERz5xZQgWBUjNvy0MevP4BBSxxz6njF25EYTWIQ2VOZg_A/exec',AB_KEY='RNTCP@123',AB_MAIL='maheshvadher12@gmail.com';   /* <-- put YOUR Web App URL, secret key and Gmail here once; every phone then saves to / restores from YOUR Drive */
+const AB_URL='https://script.google.com/macros/s/AKfycbwuolcYmEElql9xrkOTuhWqERz5xZQgWBUjNvy0MevP4BBSxxz6njF25EYTWIQ2VOZg_A/exec',AB_KEY='pransli123',AB_MAIL='maheshvadher12@gmail.com';   /* <-- put YOUR Web App URL, secret key and Gmail here once; every phone then saves to / restores from YOUR Drive */
 /* (old note) */
 const abG=k=>{try{return localStorage.getItem(k)}catch(_){return null}},abS=(k,v)=>{try{localStorage.setItem(k,v)}catch(_){}};
 const curMk=()=>{const t=new Date();return mkey(t.getFullYear(),t.getMonth())};
@@ -1070,7 +1067,7 @@ async function abPost(b,c){const ac=new AbortController(),t=setTimeout(()=>ac.ab
   const j=await r.json();if(!j.ok)throw new Error(j.err==='key'?'Wrong secret key':j.err==='email'?'This Gmail does not match the Drive account of the backup server':j.err==='none'?'No backup found in Google Drive':(j.err||'Server error'));return j}finally{clearTimeout(t)}}
 const abB64=blob=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=rej;r.readAsDataURL(blob)});
 let abBusy=false;
-async function abRun(force){if(abBusy)return;const c=abCfg();if(!abReady(c)){if(force)uiAlert('Google Drive is not connected. Open Settings \u2192 Account, enter your Gmail and press Save & Connect.');return}if(!c.on&&!force)return;
+async function abRun(force){if(abBusy)return;if(!P.length){if(force)uiAlert('No patients in the app, so nothing to back up. (To get data back, use Restore.)');return}const c=abCfg();if(!abReady(c)){if(force)uiAlert('Google Drive is not connected. Open Settings \u2192 Account, enter your Gmail and press Save & Connect.');return}if(!c.on&&!force)return;
  const monthDue=abG('tbAbMonth')!==curMk(),weekDue=!c.last||Date.now()-c.last>=7*864e5;
  if(!force&&!weekDue&&!monthDue)return;
  if(navigator.onLine===false){if(force)uiAlert('No internet connection.');return}

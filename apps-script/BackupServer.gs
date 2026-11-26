@@ -6,7 +6,7 @@
  * Actions: ping, save (backup upload), latest (newest backup, used by Restore).
  * Only requests that carry the correct KEY and the Gmail of the account that owns this script are accepted.
  */
-const KEY  = 'RNTCP@123';     // <-- your own secret key (same key in the app)
+const KEY  = 'pransli123';     // <-- your own secret key (same key in the app)
 const ROOT = 'TB Tracker Auto Backup';
 
 function out_(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
@@ -57,15 +57,27 @@ function save_(r) {
   return { ok: true, id: f.getId(), name: name };
 }
 
+function count_(txt) {
+  try {
+    var o = JSON.parse(txt), d = o.tbData2;
+    if (typeof d === 'string') d = JSON.parse(d);
+    return Array.isArray(d) ? d.length : (Array.isArray(o) ? o.length : 0);
+  } catch (x) { return 0; }
+}
+
+// Newest backup that really contains patients (empty backups are ignored)
 function latest_() {
-  var it = folder_('Backups').getFiles(), best = null;
+  var it = folder_('Backups').getFiles(), list = [];
   while (it.hasNext()) {
     var f = it.next();
-    if (!/\.json$/i.test(f.getName())) continue;
-    if (!best || f.getLastUpdated() > best.getLastUpdated()) best = f;
+    if (/\.json$/i.test(f.getName())) list.push(f);
   }
-  if (!best) return { ok: false, err: 'none' };
-  return { ok: true, name: best.getName(), text: best.getBlob().getDataAsString('UTF-8') };
+  list.sort(function (a, b) { return b.getLastUpdated() - a.getLastUpdated(); });
+  for (var i = 0; i < list.length; i++) {
+    var txt = list[i].getBlob().getDataAsString('UTF-8');
+    if (count_(txt) > 0) return { ok: true, name: list[i].getName(), text: txt };
+  }
+  return { ok: false, err: 'none' };
 }
 
 /* ---------- Forgot password: link by e-mail to the owner's Gmail ---------- */
